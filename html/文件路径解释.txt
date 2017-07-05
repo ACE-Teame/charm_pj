@@ -1,0 +1,24 @@
+link
+    -css
+        -main.css  // 样式文件
+
+    -images        // 图片
+
+    -js
+        -ueditor   // 编辑器
+        -jquery.min.js
+        -main.js    // 我的js写在这
+
+    -address.php    // 屏蔽地区
+    -footer.php     // 尾部
+    -group.php      // 用户组
+    -header.php     // 头部
+    -index.php      // 首页
+    -link.php       // 链接内容
+    -link-edit.php  // 链接内容编辑
+    -login.php      // 登录页面
+    -sector.php     // 部门管理
+    -sidebar.php    // 左边菜单栏
+    -skip.php       // 链接跳转
+    -user.php       // 用户管理
+    
