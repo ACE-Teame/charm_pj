@@ -38,5 +38,18 @@
             return false;
         });
 
-	});
+        // 手机端 菜单
+        $('body').on('click', '.nav-toggle .open', function(){
+            $('.nav-toggle .close').addClass('active');
+            $(this).removeClass('active');
+            $('.menu').addClass('active');
+            return false;
+        });
+        $('body').on('click', '.nav-toggle .close', function(){
+            $('.nav-toggle .open').addClass('active');
+            $(this).removeClass('active');
+            $('.menu').removeClass('active');            
+            return false;
+        });
+    });
 })(jQuery);
