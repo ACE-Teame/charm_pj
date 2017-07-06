@@ -6,6 +6,28 @@
 			<div class="operate">
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
+
+			<div class="search">
+				<form action="#" class="searchForm" method="GET" name="search">
+					<div class="entry">
+						<label>原链接:</label>
+						<input type="text" name="link_id" placeholder="">
+					</div>
+					<div class="entry">
+						<label>审核链接:</label>
+						<input type="text" name="verify_link" placeholder="">
+					</div>	
+					<div class="entry">
+						<label>推广链接:</label>
+						<input type="text" name="spread_link" placeholder="">
+					</div>	
+					<div class="entry">
+						<label>修改人:</label>
+						<input type="text" name="user_id" placeholder="">
+					</div>			
+				</form>
+			</div>
+
 			<div class="table">
 				<table>
 					<thead>
@@ -23,9 +45,9 @@
 					<tbody>
 						<tr>
 							<td>1</td>
-							<td>1.php</td>
-							<td>http://www.baidu.com</td>
-							<td>http://www.iconfont.cn</td>
+							<td><a href="#" class="original-link">1.php</a></td>
+							<td><a href="#" class="verify-link">http://www.baidu.com</a></td>
+							<td><a href="#" class="spread-link">http://www.iconfont.cn</a></td>
 							<td>2017-05-16 11:55:44</td>
 							<td>admin</td>
 							<td>北京</td>
@@ -36,9 +58,9 @@
 						</tr>
 						<tr>
 							<td>2</td>
-							<td>2.php</td>
-							<td>http://www.baidu.com</td>
-							<td>https://www.aliyun.com</td>
+							<td><a href="#" class="original-link">2.php</a></td>
+							<td><a href="#"  class="verify-link">http://www.baidu.com</a></td>
+							<td><a href="#" class="spread-link">https://www.aliyun.com</a></td>
 							<td>2017-05-16 11:55:44</td>
 							<td>John</td>
 							<td>上海，广州</td>
@@ -49,9 +71,9 @@
 						</tr>
 						<tr>
 							<td>3</td>
-							<td>3.php</td>
-							<td>localhost/3.php</td>
-							<td>https://www.aliyun.com</td>
+							<td><a href="#" class="original-link">3.php</a></td>
+							<td><a href="#"  class="verify-link">localhost/3.php</a></td>
+							<td><a href="#" class="spread-link">https://www.aliyun.com</a></td>
 							<td>2017-05-16 11:55:44</td>
 							<td>John</td>
 							<td>深圳</td>
@@ -82,7 +104,7 @@
 
 	<div class="popup">
 		<div class="content">
-			<div class="title">新增</div>
+			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
 				<form action="#" class="operateForm" method="POST" name="form1">
 					<div class="entry">

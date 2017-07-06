@@ -7,12 +7,31 @@
 				<a href="link-edit.php" class="btn add-link">新增</a>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
+
+			<div class="search">
+				<form action="#" class="searchForm" method="GET" name="search">
+					<div class="entry">
+						<label>原链接:</label>
+						<input type="text" name="link_id" placeholder="">
+					</div>
+					<div class="entry">
+						<label>公司名称:</label>
+						<input type="text" name="company_name" placeholder="">
+					</div>		
+					<div class="entry">
+						<label>修改人:</label>
+						<input type="text" name="user_id" placeholder="">
+					</div>		
+				</form>
+			</div>
+
 			<div class="table">
 				<table>
 					<thead>
 						<tr>
 							<th>序号</th>
 							<th>原链接</th>
+							<th>公司名称</th>
 							<th>新建时间</th>
 							<th>修改时间</th>
 							<th>最后修改人</th>
@@ -22,7 +41,8 @@
 					<tbody>
 						<tr>
 							<td>1</td>
-							<td>1.php</td>
+							<td><a href="#" class="original-link">1.php</a></td>
+							<td>百度公司</td>
 							<td>2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
 							<td>John</td>
@@ -33,7 +53,20 @@
 						</tr>
 						<tr>
 							<td>2</td>
-							<td>2.php</td>
+							<td><a href="#" class="original-link">2.php</a></td>
+							<td>Google</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>John</td>
+							<td>
+								<a href="link-edit.php" class="btn modify-link">修改</a>
+								<a href="#" class="btn delete">删除</a>
+							</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td><a href="#" class="original-link">3.php</a></td>
+							<td>阿里巴巴</td>
 							<td>2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
 							<td>John</td>
@@ -62,41 +95,6 @@
 		</div><!-- end main -->
 	</div><!-- end container -->
 
-	<div class="popup">
-		<div class="content">
-			<div class="title">新增</div>
-			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
-					<div class="entry">
-						<input type="hidden" name="id" id="id" value="">
-					</div>
-					<div class="entry">
-						<label>原链接:</label>
-						<input type="text" name="original_link" id="original_link" value="" placeholder="http://">
-					</div>
-					<div class="entry">
-						<label>审核链接</label>
-						<input type="text" name="verify_link" id="verify_link" value="" placeholder="http://">
-					</div>
-					<div class="entry">
-						<label>推广链接:</label>
-						<input type="text" name="spread_link" id="spread_link" value="" placeholder="http://">
-					</div>
-					<div class="entry">
-						<label>屏蔽地区:</label>
-						<select name="address" id="address">
-							<option value ="北京" selected>北京</option>
-							<option value ="上海">上海</option>
-						</select>
-					</div>
-				</form>
-			</div>
-			<div class="operate">
-				<a href="#" class="btn save">保存</a>
-				<a href="#" class="btn cancle">取消</a>
-			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
-		</div>
-	</div><!-- end popup -->
+
 <?php require('footer.php'); ?>
 	

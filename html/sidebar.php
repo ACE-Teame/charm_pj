@@ -1,15 +1,21 @@
 <div class="sidebar fl">
 	<div class="title">
 		<!-- <img src="images/logo.png" alt="logo"> -->
-		<i class="iconfont icon-system"></i>
-		<span>链接管理系统</span>
+		<a href="index.php">
+			<i class="iconfont icon-system"></i>
+			<span>链接管理系统</span>
+		</a>
 	</div>
 	<div class="personInfo">
 		<div class="name">John欢迎您</div>
 		<div class="logout">
-			<a href="#" class="btn btn-logout">退出登录</a>
+			<a href="#" class="btn btn-logout">退出</a>
 		</div>
 	</div>
+	<div class="nav-toggle">
+        <a class="open active" href="#"><i class="iconfont icon-menu"></i></a>
+        <a class="close" href="#"><i class="iconfont icon-close"></i></a>
+    </div>
 	<div class="menu">
 		<ul>
 			<li>
@@ -21,9 +27,6 @@
 					<li>
 						<a href="user.php" id="user" class="menu-name"><i class="iconfont icon-user"></i>用户管理</a>
 					</li>
-					<!-- <li>
-						<a href="password.php" id="password" class="menu-name"><i class="iconfont icon-modify"></i>修改密码</a>
-					</li> -->
 				</ul>
 			</li>
 			<li>

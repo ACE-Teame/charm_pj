@@ -5,7 +5,6 @@
 			<h1>部门</h1>
 			<div class="operate">
 				<a href="#" class="btn add">新增</a>
-				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 			<div class="table">
 				<table>
@@ -91,7 +90,7 @@
 
 	<div class="popup">
 		<div class="content">
-			<div class="title">新增</div>
+			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
 				<form action="#" class="operateForm" method="POST" name="form1">
 					<div class="entry">

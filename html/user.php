@@ -7,6 +7,24 @@
 				<a href="#" class="btn add">新增</a>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
+
+			<div class="search">
+				<form action="#" class="searchForm" method="GET" name="search">
+					<div class="entry">
+						<label>用户名:</label>
+						<input type="text" name="username" placeholder="">
+					</div>
+					<div class="entry">
+						<label>部门:</label>
+						<input type="text" name="sector_id" placeholder="">
+					</div>	
+					<div class="entry">
+						<label>组别:</label>
+						<input type="text" name="group_id" placeholder="">
+					</div>				
+				</form>
+			</div>
+
 			<div class="table">
 				<table>
 					<thead>
@@ -14,8 +32,10 @@
 							<th>序号</th>
 							<th>用户名</th>
 							<th>密码</th>
+							<th>部门</th>
 							<th>注册时间</th>
 							<th>最近登录时间</th>
+							<th>最近登录IP</th>
 							<th>组别</th>
 							<th>操作</th>
 						</tr>
@@ -25,8 +45,10 @@
 							<td>1</td>
 							<td>admin</td>
 							<td>***</td>
+							<td>KA</td>
 							<td>2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
+							<td>168.192.1.1</td>
 							<td>管理员</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
@@ -37,8 +59,24 @@
 							<td>2</td>
 							<td>John</td>
 							<td>***</td>
+							<td>KA</td>
 							<td>2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
+							<td>168.192.1.1</td>							
+							<td>会员</td>
+							<td>
+								<a href="#" class="btn modify">修改</a>
+								<a href="#" class="btn delete">删除</a>
+							</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Mike</td>
+							<td>***</td>
+							<td>TSA</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>168.192.1.1</td>
 							<td>会员</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
@@ -67,7 +105,7 @@
 
 	<div class="popup">
 		<div class="content">
-			<div class="title">新增</div>
+			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
 				<form action="#" class="operateForm" method="POST" name="form1">
 					<div class="entry">
@@ -86,8 +124,21 @@
 						<input type="password" name="password" id="password" value="" placeholder="">
 					</div>
 					<div class="entry">
+						<label>部门:</label>
+						<select name="sector_id" id="sector_id" multiple>
+							<option value ="KA" selected>KA</option>
+							<option value ="TSA">TSA</option>
+							<option value ="微博">微博</option>
+							<option value ="扶翼">扶翼</option>
+							<option value ="陌陌">陌陌</option>
+						</select>
+					</div>
+					<div class="entry">
 						<label>组别:</label>
-						<input type="text" name="group_id" id="group_id" value="" placeholder="">
+						<select name="group_id" id="group_id" multiple>
+							<option value ="1" selected>管理员</option>
+							<option value ="2">会员</option>
+						</select>
 					</div>
 				</form>
 			</div>
