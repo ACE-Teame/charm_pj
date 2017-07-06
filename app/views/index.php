@@ -1,26 +1,52 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title><?php echo $title; ?></title>
-</head>
-<body>
-
-<div style="text-align:center">
-	<img style="width: 250px;height: 150px;" src="<?php echo base_url('resource/images/06894dbc09ceb8dbbbaa4a2bdeac722e_b.jpg')?>" alt="">
-	<p><?php echo $content; ?></p>
-	<h1>Hello World 啊喂！~</h1>
-</div>
-	<?php echo js('jquery.min.js') ?>
-</body>
-</html> -->
-
 <?php view('header'); ?>
-<div class="container clear">
+	<div class="container clear">
 		<?php view('sidebar'); ?>
 		<div class="main fr">
 			<h1>welcome</h1>
+			<div class="table">
+				<table>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>最近登录人</th>
+							<th>最近登录时间</th>
+							<th>最近登录IP</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>John</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>192.168.1.1</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td>admin</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>192.168.1.1</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>Mike</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>192.168.1.1</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td>admin</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>192.168.1.1</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td>John</td>
+							<td>2017-05-16 11:55:44</td>
+							<td>192.168.1.1</td>
+						</tr>
+					</tbody>
+				</table>
+			</div> <!-- end table -->
 		</div>
 	</div>
 <?php view('footer'); ?>
-
