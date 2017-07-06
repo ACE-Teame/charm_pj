@@ -22,10 +22,10 @@
 				<div class="menu-title">账号管理</div>
 				<ul>
 					<li>
-						<a href="group.php" id="group" class="menu-name"><i class="iconfont icon-user-group"></i>权限管理</a>
+						<a href="<?php echo base_url('group/index')?>" id="group" class="menu-name"><i class="iconfont icon-user-group"></i>权限管理</a>
 					</li>
 					<li>
-						<a href="user.php" id="user" class="menu-name"><i class="iconfont icon-user"></i>用户管理</a>
+						<a href="<?php echo base_url('user/index')?>" id="user" class="menu-name"><i class="iconfont icon-user"></i>用户管理</a>
 					</li>
 				</ul>
 			</li>
@@ -33,7 +33,7 @@
 				<div class="menu-title">链接跳转管理</div>
 				<ul>
 					<li>
-						<a href="skip.php" id="skip" class="menu-name"><i class="iconfont icon-link"></i>链接跳转</a>
+						<a href="<?php echo base_url('link/skip')?>" id="skip" class="menu-name"><i class="iconfont icon-link"></i>链接跳转</a>
 					</li>
 				</ul>
 			</li>
@@ -41,7 +41,7 @@
 				<div class="menu-title">链接内容管理</div>
 				<ul>
 					<li>
-						<a href="link.php" id="link" class="menu-name"><i class="iconfont icon-product"></i>链接内容</a>
+						<a href="<?php echo base_url('link/link')?>" id="link" class="menu-name"><i class="iconfont icon-product"></i>链接内容</a>
 					</li>
 				</ul>
 			</li>
@@ -49,7 +49,7 @@
 				<div class="menu-title">地区管理</div>
 				<ul>
 					<li>
-						<a href="address.php" id="address" class="menu-name"><i class="iconfont icon-address"></i>屏蔽地区</a>
+						<a href="<?php echo base_url('address/index')?>" id="address" class="menu-name"><i class="iconfont icon-address"></i>屏蔽地区</a>
 					</li>
 				</ul>
 			</li>
@@ -57,7 +57,7 @@
 				<div class="menu-title">部门管理</div>
 				<ul>
 					<li>
-						<a href="sector.php" id="sector" class="menu-name"><i class="iconfont icon-sector"></i>部门</a>
+						<a href="<?php echo base_url('section/index')?>" id="sector" class="menu-name"><i class="iconfont icon-sector"></i>部门</a>
 					</li>
 				</ul>
 			</li>
