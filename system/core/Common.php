@@ -156,7 +156,11 @@
 		$file_path = VIEWS . $file_path . APPEXT;
 
 		if(is_array($data)) extract($data);
-		if(is_file($file_path)) include_once $file_path;
+		if(is_file($file_path)){
+			include_once $file_path;
+		} else {
+			throw new \Exception("找不到文件 -- " . $file_path);
+		}
 	}
 
     /**
