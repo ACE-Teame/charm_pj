@@ -17,4 +17,8 @@ class LinkController extends Controller
 	{
 		view('Link/link');
 	}
+	public function linkEdit()
+	{
+		view('Link/link-edit');
+	}
 }

@@ -22,7 +22,7 @@
 						<input type="text" name="spread_link" placeholder="">
 					</div>	
 					<div class="entry">
-						<label>修改人:</label>
+						<label>负责人:</label>
 						<input type="text" name="user_id" placeholder="">
 					</div>			
 				</form>
@@ -36,9 +36,9 @@
 							<th>原链接</th>
 							<th>审核链接</th>
 							<th>推广链接</th>
-							<th>最后修改时间</th>
-							<th>最后修改人</th>
-							<th>屏蔽地区</th>
+							<th class="tb-modify-time">最后修改时间</th>
+							<th class="tb-modify-user">负责人</th>
+							<th class="tb-address">屏蔽地区</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -48,9 +48,9 @@
 							<td><a href="#" class="original-link">1.php</a></td>
 							<td><a href="#" class="verify-link">http://www.baidu.com</a></td>
 							<td><a href="#" class="spread-link">http://www.iconfont.cn</a></td>
-							<td>2017-05-16 11:55:44</td>
-							<td>admin</td>
-							<td>北京</td>
+							<td class="tb-modify-time">2017-05-16 11:55:44</td>
+							<td class="tb-modify-user">admin</td>
+							<td class="tb-address">北京</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
 								<a href="#" class="btn delete">删除</a>
@@ -61,9 +61,9 @@
 							<td><a href="#" class="original-link">2.php</a></td>
 							<td><a href="#"  class="verify-link">http://www.baidu.com</a></td>
 							<td><a href="#" class="spread-link">https://www.aliyun.com</a></td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>上海，广州</td>
+							<td class="tb-modify-time">2017-05-16 11:55:44</td>
+							<td class="tb-modify-user">John</td>
+							<td class="tb-address">上海，广州</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
 								<a href="#" class="btn delete">删除</a>
@@ -74,9 +74,9 @@
 							<td><a href="#" class="original-link">3.php</a></td>
 							<td><a href="#"  class="verify-link">localhost/3.php</a></td>
 							<td><a href="#" class="spread-link">https://www.aliyun.com</a></td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>深圳</td>
+							<td class="tb-modify-time">2017-05-16 11:55:44</td>
+							<td class="tb-modify-user">John</td>
+							<td class="tb-address">深圳</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
 								<a href="#" class="btn delete">删除</a>

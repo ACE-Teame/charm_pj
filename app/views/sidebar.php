@@ -1,21 +1,25 @@
 <div class="sidebar fl">
 	<div class="title">
 		<!-- <img src="images/logo.png" alt="logo"> -->
-		<a href="index.php">
+		<a href="<?php echo base_url('index')?>">
 			<i class="iconfont icon-system"></i>
 			<span>链接管理系统</span>
 		</a>
 	</div>
+	<div class="nav-toggle">
+		<div>			
+        	<a class="open active" href="#"><i class="iconfont icon-menu"></i></a>
+		</div>
+		<div>			
+        	<a class="close" href="#"><i class="iconfont icon-close"></i></a>
+		</div>
+    </div>
 	<div class="personInfo">
 		<div class="name">John欢迎您</div>
 		<div class="logout">
 			<a href="#" class="btn btn-logout">退出</a>
 		</div>
 	</div>
-	<div class="nav-toggle">
-        <a class="open active" href="#"><i class="iconfont icon-menu"></i></a>
-        <a class="close" href="#"><i class="iconfont icon-close"></i></a>
-    </div>
 	<div class="menu">
 		<ul>
 			<li>
@@ -57,13 +61,13 @@
 				<div class="menu-title">部门管理</div>
 				<ul>
 					<li>
-						<a href="<?php echo base_url('section/index')?>" id="sector" class="menu-name"><i class="iconfont icon-sector"></i>部门</a>
+						<a href="<?php echo base_url('sector/index')?>" id="sector" class="menu-name"><i class="iconfont icon-sector"></i>部门</a>
 					</li>
 				</ul>
 			</li>
 		</ul>
 	</div>
-	<div class="copy">
+	<div class="copyright">
 		<p>版权所有: 广州天拓网络技术有限公司深圳分公司</p>
 	</div>
 </div>

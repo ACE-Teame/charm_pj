@@ -2,13 +2,37 @@
 	$(function(){
 		 
         // get current sidebar menu-list 
+        // var str = window.location.pathname;
+        // var i = str.lastIndexOf('/');
+        // var j = str.lastIndexOf('.');
+        // var ret = str.substring(i + 1, j);
+
         var str = window.location.pathname;
-        var i = str.lastIndexOf('/');
-        var j = str.lastIndexOf('.');
-        var ret = str.substring(i + 1, j);
+
+        var positions = new Array();
+        var pos = str.indexOf("/");
+        while (pos > -1) {
+            positions.push(pos);
+            pos = str.indexOf("/", pos + 1);
+        }
+
+        i = positions[positions.length - 2];
+        j = positions[positions.length - 1];
+
+        var ret = str.substring(i+1, j);
+
+
         $('#' + ret).addClass('active');
-        if(ret == 'link-edit'){
-            $('#link').addClass('active');
+        if(ret == 'link'){
+            $('#' + ret).removeClass('active');
+
+            ret = str.substring(j+1, str.length);
+            if(ret == 'linkEdit'){
+                $('#link').addClass('active');
+            }else{
+                $('#' + ret).addClass('active');
+            }
+            console.log(ret);
         }
 
         $('body').on('click', '.modify', function(){

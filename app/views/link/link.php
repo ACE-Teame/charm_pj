@@ -4,7 +4,7 @@
 		<div class="main fr">
 			<h1>链接内容</h1>
 			<div class="operate">
-				<a href="link-edit" class="btn add-link">新增</a>
+				<a href="<?php echo base_url('link/linkEdit')?>" class="btn add-link">新增</a>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
@@ -19,7 +19,7 @@
 						<input type="text" name="company_name" placeholder="">
 					</div>		
 					<div class="entry">
-						<label>修改人:</label>
+						<label>负责人:</label>
 						<input type="text" name="user_id" placeholder="">
 					</div>		
 				</form>
@@ -32,9 +32,9 @@
 							<th>序号</th>
 							<th>原链接</th>
 							<th>公司名称</th>
-							<th>新建时间</th>
-							<th>修改时间</th>
-							<th>最后修改人</th>
+							<th class="tb-register-time">新建时间</th>
+							<th class="tb-modify-time">修改时间</th>
+							<th>负责人</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -43,11 +43,11 @@
 							<td>1</td>
 							<td><a href="#" class="original-link">1.php</a></td>
 							<td>百度公司</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
+							<td class="tb-register-time">2017-05-16 11:55:44</td>
+							<td class="tb-modify-time">2017-05-16 11:55:44</td>
 							<td>John</td>
 							<td>
-								<a href="link-edit.php" class="btn modify-link">修改</a>
+								<a href="<?php echo base_url('link/linkEdit')?>" class="btn modify-link">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>
@@ -55,11 +55,11 @@
 							<td>2</td>
 							<td><a href="#" class="original-link">2.php</a></td>
 							<td>Google</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
+							<td class="tb-register-time">2017-05-16 11:55:44</td>
+							<td class="tb-modify-time">2017-05-16 11:55:44</td>
 							<td>John</td>
 							<td>
-								<a href="link-edit.php" class="btn modify-link">修改</a>
+								<a href="<?php echo base_url('link/linkEdit')?>" class="btn modify-link">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>
@@ -67,11 +67,11 @@
 							<td>3</td>
 							<td><a href="#" class="original-link">3.php</a></td>
 							<td>阿里巴巴</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
+							<td class="tb-register-time">2017-05-16 11:55:44</td>
+							<td class="tb-modify-time">2017-05-16 11:55:44</td>
 							<td>John</td>
 							<td>
-								<a href="link-edit.php" class="btn modify-link">修改</a>
+								<a href="<?php echo base_url('link/linkEdit')?>" class="btn modify-link">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>

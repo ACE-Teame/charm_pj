@@ -31,11 +31,11 @@
 						<tr>
 							<th>序号</th>
 							<th>用户名</th>
-							<th>密码</th>
+							<th class="tb-password">密码</th>
 							<th>部门</th>
-							<th>注册时间</th>
+							<th class="tb-register-time">注册时间</th>
 							<th>最近登录时间</th>
-							<th>最近登录IP</th>
+							<th class="tb-ip">最近登录IP</th>
 							<th>组别</th>
 							<th>操作</th>
 						</tr>
@@ -44,11 +44,11 @@
 						<tr>
 							<td>1</td>
 							<td>admin</td>
-							<td>***</td>
+							<td class="tb-password">***</td>
 							<td>KA</td>
+							<td class="tb-register-time">2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>168.192.1.1</td>
+							<td class="tb-ip">168.192.1.1</td>
 							<td>管理员</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
@@ -58,11 +58,11 @@
 						<tr>
 							<td>2</td>
 							<td>John</td>
-							<td>***</td>
+							<td class="tb-password">***</td>
 							<td>KA</td>
+							<td class="tb-register-time">2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>168.192.1.1</td>							
+							<td class="tb-ip">168.192.1.1</td>							
 							<td>会员</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
@@ -72,11 +72,11 @@
 						<tr>
 							<td>3</td>
 							<td>Mike</td>
-							<td>***</td>
+							<td class="tb-password">***</td>
 							<td>TSA</td>
+							<td class="tb-register-time">2017-05-16 11:55:44</td>
 							<td>2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>168.192.1.1</td>
+							<td class="tb-ip">168.192.1.1</td>
 							<td>会员</td>
 							<td>
 								<a href="#" class="btn modify">修改</a>

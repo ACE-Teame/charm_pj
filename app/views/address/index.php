@@ -1,6 +1,6 @@
-<?php require('header.php'); ?>
+<?php view('header'); ?>
 	<div class="container clear">
-		<?php require('sidebar.php'); ?>
+		<?php view('sidebar'); ?>
 		<div class="main fr">
 			<h1>屏蔽地区</h1>
 			<div class="operate">
@@ -129,5 +129,5 @@
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
 		</div>
 	</div><!-- end popup -->
-<?php require('footer.php'); ?>
+<?php view('footer'); ?>
 	
