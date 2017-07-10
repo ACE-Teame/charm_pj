@@ -16,3 +16,5 @@
 2017-07-10 22:12:07   "Controller:app\\Controller\\UserController  action:index"
 2017-07-10 22:12:09   "Controller:app\\Controller\\GroupController  action:index"
 2017-07-10 22:12:13   "Controller:app\\Controller\\IndexController  action:index"
+2017-07-10 22:37:13   "Controller:app\\Controller\\IndexController  action:index"
+2017-07-10 22:37:14   "Controller:app\\Controller\\GroupController  action:index"

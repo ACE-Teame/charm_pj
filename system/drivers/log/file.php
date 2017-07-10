@@ -21,7 +21,7 @@ class file
 		if(is_dir($pathSaveFloder)) {
 			file_put_contents($strSaveFileName, $jsonSaveContent . PHP_EOL, FILE_APPEND);
 		}else {
-			mkdir($pathSaveFloder, 0755);
+			mkdir($pathSaveFloder, 0755, true);
 			file_put_contents($strSaveFileName, $jsonSaveContent . PHP_EOL, FILE_APPEND);
 		}
 	}
