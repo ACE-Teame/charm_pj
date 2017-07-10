@@ -24,7 +24,8 @@ class Charm
 
 		// 拼接控制器文件路径
 		$strCtrlFile = CONTROLLER . $strController . APPEXT;
-		$strClass    = CONTROLLER . $strController;
+		$strClass    = replace(CONTROLLER . $strController, ['/', '\\'], '\\');
+
 		if(is_file($strCtrlFile)) {
 dump($strClass);exit;
 			require_once $strCtrlFile;
