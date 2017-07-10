@@ -26,6 +26,7 @@ class Charm
 		$strCtrlFile = CONTROLLER . $strController . APPEXT;
 		$strClass    = CONTROLLER . $strController;
 		if(is_file($strCtrlFile)) {
+dump($strClass);exit;
 			require_once $strCtrlFile;
 			$objClass = new $strClass();
 			$objClass->$strAction();
@@ -41,7 +42,8 @@ class Charm
 	 */
 	static public function load($strClass) 
 	{
-		$strClassPath = CHARM . DIRESEP .$strClass . APPEXT;
+		$strClassPath = replace(CHARM . DIRESEP .$strClass . APPEXT);
+		//dump($strClassPath);exit;
 		if(in_array($strClass, self::$arrClassMap)) {
 			return TRUE;
 		}else {
