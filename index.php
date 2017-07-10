@@ -4,15 +4,10 @@
  */
 date_default_timezone_set('PRC');
 
-define('CHARM', dirname(__FILE__) );
-define('SYSTEM', CHARM . '\system');
-define('CORE', CHARM . '\system\core');
-define('APP', CHARM . '\app');
+define('DIRESEP', DIRECTORY_SEPARATOR);
+define('CHARM', str_replace(array('/', '\\'), DIRESEP, dirname(__FILE__)));
 define('ENVIRONMENT', 'development');
-define('CONTROLLER', '\app\Controller\\');
 
-define('APPEXT', '.php');
-define('VIEWS', APP . '\views\\');
 include "vendor/autoload.php";
 
 /**
@@ -49,9 +44,7 @@ switch (ENVIRONMENT)
 }
 
 
-include SYSTEM . '\core\Common.php';
-include SYSTEM . '\core\Charm.php';
-
+require_once 'system' . DIRESEP . 'core'. DIRESEP . 'Core.php';
 spl_autoload_register('\system\core\Charm::load');
 
 \system\core\Charm::run();
