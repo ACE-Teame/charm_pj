@@ -27,7 +27,7 @@ class Charm
 		$strClass    = replace(CONTROLLER . $strController, ['/', '\\'], '\\');
 
 		if(is_file($strCtrlFile)) {
-dump($strClass);exit;
+// dump($strClass);exit;
 			require_once $strCtrlFile;
 			$objClass = new $strClass();
 			$objClass->$strAction();
