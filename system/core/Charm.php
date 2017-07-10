@@ -23,7 +23,7 @@ class Charm
 		$strAction     = $objRoute->strAction;
 
 		// 拼接控制器文件路径
-		$strCtrlFile = APP . '\Controller\\' . $strController . APPEXT;
+		$strCtrlFile = CONTROLLER . $strController . APPEXT;
 		$strClass    = CONTROLLER . $strController;
 		if(is_file($strCtrlFile)) {
 			require_once $strCtrlFile;
@@ -41,7 +41,7 @@ class Charm
 	 */
 	static public function load($strClass) 
 	{
-		$strClassPath = CHARM . '\\' .$strClass . APPEXT;
+		$strClassPath = CHARM . DIRESEP .$strClass . APPEXT;
 		if(in_array($strClass, self::$arrClassMap)) {
 			return TRUE;
 		}else {
@@ -52,19 +52,5 @@ class Charm
 				throw new \Exception("找不到类 -- " . $strClass);
 			}
 		}
-	}	
-
-	// static public function load_common()
-	// {
-	// 	$pathCommon = CHARM . '\system\common';
-	// 	if(is_dir($pathCommon)) {
-	// 		$handler = opendir(CHARM . '\system\common');
-	// 		while( ($filename = readdir($handler)) !== false ) {
-	// 	      	if($filename != "." && $filename != ".."){
-	// 	          	include_once $pathCommon . '\\' . $filename;
-	// 	      }
-	// 		}
-	// 	}
-	// }
-
+	}
 }
