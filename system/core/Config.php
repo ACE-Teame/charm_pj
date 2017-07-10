@@ -22,7 +22,7 @@ class Config
 		 * 2、判断配置项是否存在
 		 * 3、缓存配置
 		 */
-		$strConfigPath = SYSTEM . '\config\\' . $file . APPEXT;
+		$strConfigPath = replace(SYSTEM . '\config\\' . $file . APPEXT);
 		if(isset(self::$config[$file])) {
 			return self::$config[$file][$name];
 		}else {
