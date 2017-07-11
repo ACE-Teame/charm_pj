@@ -10,15 +10,15 @@ class LinkController extends Controller
 {
 	public function skip()
 	{
-		view('Link/skip');
+		view('link/skip');
 	}
 
 	public function link()
 	{
-		view('Link/link');
+		view('link/link');
 	}
 	public function linkEdit()
 	{
-		view('Link/link-edit');
+		view('link/link-edit');
 	}
 }

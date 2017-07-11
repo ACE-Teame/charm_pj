@@ -10,6 +10,6 @@ class SectorController extends Controller
 {
 	public function index()
 	{
-		view('Sector/index');
+		view('sector/index');
 	}
 }
