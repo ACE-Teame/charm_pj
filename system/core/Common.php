@@ -33,7 +33,9 @@
 	{
 		 if (isset($_SERVER['SCRIPT_NAME'][0])) {
 		 	$urlFloder = dirname($_SERVER['SCRIPT_NAME']);
+		 	dump($urlFloder);
 		 	$urlFloder = str_replace('\\', '/', $urlFloder);
+		 	dump($urlFloder);
 		 	dump($_SERVER);
 		 	return  $_SERVER['REQUEST_SCHEME'] . '://' .  $_SERVER['HTTP_HOST'] . $urlFloder . '/' .  $uri;
 		 }
