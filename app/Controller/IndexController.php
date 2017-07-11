@@ -17,7 +17,7 @@ class IndexController extends Controller
 
 		// dump($res->fetchAll());
 		// 
-		// echo base_url();exit;
+		echo base_url();exit;
 		view('index', ['title' => '测试标题', 'content' => '我是测试内容啊喂']);
 	}
 }
