@@ -92,18 +92,18 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
+				<form action="<?php echo base_url('sector/add')?>" class="operateForm" method="GET" name="add_from" id="add_from">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
 					<div class="entry">
-						<label>地区名:</label>
-						<input type="text" name="address_name" id="address_name" value="" placeholder="">
+						<label>部门名:</label>
+						<input type="text" name="name" id="address_name" value="" placeholder="">
 					</div>
 				</form>
 			</div>
 			<div class="operate">
-				<a href="#" class="btn save">保存</a>
+				<a href="javascript:document.add_from.submit();" class="btn save">保存</a>
 				<a href="#" class="btn cancle">取消</a>
 			</div>			
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 

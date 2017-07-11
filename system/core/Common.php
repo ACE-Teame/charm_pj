@@ -193,12 +193,13 @@
      */
 	function get($name = '')
 	{
+		$security = new \system\core\Security();
 		if($name) {
-			return isEscape($_GET[$name]);
+			return $security->isEscape($_GET[$name]);
 		}else {
 			$arrGET = [];
 			foreach ($_GET as $key => $value) {
-				$arrGET[$key] = isEscape($value);
+				$arrGET[$key] = $security->isEscape($value);
 			}
 			return $arrGET;
 		}
@@ -223,5 +224,17 @@
 		}
 
 		return $arrData;
+	}
+
+	function session($key, $val, $type, $time = 7200)
+	{
+		session_start();
+		if($type == 'get') {
+			
+		}else if($type == 'set') {
+
+		}else {
+
+		}
 	}
 

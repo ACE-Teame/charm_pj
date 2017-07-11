@@ -1,6 +1,7 @@
 <?php 
 namespace app\Controller;
-use system\core\Model;
+use app\model\UserModel;
+use app\model\SectionModel;
 use system\core\Controller;
 
 /**
@@ -8,8 +9,17 @@ use system\core\Controller;
  */
 class UserController extends Controller
 {
+	// static private $model = [];
+	public function __construct()
+	{
+
+	}
 	public function index()
 	{
+
+		$userModel = new UserModel();
+		$userInfo = $userModel->select('user', '*');
+		dump($userInfo);
 		view('user/index');
 	}
 }
