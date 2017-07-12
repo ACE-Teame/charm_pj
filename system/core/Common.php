@@ -156,7 +156,7 @@
 		if(is_file($file_path)){
 			include_once $file_path;
 		} else {
-			throw new \Exception("找不到文件 -- " . $file_path);
+			throw new \Exception("找不到视图文件 -- " . $file_path);
 		}
 	}
 
@@ -222,7 +222,7 @@
 
 		return $arrData;
 	}
-	
+
 	function get_date($time = ''){
 		return $time ? date('Y-m-d H:i:s', $time) : date('Y-m-d H:i:s');
 	}
