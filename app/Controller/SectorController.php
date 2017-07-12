@@ -16,8 +16,10 @@ class SectorController extends Controller
 	}
 	public function index()
 	{
+		$sectionData = $this->section->select('section', '*');
 
-		view('sector/index');
+		// dump($sectionData);
+		view('sector/index', ['sectionData' => $sectionData]);
 	}
 
 	public function add()

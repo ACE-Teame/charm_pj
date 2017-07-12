@@ -4,73 +4,36 @@
 		<div class="main fr">
 			<h1>部门</h1>
 			<div class="operate">
-				<a href="#" class="btn add">新增</a>
+				<a href="<?=base_url('section/delete')?>" class="btn add">新增</a>
 			</div>
 			<div class="table">
-				<table>
-					<thead>
-						<tr>
-							<th>序号</th>
-							<th>部门名</th>
-							<th>最后修改时间</th>
-							<th>最后修改人</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>KA</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>TSA</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>微博</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>扶翼</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>陌陌</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
+				<form action="" method="GET" name="section">
+					<table>
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>部门名</th>
+								<th>最后修改时间</th>
+								<th>最后修改人</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php foreach ($sectionData as $key => $section): ?>
+							<tr>
+								<td><?=$section['id']?></td>
+								<td><?=$section['name']?></td>
+								<td><?=get_date($section['create_time'])?></td>
+								<td>1</td>
+								<td>
+									<a href="#" class="btn modify">修改</a>
+									<a href="#" class="btn delete" onclick="delete_by_id(<?php echo $section['id'] ?>, 'domain')">删除</a>
+								</td>
+							</tr>
+						<?php endforeach ?>
+						</tbody>
+					</table>
+				</form>
 				<div class="paginate">
 					<ul class="clear">
 						<div id="page">
@@ -106,7 +69,16 @@
 				<a href="javascript:document.add_from.submit();" class="btn save">保存</a>
 				<a href="#" class="btn cancle">取消</a>
 			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
+			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div>
+			<script>
+				function delete_by_id()
+				{
+					if(confirm('确认删除？') == true) {
+						
+					}
+				}
+
+			</script>
 		</div>
 	</div><!-- end popup -->
 <?php view('footer'); ?>

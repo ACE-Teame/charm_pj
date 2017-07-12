@@ -1,7 +1,4 @@
 <?php 
-	
-
-		
 	/**
 	 * 打印函数
 	 * @param  array/string/int  $arr  打印变量
@@ -225,16 +222,8 @@
 
 		return $arrData;
 	}
-
-	function session($key, $val, $type, $time = 7200)
-	{
-		session_start();
-		if($type == 'get') {
-			
-		}else if($type == 'set') {
-
-		}else {
-
-		}
+	
+	function get_date($time = ''){
+		return $time ? date('Y-m-d H:i:s', $time) : date('Y-m-d H:i:s');
 	}
 
