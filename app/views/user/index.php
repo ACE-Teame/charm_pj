@@ -107,30 +107,30 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
+				<form action="<?=base_url('user/add')?>" class="operateForm" method="POST" name="adduser">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
 					<div class="entry">
 						<label>用户名:</label>
-						<input type="text" name="username" id="username" value="" placeholder="">
+						<input type="text" name="name" id="name" value="" placeholder="">
 					</div>
 					<div class="entry">
 						<label>密码:</label>
-						<input type="password" name="password" id="password" value="" placeholder="">
+						<input type="password" name="pwd" id="pwd" value="" placeholder="">
 					</div>
 					<div class="entry">
 						<label>确定密码:</label>
-						<input type="password" name="password" id="password" value="" placeholder="">
+						<input type="password" name="pwd" id="pwd" value="" placeholder="">
 					</div>
 					<div class="entry">
 						<label>部门:</label>
 						<select name="sector_id" id="sector_id" multiple>
-							<option value ="KA" selected>KA</option>
-							<option value ="TSA">TSA</option>
-							<option value ="微博">微博</option>
-							<option value ="扶翼">扶翼</option>
-							<option value ="陌陌">陌陌</option>
+							<option value ="1" selected>KA</option>
+							<option value ="2">TSA</option>
+							<option value ="3">微博</option>
+							<option value ="4">扶翼</option>
+							<option value ="5">陌陌</option>
 						</select>
 					</div>
 					<div class="entry">
@@ -143,7 +143,7 @@
 				</form>
 			</div>
 			<div class="operate">
-				<a href="#" class="btn save">保存</a>
+				<a href="javascript:document.adduser.submit();" class="btn save" >保存</a>
 				<a href="#" class="btn cancle">取消</a>
 			</div>			
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 

@@ -167,10 +167,6 @@
      */
 	function post($name = '')
 	{
-
-		// $se =& load_class('Route');
-
-		// dump($se);
 		$security = new \system\core\Security();
 		if($name) {
 			return $security->isEscape($_POST[$name]);
