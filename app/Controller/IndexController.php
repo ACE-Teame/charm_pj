@@ -1,13 +1,12 @@
 <?php 
 namespace app\Controller;
-use system\core\Model;
-use system\core\Controller;
-use system\core\Config;
 
+use system\core\Config;
+use app\core\C_Controller;
 /**
  * 默认控制器(测试)
  */
-class IndexController extends Controller
+class IndexController extends C_Controller
 {
 	public function index()
 	{

@@ -19,26 +19,18 @@
 						</tr>
 					</thead>
 					<tbody>
+					<?php foreach ($groupData as $key => $group): ?>
 						<tr>
-							<td>1</td>
-							<td>管理员</td>
-							<td>所有功能</td>
-							<td>2017-05-16 11:55:44</td>
+							<td><?=$group['id']?></td>
+							<td><?=$group['name']?></td>
+							<td><?=$group['discription']?></td>
+							<td><?=get_date($group['create_time'])?></td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td>会员</td>
-							<td>部分权限</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
+					<?php endforeach ?>
 					</tbody>
 				</table>
 
@@ -63,22 +55,22 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
+				<form action="<?=base_url('group/add')?>" class="operateForm" method="POST" name="groupadd">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
 					<div class="entry">
 						<label>组名:</label>
-						<input type="text" name="groupname" id="groupname" value="" placeholder="">
+						<input type="text" name="name" id="name" value="" placeholder="">
 					</div>
 					<div class="entry">
 						<label>描述:</label>
-						<input type="text" name="description" id="description" value="" placeholder="">
+						<input type="text" name="discription" id="discription" value="" placeholder="">
 					</div>
 				</form>
 			</div>
 			<div class="operate">
-				<a href="#" class="btn save">保存</a>
+				<a href="javascript:document.groupadd.submit();" class="btn save">保存</a>
 				<a href="#" class="btn cancle">取消</a>
 			</div>			
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 

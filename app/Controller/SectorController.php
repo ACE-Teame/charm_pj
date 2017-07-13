@@ -1,12 +1,12 @@
 <?php 
 namespace app\Controller;
 
-use system\core\Controller;
+use app\core\C_Controller;
 use app\model\SectionModel;
 /**
  * 默认控制器(测试)
  */
-class SectorController extends Controller
+class SectorController extends C_Controller
 {
 	public $section;
 

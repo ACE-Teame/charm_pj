@@ -219,7 +219,17 @@
 		return $arrData;
 	}
 
-	function get_date($time = ''){
+	function get_date($time = '')
+	{
 		return $time ? date('Y-m-d H:i:s', $time) : date('Y-m-d H:i:s');
+	}
+
+	function &model()
+	{
+		static $model;
+		if(empty($model)) {
+			$model = new \system\core\Model();
+		}
+		return $model;
 	}
 

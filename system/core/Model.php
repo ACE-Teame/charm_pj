@@ -10,11 +10,14 @@ use system\core\lib\Medoo;
  */
 class Model extends Medoo
 {
-
+	public $_model; 
 	public function __construct()
 	{
 		$arrDbMsg = Config::getAll('database');
 		parent::__construct($arrDbMsg);
+		if(empty($this->_model)) {
+			$this->_model = new Medoo();
+		}
 	}
 }
 

@@ -1,27 +1,26 @@
 <?php 
 namespace app\Controller;
+use app\core\C_Controller;
 use app\model\UserModel;
 use app\model\SectionModel;
-use system\core\Controller;
 
 /**
  * 用户模块
  * @author 命中水、
  * @date(2017.7.12)
  */
-class UserController extends Controller
+class UserController extends C_Controller
 {
-	// static private $model = [];
+	private $_userModel;
 	public function __construct()
 	{
-
+		$this->_userModel = new UserModel();
 	}
 
 	public function index()
 	{
-
 		$userModel = new UserModel();
-		$userInfo = $userModel->select('user', '*');
+		$userInfo = $this->_userModel->select('user', '*');
 		dump($userInfo);
 		view('user/index');
 	}
