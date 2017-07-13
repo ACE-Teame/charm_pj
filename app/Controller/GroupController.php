@@ -17,28 +17,34 @@ class GroupController extends C_Controller
 
 	public function index()
 	{
-
 		$data['groupData'] = $this->_model->select('group', '*');
-		// dump($data);
 		view('group/index', $data);
 	}
 
 	/**
-	 * 增加
+	 * 增加/修改
 	 */
 	public function add()
 	{
+		dump(post());
 		if(post()) {
-			$insData = [
-				'name'        => post('name'),
-				'discription' => post('discription'),
-				'create_time' => time()
-			];
-
-			$this->_groupModel->insert('group', $insData);
+			if(intval(post('id'))) {
+				$uptData = [
+					'name'        => post('name'),
+					'discription' => post('discription'),
+				];
+				$this->_model->update('group', $uptData, ['id' => intval(post('id'))]);
+			}else {
+				$insData = [
+					'name'        => post('name'),
+					'discription' => post('discription'),
+					'create_time' => time()
+				];
+				$this->_model->insert('group', $insData);
+			}
 		}
 
-		view('group/index');
+		$this->index();
 	}
 
 	public function get_by_pk()

@@ -4,7 +4,7 @@
 		<div class="main fr">
 			<h1>权限管理</h1>
 			<div class="operate">
-				<a href="#" class="btn add">新增</a>
+				<a href="#" class="btn add" onclick="">新增</a>
 			</div>
 
 			<div class="table">
@@ -71,7 +71,7 @@
 			</div>
 			<div class="operate">
 				<a href="javascript:document.groupadd.submit();" class="btn save">保存</a>
-				<a href="#" class="btn cancle">取消</a>
+				<a href="#" class="btn cancle" onclick="cancel()">取消</a>
 			</div>			
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
 		</div>
@@ -81,12 +81,17 @@
 			{
 				$.get('<?=base_url('group/get_by_pk')?>',{id:id}, function(data) {
 					if(data) {
+						$("#id").val(data.id);
 						$("#name").val(data.name);
 						$("#discription").val(data.discription);
 					}
 				}, 'JSON');
 			}
 
+			function cancel()
+			{
+				$("#id").val('');
+			}
 		</script>
 	</div><!-- end popup -->
 <?php view('footer'); ?>
