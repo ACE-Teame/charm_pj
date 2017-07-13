@@ -26,7 +26,7 @@
 							<td><?=$group['discription']?></td>
 							<td><?=get_date($group['create_time'])?></td>
 							<td>
-								<a href="#" class="btn modify">修改</a>
+								<a href="#" class="btn modify" onclick="group_edit(<?=$group['id']?>)">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>
@@ -75,6 +75,19 @@
 			</div>			
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
 		</div>
+
+		<script>
+			function group_edit(id)
+			{
+				$.get('<?=base_url('group/get_by_pk')?>',{id:id}, function(data) {
+					if(data) {
+						$("#name").val(data.name);
+						$("#discription").val(data.discription);
+					}
+				}, 'JSON');
+			}
+
+		</script>
 	</div><!-- end popup -->
 <?php view('footer'); ?>
 	

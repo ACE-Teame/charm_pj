@@ -39,7 +39,7 @@
             $('.popup').addClass('active');
             return false;
         });
-        $('body').on('click', '.add', function(){
+        $('body').on('click', '.add,.edit', function(){
             $('.popup').addClass('active');
             return false;
         });

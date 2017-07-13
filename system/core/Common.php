@@ -233,3 +233,10 @@
 		return $model;
 	}
 
+	function ajaxReturn($data, $msg = '')
+	{
+		if(is_array($data))
+			exit(json_encode($data));
+		exit(json_encode(['status' => $data, 'msg' => $msg]));
+	}
+

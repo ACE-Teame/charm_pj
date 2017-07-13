@@ -17,9 +17,9 @@ class GroupController extends C_Controller
 
 	public function index()
 	{
-		
+
 		$data['groupData'] = $this->_model->select('group', '*');
-		dump($data);
+		// dump($data);
 		view('group/index', $data);
 	}
 
@@ -39,5 +39,13 @@ class GroupController extends C_Controller
 		}
 
 		view('group/index');
+	}
+
+	public function get_by_pk()
+	{
+		if(get('id')) {
+			$groupInfo = $this->_model->select('group', '*', ['id' => get('id')]);
+			ajaxReturn($groupInfo[0]);
+		}
 	}
 }

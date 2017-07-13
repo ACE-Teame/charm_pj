@@ -19,6 +19,16 @@ class C_Controller extends Controller
 	{
 
 	}
+
+	// public function get_by_id($table, $$where, $columns = '*' $where)
+	// {
+	// 	if($id && $table) {
+	// 		if($columns != '*' && is_string($columns)) {
+	// 			$columns = explode(',', $columns);
+	// 		}
+	// 		return $this->_model->select($table, $columns, [key($id) => end($id)]);
+	// 	}
+	// }
 }
 
  ?>
