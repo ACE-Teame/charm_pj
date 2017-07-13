@@ -26,7 +26,7 @@ class GroupController extends C_Controller
 	 */
 	public function add()
 	{
-		dump(post());
+		// dump(post());
 		if(post()) {
 			if(intval(post('id'))) {
 				$uptData = [
@@ -50,8 +50,17 @@ class GroupController extends C_Controller
 	public function get_by_pk()
 	{
 		if(get('id')) {
-			$groupInfo = $this->_model->select('group', '*', ['id' => get('id')]);
+			$groupInfo = $this->get_by_id('group', ['id' => get('id')]);
 			ajaxReturn($groupInfo[0]);
+		}
+	}
+
+	public function delete_by_id()
+	{
+		if(intval(get('id'))) {
+			echo get('id');
+			$flag = $this->del_by_pk('group', ['id' => get('id')]);
+			if($flag) $this->index();
 		}
 	}
 }

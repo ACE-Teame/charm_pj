@@ -26,8 +26,8 @@
 							<td><?=$group['discription']?></td>
 							<td><?=get_date($group['create_time'])?></td>
 							<td>
-								<a href="#" class="btn modify" onclick="group_edit(<?=$group['id']?>)">修改</a>
-								<a href="#" class="btn delete">删除</a>
+								<a href="javascript:;" class="btn modify" onclick="group_edit(<?=$group['id']?>)">修改</a>
+								<a href="javascript:;" class="btn delete" onclick="delete_by_id(<?=$group['id']?>)">删除</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -55,7 +55,7 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="<?=base_url('group/add')?>" class="operateForm" method="POST" name="groupadd">
+				<form action="<?=base_url('group/add')?>" class="operateForm" method="POST" id="from" name="groupadd">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
@@ -91,6 +91,14 @@
 			function cancel()
 			{
 				$("#id").val('');
+			}
+
+			function delete_by_id(id)
+			{
+				if(confirm('确定删除？') == true){
+					$("#from").attr('action', '<?=base_url('group/delete_by_id')?>' + '?id=' + id);
+					$("#from").submit();
+				}
 			}
 		</script>
 	</div><!-- end popup -->
