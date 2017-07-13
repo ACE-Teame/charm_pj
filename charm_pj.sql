@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-07-11 22:39:32
+Date: 2017-07-13 22:33:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,14 +22,17 @@ DROP TABLE IF EXISTS `group`;
 CREATE TABLE `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(48) NOT NULL,
-  `create_time` int(10) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `discription` varchar(64) DEFAULT NULL COMMENT '描述',
+  `create_time` int(10) NOT NULL COMMENT '创建时间',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态(1启用0停用)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of group
 -- ----------------------------
+INSERT INTO `group` VALUES ('1', '测试', '测试来着', '1499949292', '1');
+INSERT INTO `group` VALUES ('2', '管理员', '管理员啊', '1499949313', '1');
 
 -- ----------------------------
 -- Table structure for `section`
