@@ -23,7 +23,6 @@ class Config
 		 * 3、缓存配置
 		 */
 		$strConfigPath = replace(SYSTEM . '\config\\' . $file . APPEXT);
-		dump($strConfigPath);
 		if(isset(self::$config[$file])) {
 			return self::$config[$file][$name];
 		}else {
