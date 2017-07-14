@@ -16,7 +16,7 @@ class file
 	public function write($data, $file = 'log') {
 		$dateToday  = date('Ymd');
 		$pathSaveFloder  = $this->_pathSave . $dateToday;
-		$strSaveFileName = $pathSaveFloder . '\\' . $file . '.log';
+		$strSaveFileName = replace($pathSaveFloder . '\\') . $file . '.log';
 		$jsonSaveContent = date('Y-m-d H:i:s') . '   ' . json_encode($data);
 		if(is_dir($pathSaveFloder)) {
 			file_put_contents($strSaveFileName, $jsonSaveContent . PHP_EOL, FILE_APPEND);
