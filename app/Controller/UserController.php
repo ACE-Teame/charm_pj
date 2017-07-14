@@ -21,7 +21,6 @@ class UserController extends C_Controller
 	{
 		$userModel = new UserModel();
 		$userInfo = $this->_userModel->select('user', '*');
-		dump($userInfo);
 		view('user/index');
 	}
 
