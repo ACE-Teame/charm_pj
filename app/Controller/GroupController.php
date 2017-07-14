@@ -1,7 +1,7 @@
 <?php 
 namespace app\Controller;
 use app\core\C_Controller;
-// use app\model\GroupModel;
+use app\model\GroupModel;
 
 /**
  * 权限管理模块
@@ -12,7 +12,7 @@ class GroupController extends C_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->_groupModel = new GroupModel();
+		$this->_groupModel = new GroupModel();
 	}
 
 	public function index()
@@ -26,7 +26,6 @@ class GroupController extends C_Controller
 	 */
 	public function add()
 	{
-		// dump(post());
 		if(post()) {
 			if(intval(post('id'))) {
 				$uptData = [
@@ -47,13 +46,15 @@ class GroupController extends C_Controller
 		$this->index();
 	}
 
+	/**
+	 * 根据ID获取数据信息
+	 * @return json 
+	 */
 	public function get_by_pk()
 	{
-		if(get('id')) {
-			$groupInfo = $this->get_by_id('group', ['id' => get('id')]);
-			ajaxReturn($groupInfo[0]);
-		}
+		ajaxReturn($this->_groupModel->byPkGetInfo(get('id')));
 	}
+
 
 	public function delete_by_id()
 	{
