@@ -10,6 +10,7 @@ define('ENVIRONMENT', 'development');
 
 include "vendor/autoload.php";
 
+
 /**
  * 错误级别设置 引自CI
  */
