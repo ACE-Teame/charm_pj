@@ -5,6 +5,6 @@ return [
 	'database_name' => 'charm_pj',
 	'server'        => 'localhost',
 	'username'      => 'root',
-	'password'      => '',
+	'password'      => '123456',
 	'charset'       => 'utf8',
 ];

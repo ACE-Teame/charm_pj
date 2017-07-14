@@ -23,6 +23,7 @@ class Config
 		 * 3、缓存配置
 		 */
 		$strConfigPath = replace(SYSTEM . '\config\\' . $file . APPEXT);
+		dump($strConfigPath);
 		if(isset(self::$config[$file])) {
 			return self::$config[$file][$name];
 		}else {
@@ -50,7 +51,7 @@ class Config
 	 */
 	static public function getAll($file)
 	{	
-		$strConfigPath = SYSTEM . '\config\\' . $file . APPEXT;
+		$strConfigPath = replace(SYSTEM . '\config\\' . $file . APPEXT);
 		if(isset(self::$config[$file])) {
 			return self::$config[$file];
 		}else {
