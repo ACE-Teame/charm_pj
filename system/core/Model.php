@@ -1,8 +1,7 @@
 <?php 
 namespace system\core;
-
+use Medoo\Medoo;
 use system\core\Config;
-use system\core\lib\Medoo;
 
 /**
  * 模型类
