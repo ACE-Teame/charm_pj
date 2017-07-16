@@ -59,5 +59,14 @@ class Model extends Medoo
 		
 		return $this->select($this->getTable(), $colums, [$this->getPk() => $id])[0];
 	}
+
+	
+	public function byPkDel($id)
+	{
+		if($id) {
+			return $this->delete($this->getTable(), [$this->getPk() => $id]);
+		}
+		
+	}
 }
 

@@ -1,5 +1,7 @@
 <?php 
 namespace app\Controller;
+use system\core\Config;
+use system\core\Page;
 use app\core\C_Controller;
 use app\model\GroupModel;
 
@@ -15,9 +17,29 @@ class GroupController extends C_Controller
 		$this->_groupModel = new GroupModel();
 	}
 
+	/**
+	 * 取得列表数据
+	 * Medoo limit用法 ['LIMIT' => [offset, page_num]]
+	 * @return array 
+	 */
 	public function index()
 	{
-		$data['groupData'] = $this->_model->select('group', '*');
+		if(isset($_GET['page'])) {
+			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
+		}else {
+			$now_page = 1;
+		}
+		// 取得每页条数
+		$pageNum           = Config::get('PAGE_NUM', 'page');
+		// 计算偏移量
+		$offset            = $pageNum * ($now_page - 1);
+
+		$data['count']     = $this->_groupModel->count('group');
+		$data['groupData'] = $this->_groupModel->select('group', '*', ['LIMIT' => [$offset, $pageNum]]);
+		// 分页处理
+		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
+		$data['pageNum']   = $pageNum;
+		$data['pageList']  = $objPage->myde_write();
 		view('group/index', $data);
 	}
 
@@ -32,14 +54,14 @@ class GroupController extends C_Controller
 					'name'        => post('name'),
 					'discription' => post('discription'),
 				];
-				$this->_model->update('group', $uptData, ['id' => intval(post('id'))]);
+				$this->_groupModel->update('group', $uptData, ['id' => intval(post('id'))]);
 			}else {
 				$insData = [
 					'name'        => post('name'),
 					'discription' => post('discription'),
 					'create_time' => time()
 				];
-				$this->_model->insert('group', $insData);
+				$this->_groupModel->insert('group', $insData);
 			}
 		}
 
@@ -58,9 +80,10 @@ class GroupController extends C_Controller
 
 	public function delete_by_id()
 	{
-		if(intval(get('id'))) {
-			echo get('id');
-			$flag = $this->del_by_pk('group', ['id' => get('id')]);
+		$id = intval(get('id'));
+		if($id) {
+			// echo get('id');
+			$flag = $this->_groupModel->byPkDel($id);
 			if($flag) $this->index();
 		}
 	}

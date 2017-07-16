@@ -4,7 +4,7 @@
 		<div class="main fr">
 			<h1>权限管理</h1>
 			<div class="operate">
-				<a href="#" class="btn add" onclick="">新增</a>
+				<a href="#" class="btn add" onclick="addgroup()">新增</a>
 			</div>
 
 			<div class="table">
@@ -36,7 +36,7 @@
 
 				<div class="paginate">
 					<ul class="clear">
-						<div id="page">
+						<!-- <div id="page">
 							<li><span>首页</span></li>
 							<li><span>上一页</span></li>
 							<li><a href="?page=1" title="第1页" class="active">1</a></li>
@@ -44,7 +44,11 @@
 							<li><a href="?page=2" title="下一页">下一页</a></li>
 							<li><a href="?page=2" title="尾页">尾页</a></li>
 							<p class="pageRemark">共<b> 2 </b>页<b> 16 </b>条数据</p>
-						</div>
+						</div> -->
+						<?php if ($count > $pageNum): ?>
+							<?=$pageList?>
+						<?php endif ?>
+
 					</ul>
 				</div>
 			</div> <!-- end table -->
@@ -77,6 +81,10 @@
 		</div>
 
 		<script>
+
+			/**
+			 * 修改时获取数据
+			 */
 			function group_edit(id)
 			{
 				$.get('<?=base_url('group/get_by_pk')?>',{id:id}, function(data) {
@@ -88,11 +96,19 @@
 				}, 'JSON');
 			}
 
+			/**
+			 * 取消 清空数据
+			 */
 			function cancel()
 			{
 				$("#id").val('');
+				$("#name").val('');
+				$("#discription").val('');
 			}
 
+			/**
+			 * 根据ID删除数据
+			 */
 			function delete_by_id(id)
 			{
 				if(confirm('确定删除？') == true){
