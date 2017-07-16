@@ -61,7 +61,7 @@
 				<div class="menu-title">部门管理</div>
 				<ul>
 					<li>
-						<a href="<?php echo base_url('sector/index')?>" id="sector" class="menu-name"><i class="iconfont icon-sector"></i>部门</a>
+						<a href="<?php echo base_url('section/index')?>" id="sector" class="menu-name"><i class="iconfont icon-sector"></i>部门</a>
 					</li>
 				</ul>
 			</li>

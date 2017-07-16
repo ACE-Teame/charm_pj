@@ -4,7 +4,7 @@
 		<div class="main fr">
 			<h1>权限管理</h1>
 			<div class="operate">
-				<a href="#" class="btn add" onclick="addgroup()">新增</a>
+				<a href="#" class="btn add">新增</a>
 			</div>
 
 			<div class="table">

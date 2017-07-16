@@ -10,11 +10,6 @@ class GroupModel extends Model
 		parent::__construct();
 		$this->pk = 'id';
 	}
-	// public static function getInfo()
-	// {
-	// 	return $this->select('group', '*');
-	// 	dump($this->select('user', '*'));
-	// }
 }
 
  ?>
