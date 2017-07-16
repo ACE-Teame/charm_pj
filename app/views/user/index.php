@@ -41,48 +41,22 @@
 						</tr>
 					</thead>
 					<tbody>
+					<?php foreach ($userData as $key => $value): ?>
 						<tr>
-							<td>1</td>
-							<td>admin</td>
+							<td><?=$value['id']?></td>
+							<td><?=$value['name']?></td>
 							<td class="tb-password">***</td>
-							<td>KA</td>
-							<td class="tb-register-time">2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
-							<td class="tb-ip">168.192.1.1</td>
-							<td>管理员</td>
+							<td><?=$value['section_id']?></td>
+							<td class="tb-register-time"><?=$value['create_time']?></td>
+							<td><?=$value['id']?></td>
+							<td class="tb-ip"><?=$value['id']?></td>
+							<td><?=$value['id']?></td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td>John</td>
-							<td class="tb-password">***</td>
-							<td>KA</td>
-							<td class="tb-register-time">2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
-							<td class="tb-ip">168.192.1.1</td>							
-							<td>会员</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Mike</td>
-							<td class="tb-password">***</td>
-							<td>TSA</td>
-							<td class="tb-register-time">2017-05-16 11:55:44</td>
-							<td>2017-05-16 11:55:44</td>
-							<td class="tb-ip">168.192.1.1</td>
-							<td>会员</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
+					<?php endforeach ?>
 					</tbody>
 				</table>
 
@@ -125,7 +99,7 @@
 					</div>
 					<div class="entry">
 						<label>部门:</label>
-						<select name="sector_id" id="sector_id" multiple>
+						<select name="section_id" id="section_id" multiple>
 							<option value ="1" selected>KA</option>
 							<option value ="2">TSA</option>
 							<option value ="3">微博</option>

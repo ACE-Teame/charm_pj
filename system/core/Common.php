@@ -114,8 +114,6 @@
 		return $absolute_path;
 	}
 
-
-
 	/**
 	 * 引用JS
 	 * @param string $js JS文件
@@ -198,6 +196,12 @@
 		}
 	}
 
+	/**
+	 * 接收request数据
+	 * @param  string $name 数据key值
+	 * @param  string $type 接收方式
+	 * @return string       数据
+	 */
 	function request($name = '', $type='get') {
 		$type = $type ? $type : strtolower(trim($type));
 		$arrData = [];
@@ -219,6 +223,11 @@
 		return $arrData;
 	}
 
+	/**
+	 * 时间戳格式化
+	 * @param  int $time 时间戳
+	 * @return string    xxxx-xx-xx xx:xx:xx
+	 */
 	function get_date($time = '')
 	{
 		return $time ? date('Y-m-d H:i:s', $time) : date('Y-m-d H:i:s');
@@ -233,10 +242,26 @@
 		return $model;
 	}
 
+	/**
+	 * 返回json数据
+	 * @param  int/array $data 状态码/返回数组
+	 * @param  string 	 $msg  返回结果
+	 * @return string          json
+	 */
 	function ajaxReturn($data, $msg = '')
 	{
 		if(is_array($data))
 			exit(json_encode($data));
 		exit(json_encode(['status' => $data, 'msg' => $msg]));
+	}
+
+	/**
+	 * 重定向
+	 * @param  url $url 
+	 */
+	function redirect($uri)
+	{
+
+		echo "<script>location.href=". base_url($uri) ."</script>";
 	}
 

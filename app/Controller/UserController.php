@@ -19,14 +19,16 @@ class UserController extends C_Controller
 
 	public function index()
 	{
-		$userModel = new UserModel();
-		$userInfo = $this->_userModel->select('user', '*');
-		view('user/index');
+
+		dump(123);
+		$data['userData'] = $this->_userModel->select('user', '*');
+		view('user/index', $data);
 	}
 
 	public function add()
 	{
-
+		// dump(post());
+		// exit;
 		// if(post()) {
 		// 	$insData = [
 		// 		'name' => post('name'),
@@ -34,10 +36,27 @@ class UserController extends C_Controller
 		// 		'last_edit_time' => time(),
 		// 		'last_edit_uid' => 1
 		// 	];
+		if(post()) {
+			if(intval(post('id'))) {
+				$uptData = [
+					'name'        => post('name'),
+					'discription' => post('discription'),
+				];
+				$this->_userModel->update('group', $uptData, ['id' => intval(post('id'))]);
+			}else {
+				$insData = [
+					'name'          => post('name'),
+					'create_time'   => time(),
+					'update_time'   => time(),
+					'pwd'           => password_hash(post('pwd'), PASSWORD_DEFAULT),
+					'group_id'      => post('group_id'),
+					'section_id'    => post('section_id'),
+				];
 
-		// 	$insId = $this->section->insert('section', $insData);
-		// }
-		dump(post());
-		view('user/index');
+				$this->_userModel->insert('user', $insData);
+			}
+		}
+		// redirect('user/index');
+		$this->index();
 	}
 }
