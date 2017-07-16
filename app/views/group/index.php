@@ -39,7 +39,6 @@
 						<?php if ($count > $pageNum): ?>
 							<?=$pageList?>
 						<?php endif ?>
-
 					</ul>
 				</div>
 			</div> <!-- end table -->
@@ -68,9 +67,8 @@
 				<a href="javascript:document.groupadd.submit();" class="btn save">保存</a>
 				<a href="#" class="btn cancle" onclick="cancel()">取消</a>
 			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
+			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close" onclick="cancel()"></i></a></div> 
 		</div>
-
 		<script>
 
 			/**

@@ -77,12 +77,13 @@ class GroupController extends C_Controller
 		ajaxReturn($this->_groupModel->byPkGetInfo(get('id')));
 	}
 
-
+	/**
+	 * 根据主键删除
+	 */
 	public function delete_by_id()
 	{
 		$id = intval(get('id'));
 		if($id) {
-			// echo get('id');
 			$flag = $this->_groupModel->byPkDel($id);
 			if($flag) $this->index();
 		}

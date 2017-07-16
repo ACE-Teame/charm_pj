@@ -41,19 +41,19 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php foreach ($userData as $key => $value): ?>
+					<?php foreach ($userData as $key => $user): ?>
 						<tr>
-							<td><?=$value['id']?></td>
-							<td><?=$value['name']?></td>
+							<td><?=$user['id']?></td>
+							<td><?=$user['name']?></td>
 							<td class="tb-password">***</td>
-							<td><?=$value['section_id']?></td>
-							<td class="tb-register-time"><?=$value['create_time']?></td>
-							<td><?=$value['id']?></td>
-							<td class="tb-ip"><?=$value['id']?></td>
-							<td><?=$value['id']?></td>
+							<td><?=$user['section_id']?></td>
+							<td class="tb-register-time"><?=$user['create_time']?></td>
+							<td><?=$user['id']?></td>
+							<td class="tb-ip"><?=$user['id']?></td>
+							<td><?=$user['id']?></td>
 							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
+								<a href="javascript:;" class="btn modify" onclick="group_edit(<?=$user['id']?>)">修改</a>
+								<a href="javascript:;" class="btn delete" onclick="delete_by_id(<?=$user['id']?>)">删除</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -62,15 +62,9 @@
 
 				<div class="paginate">
 					<ul class="clear">
-						<div id="page">
-							<li><span>首页</span></li>
-							<li><span>上一页</span></li>
-							<li><a href="?page=1" title="第1页" class="active">1</a></li>
-							<li><a href="?page=2" title="第2页">2</a></li>
-							<li><a href="?page=2" title="下一页">下一页</a></li>
-							<li><a href="?page=2" title="尾页">尾页</a></li>
-							<p class="pageRemark">共<b> 2 </b>页<b> 16 </b>条数据</p>
-						</div>
+						<?php if ($count > $pageNum): ?>
+							<?=$pageList?>
+						<?php endif ?>
 					</ul>
 				</div>
 			</div> <!-- end table -->
@@ -81,7 +75,7 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="<?=base_url('user/add')?>" class="operateForm" method="POST" name="adduser">
+				<form action="<?=base_url('user/add')?>" class="operateForm" method="POST" id="from" name="adduser">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
@@ -100,7 +94,7 @@
 					<div class="entry">
 						<label>部门:</label>
 						<select name="section_id" id="section_id" multiple>
-							<option value ="1" selected>KA</option>
+							<option value ="1">KA</option>
 							<option value ="2">TSA</option>
 							<option value ="3">微博</option>
 							<option value ="4">扶翼</option>
@@ -110,7 +104,7 @@
 					<div class="entry">
 						<label>组别:</label>
 						<select name="group_id" id="group_id" multiple>
-							<option value ="1" selected>管理员</option>
+							<option value ="1">管理员</option>
 							<option value ="2">会员</option>
 						</select>
 					</div>
@@ -118,10 +112,53 @@
 			</div>
 			<div class="operate">
 				<a href="javascript:document.adduser.submit();" class="btn save" >保存</a>
-				<a href="#" class="btn cancle">取消</a>
+				<a href="#" class="btn cancle" onclick="cancel()">取消</a>
 			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
+			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close" onclick="cancel()"></i></a></div> 
 		</div>
+		<script>
+
+			/**
+			 * 修改时获取数据
+			 */
+			function group_edit(id)
+			{
+				$.get('<?=base_url('user/get_by_pk')?>',{id:id}, function(data) {
+					if(data) {
+						$("#id").val(data.id);
+						$("#name").val(data.name);
+						$("#section_id").find("option[value='"+data.section_id+"']").attr("selected",true);
+						$("#group_id").find("option[value='"+data.group_id+"']").attr("selected",true);
+					}
+				}, 'JSON');
+			}
+
+			/**
+			 * 取消 清空数据
+			 */
+			function cancel()
+			{
+				$("#id").val('');
+				$("#name").val('');
+				$("#section_id option").each(function() {
+					$(this).attr('selected', false);
+				});
+				$("#group_id option").each(function() {
+					$(this).attr('selected', false);
+				});
+			}
+
+			/**
+			 * 根据ID删除数据
+			 */
+			function delete_by_id(id)
+			{
+				if(confirm('确定删除？') == true){
+					$("#from").attr('action', '<?=base_url('user/delete_by_id')?>' + '?id=' + id);
+					$("#from").submit();
+				}
+			}
+		</script>
 	</div><!-- end popup -->
 <?php view('footer'); ?>
 	
