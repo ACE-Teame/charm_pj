@@ -36,7 +36,6 @@ class SectionController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
-
 		view('section/index', $data);
 	}
 

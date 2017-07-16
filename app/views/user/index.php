@@ -9,14 +9,14 @@
 			</div>
 
 			<div class="search">
-				<form action="#" class="searchForm" method="GET" name="search">
+				<form action="<?php echo base_url('user');?>#" class="searchForm" method="GET" name="search">
 					<div class="entry">
 						<label>用户名:</label>
-						<input type="text" name="username" placeholder="">
+						<input type="text" name="name" placeholder="">
 					</div>
 					<div class="entry">
 						<label>部门:</label>
-						<input type="text" name="sector_id" placeholder="">
+						<input type="text" name="section_id" placeholder="">
 					</div>	
 					<div class="entry">
 						<label>组别:</label>
@@ -94,11 +94,9 @@
 					<div class="entry">
 						<label>部门:</label>
 						<select name="section_id" id="section_id" multiple>
-							<option value ="1">KA</option>
-							<option value ="2">TSA</option>
-							<option value ="3">微博</option>
-							<option value ="4">扶翼</option>
-							<option value ="5">陌陌</option>
+						<?php foreach ($sectionData as $key => $section): ?>
+							<option value ="<?=$section['id']?>"><?=$section['name']?></option>
+						<?php endforeach ?>
 						</select>
 					</div>
 					<div class="entry">

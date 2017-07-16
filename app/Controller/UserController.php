@@ -19,32 +19,7 @@ class UserController extends C_Controller
 		$this->_userModel = new UserModel();
 	}
 
-	/**
-	 * 用户列表
-	 */
-	public function index()
-	{
 
-		if(isset($_GET['page'])) {
-			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
-		}else {
-			$now_page = 1;
-		}
-		// 取得每页条数
-		$pageNum           = Config::get('PAGE_NUM', 'page');
-		// 计算偏移量
-		$offset            = $pageNum * ($now_page - 1);
-
-		$data['count']     = $this->_userModel->count('user');
-		$data['userData']  = $this->_userModel->select('user', '*', ['LIMIT' => [$offset, $pageNum]]);
-		// 分页处理
-		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
-		$data['pageNum']   = $pageNum;
-		$data['pageList']  = $objPage->myde_write();
-
-		$this->_arrange_data($data);
-		view('user/index', $data);
-	}
 
 	/**
 	 * 1.补充用户列表部门、组信息
@@ -60,8 +35,59 @@ class UserController extends C_Controller
 		}
 
 		$data['groupData'] = $groumModel->select('', ['id', 'name']);
+		$data['sectionData'] = $sectionModel->select('', ['id', 'name']);
 
 	}
+
+	/**
+	 * 用户列表
+	 */
+	public function index()
+	{
+		$where = $this->getSearch();
+		if(isset($_GET['page'])) {
+			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
+		}else {
+			$now_page = 1;
+		}
+		// 取得每页条数
+		$pageNum           = Config::get('PAGE_NUM', 'page');
+		// 计算偏移量
+		$offset            = $pageNum * ($now_page - 1);
+
+		$data['count']     = $this->_userModel->count('user', $where);
+		// dump($this->_userModel->last());
+		$where['LIKE']     = [$offset, $pageNum];
+
+		$data['userData']  = $this->_userModel->select('user', '*', $where);
+		// dump($this->_userModel->last());
+		// 分页处理
+		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
+		$data['pageNum']   = $pageNum;
+		$data['pageList']  = $objPage->myde_write();
+
+		$this->_arrange_data($data);
+		view('user/index', $data);
+	}
+
+	/**
+	 * 拼接查询条件
+	 * @return array
+	 */
+	public function getSearch()
+	{
+		if(get('name')) 
+			$where['name[~]'] = get('name');
+		if(get('section_id')) {
+
+		}
+		if(get('group_id')) {
+
+		}
+		return $where;
+	}
+
+	
 	/**
 	 * 增加/修改用户
 	 */
