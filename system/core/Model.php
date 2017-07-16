@@ -56,7 +56,6 @@ class Model extends Medoo
 			&& (strpos($colums, ',') !== FALSE)) {
 			$colums = explode(',', $colums);
 		}
-		
 		return $this->select($this->getTable(), $colums, [$this->getPk() => $id])[0];
 	}
 
@@ -67,6 +66,11 @@ class Model extends Medoo
 			return $this->delete($this->getTable(), [$this->getPk() => $id]);
 		}
 		
+	}
+
+	public function byPkGetVal($id)
+	{
+
 	}
 }
 

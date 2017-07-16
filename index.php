@@ -6,7 +6,7 @@ date_default_timezone_set('PRC');
 
 define('DIRESEP', DIRECTORY_SEPARATOR);
 define('CHARM', str_replace(array('/', '\\'), DIRESEP, dirname(__FILE__)));
-define('ENVIRONMENT', 'development');
+define('ENVIRONMENT', 'testing');
 
 include "vendor/autoload.php";
 
@@ -29,6 +29,13 @@ switch (ENVIRONMENT)
 		break;
 
 	case 'testing':
+		$whoops     = new \Whoops\Run;
+		$errorTitle = '哎呦！出现一个小bug！~';
+		$options    = new \Whoops\Handler\PrettyPageHandler;
+		$options->setPageTitle($errorTitle); // 设置错误标题
+		$whoops->pushHandler($options); 
+		$whoops->register();
+		
 	case 'production':
 		ini_set('display_errors', 0);
 		if (version_compare(PHP_VERSION, '5.3', '>=')) {

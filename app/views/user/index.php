@@ -47,10 +47,10 @@
 							<td><?=$user['name']?></td>
 							<td class="tb-password">***</td>
 							<td><?=$user['section_id']?></td>
-							<td class="tb-register-time"><?=$user['create_time']?></td>
+							<td class="tb-register-time"><?=get_date($user['create_time'])?></td>
 							<td><?=$user['id']?></td>
 							<td class="tb-ip"><?=$user['id']?></td>
-							<td><?=$user['id']?></td>
+							<td><?=$user['groupName']?></td>
 							<td>
 								<a href="javascript:;" class="btn modify" onclick="group_edit(<?=$user['id']?>)">修改</a>
 								<a href="javascript:;" class="btn delete" onclick="delete_by_id(<?=$user['id']?>)">删除</a>
@@ -104,8 +104,11 @@
 					<div class="entry">
 						<label>组别:</label>
 						<select name="group_id" id="group_id" multiple>
-							<option value ="1">管理员</option>
-							<option value ="2">会员</option>
+							<?php foreach ($groupData as $key => $group): ?>
+								<option value ="<?=$group['id']?>"><?=$group['name']?></option>
+							<?php endforeach ?>
+							
+							<!-- <option value ="2">会员</option> -->
 						</select>
 					</div>
 				</form>

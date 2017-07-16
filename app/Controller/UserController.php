@@ -36,14 +36,32 @@ class UserController extends C_Controller
 		$offset            = $pageNum * ($now_page - 1);
 
 		$data['count']     = $this->_userModel->count('user');
-		$data['userData'] = $this->_userModel->select('user', '*', ['LIMIT' => [$offset, $pageNum]]);
+		$data['userData']  = $this->_userModel->select('user', '*', ['LIMIT' => [$offset, $pageNum]]);
 		// 分页处理
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
+
+		$this->_arrange_data($data);
 		view('user/index', $data);
 	}
 
+	/**
+	 * 1.补充用户列表部门、组信息
+	 * 2.取出部门和组信息列表
+	 * @param  array &$data 
+	 */
+	private function _arrange_data(&$data)
+	{
+		$groumModel   = new \app\model\GroupModel;
+		$sectionModel = new \app\model\SectionModel;
+		foreach ($data['userData'] as $key => $user) {
+			$data['userData'][$key]['groupName'] = $groumModel->byPkGetInfo($user['group_id'], ['name'])['name'];
+		}
+
+		$data['groupData'] = $groumModel->select('', ['id', 'name']);
+
+	}
 	/**
 	 * 增加/修改用户
 	 */

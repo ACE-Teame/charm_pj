@@ -74,7 +74,7 @@ class GroupController extends C_Controller
 	 */
 	public function get_by_pk()
 	{
-		ajaxReturn($this->_groupModel->byPkGetInfo(get('id')));
+		ajaxReturn($this->_groupModel->byPkGetInfo(get('id'))[0]);
 	}
 
 	/**

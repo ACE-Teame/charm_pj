@@ -800,7 +800,7 @@ class Medoo
 	protected function selectContext($table, &$map, $join, &$columns = null, $where = null, $column_fn = null)
 	{
 		preg_match('/(?<table>[a-zA-Z0-9_]+)\s*\((?<alias>[a-zA-Z0-9_]+)\)/i', $table, $table_match);
-
+		
 		if (isset($table_match[ 'table' ], $table_match[ 'alias' ]))
 		{
 			$table = $this->tableQuote($table_match[ 'table' ]);
@@ -1032,14 +1032,14 @@ class Medoo
 		}
 	}
 
-	public function select($table, $join, $columns = null, $where = null)
+	public function select($table = '', $join, $columns = null, $where = null)
 	{
 		$map = [];
 		$stack = [];
 		$column_map = [];
 
 		$index = 0;
-
+		if(empty($table)) $table = $this->getTable();
 		$column = $where === null ? $join : $columns;
 
 		$is_single_column = (is_string($column) && $column !== '*');
