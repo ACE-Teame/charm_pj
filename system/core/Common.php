@@ -261,6 +261,7 @@
 	 */
 	function redirect($uri)
 	{
-		echo "<script>location.href=". base_url($uri) ."</script>";
+		header('Location:' . base_url($uri), TRUE);
+		exit();
 	}
 

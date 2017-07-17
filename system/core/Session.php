@@ -90,20 +90,26 @@ class Session
 	 * @param string  $prefix 会话文件前缀
 	 * @param boolean $start  是否马上启用SESSION处理
 	 */
-	public function __construct($type = 'file', $ltime = 30, $path = '', $prefix = 'ws', $start = true)
+	public function __construct($type = 'auto', $ltime = 30, $path = '', $prefix = 'ws', $start = true)
 	{
 		$this->_prefix = $prefix;
 		$this->_type   = strtolower($type);
 		if ($this->_type == 'file' || $this->_type == 'dir')
 		{
 			$this->_path = ($path && file_exists($path)) ? $path : get_cfg_var('session.save_path');
+			dump($this->_path);exit;
 			wcore_fso::make_dir($this->_path); //处理SESSION存储的路径
 		}
 
 		$this->_life_time = ($ltime && is_numeric($ltime)) ? $ltime * 60 : get_cfg_var('session.gc_maxlifetime');
-		$this->_ip        = wcore_utils::get_ip();
-		session_set_save_handler(array(&$this, 'open'), array(&$this, 'close'),		array(&$this, 'read'),
-								 array(&$this, 'write'),array(&$this, 'destroy'),	array(&$this, 'gc'));
+		$this->_ip        = $this->getIp();
+		session_set_save_handler(
+			array(&$this, 'open'),
+			array(&$this, 'close'),
+			array(&$this, 'read'),
+			array(&$this, 'write'),
+			array(&$this, 'destroy'),
+			array(&$this, 'gc'));
 		register_shutdown_function('session_write_close');
 
 		/**
@@ -117,6 +123,42 @@ class Session
 			session_start();
 		}
 		$this->data = & $_SESSION;
+	}
+
+	/**
+	 * 获取IP地址
+	 */
+	public function getIp()
+	{
+		$ip = FALSE;  
+		if(!empty($_SERVER["HTTP_CLIENT_IP"])){  
+			$ip = $_SERVER["HTTP_CLIENT_IP"];  
+		}  
+		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+			$ips = explode (", ", $_SERVER['HTTP_X_FORWARDED_FOR']);  
+			if ($ip) {
+			 	array_unshift($ips, $ip); 
+			 	$ip = FALSE; 
+			}  
+			for ($i = 0; $i < count($ips); $i++) {  
+				if (!eregi("^(10|172\.16|192\.168)\.", $ips[$i])) {  
+					$ip = $ips[$i];  
+					break;  
+				}  
+			}  
+		}  
+		return ($ip ? $ip : $_SERVER['REMOTE_ADDR']); 
+	}
+
+	/**
+	 * 创建目录
+	 * @param  [type] $path [description]
+	 * @return [type]       [description]
+	 */
+	public function make_dir($path)
+	{
+		if(!is_dir($path)) 
+			mkdir($path, 0755, true);
 	}
 
 	/**
@@ -141,8 +183,9 @@ class Session
 			$this->_mem         = wcore_object::mem();
 			$this->_mem->expire = $this->_life_time / 60;
 		}
-
-		$this->gc(0); //删除失效的SESSION
+		if($this->_type != 'auto') {
+			$this->gc(0); //删除失效的SESSION
+		}
 		return true;
 	}
 
@@ -196,8 +239,18 @@ class Session
 		{
 			$sfile = "{$this->_path}/{$sid[0]}/{$this->_prefix}-{$sid}";
 		}
-		else
-		{
+		if($this->_type == 'auto') {
+			if(is_array($sid)) {
+				foreach ($sid as $key) {
+					if(isset($_SESSION[$key]) && !empty($_SESSION[$key])) {
+						$session[$key] = $_SESSION[$key];
+					}
+				}
+				return json_encode($session);
+			}else {
+				return $_SESSION[$sid];
+			}
+		} else {
 			$sfile = "{$this->_path}/{$this->_prefix}-{$sid}";
 		}
 
@@ -208,6 +261,8 @@ class Session
 
 		return (string)file_get_contents($sfile);
 	}
+
+
 
 	/**
 	 * 写入SESSION内容
@@ -221,10 +276,9 @@ class Session
 		/**
 		 * SESSION数据为空则清除先前数据
 		 */
-		if (empty($sdata))
+		if (empty($sdata) && $this->_type != 'auto')
 		{
 			$this->destroy($sid);
-
 			return false;
 		}
 
@@ -258,8 +312,18 @@ class Session
 			wcore_fso::make_dir($sfile); //处理SESSION存储的路径
 			$sfile = "{$sfile}/{$this->_prefix}-{$sid}";
 		}
-		else
-		{
+		/**
+		 * 扩展 当为自动时候写入到session
+		 */
+		if($this->_type == 'auto') {
+			if (is_array($sid)) {
+				foreach ($sid as $key => $value) {
+					$_SESSION[$key] = $value;
+				}
+			}
+			$_SESSION[$sid] = $sdata;
+			return;
+		} else {
 			$sfile = "{$this->_path}/{$this->_prefix}-{$sid}";
 		}
 
@@ -267,8 +331,22 @@ class Session
 	}
 
 	/**
+	 * 删除session
+	 * @param  string/array $key 键/键组
+	 */
+	public function delete($key)
+	{
+		if(is_array($key)) {
+			foreach ($key as $k) {
+				unset($_SESSION[$k]);
+			}
+		}else {
+			unset($_SESSION[$key]);
+		}
+	}
+
+	/**
 	 * 清除SESSION
-	 *
 	 * @param string $sid 会话唯一标识
 	 * @return boolean 清除成功返回true否则为false
 	 */
@@ -304,7 +382,11 @@ class Session
 		{
 			$sfile = "{$this->_path}/{$sid[0]}/{$this->_prefix}-{$sid}";
 		}
-		else
+
+		if($this->_type == 'auto') {
+			session_destroy();
+			return;
+		}else
 		{
 			$sfile = "{$this->_path}/{$this->_prefix}-{$sid}";
 		}
@@ -343,7 +425,6 @@ class Session
 
 	/**
 	 * 删除session文件
-	 *
 	 * @param string  $dir      会话文件所在目录
 	 * @param boolean $no_check 是否进行过期判断
 	 * @return boolean
@@ -380,6 +461,10 @@ class Session
 	{
 		switch ($this->_type)
 		{
+			case 'auto':
+				foreach ($_SESSION as $key => $value) {
+					unset($_SESSION[$key]);
+				}
 			case 'mem':
 				return $this->_mem->flush();
 			case 'db':
@@ -396,6 +481,28 @@ class Session
 				}
 			default:
 				return true;
+		}
+	}
+
+	public function rm_dir()
+	{
+		$dh = opendir($dir);
+	  	while ($file=readdir($dh)) {
+	    	if($file!="." && $file!="..") {
+	      		$fullpath=$dir."/".$file;
+		      	if(!is_dir($fullpath)) {
+		          	unlink($fullpath);
+		      	} else {
+		          	deldir($fullpath);
+		      	}
+		    }
+		}
+		closedir($dh);
+		  //删除当前文件夹：
+		if(rmdir($dir)) {
+		    return true;
+		} else {
+		    return false;
 		}
 	}
 }

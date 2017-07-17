@@ -15,9 +15,9 @@
 		</div>
     </div>
 	<div class="personInfo">
-		<div class="name">John欢迎您</div>
+		<div class="name"><?php echo $_SESSION['name'] ?>欢迎您</div>
 		<div class="logout">
-			<a href="#" class="btn btn-logout">退出</a>
+			<a href="<?php echo base_url('common/logout') ?>" class="btn btn-logout" onClick="return confirm('确定退出？');">退出</a>
 		</div>
 	</div>
 	<div class="menu">

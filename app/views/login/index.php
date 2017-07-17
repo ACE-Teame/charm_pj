@@ -11,16 +11,13 @@
 	<div class="container">
 		<div class="form">
 			<div class="title">链接管理系统</div>
-			<form action="#" class="operateForm" method="POST" name="form1">
-				<div class="entry">
-					<input type="hidden" name="id" id="id" value="">
-				</div>
+			<form action="<?php echo base_url('Common/login') ?>" class="operateForm" method="POST" name="form1" id="login">
 				<div class="entry clear">
 					<div class="fl">					
 						<label>用户名:</label>
 					</div>
 					<div class="fl">					
-						<input type="text" name="username" id="username" value="" placeholder="">
+						<input type="text" name="name" id="name" value="" placeholder="">
 					</div>
 				</div>
 				<div class="entry clear">
@@ -28,7 +25,7 @@
 						<label>密码:</label>
 					</div>
 					<div class="fl">					
-						<input type="password" name="password" id="password" value="" placeholder="">
+						<input type="password" name="pwd" id="pwd" value="" placeholder="">
 					</div>					
 				</div>
 				<div class="entry clear">
@@ -81,7 +78,7 @@
                 createCode();
             }
             else {
-                alert("验证码正确！");
+            	$("#login").submit();
             }        
         }  
 
