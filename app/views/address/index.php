@@ -4,104 +4,41 @@
 		<div class="main fr">
 			<h1>屏蔽地区</h1>
 			<div class="operate">
-				<a href="#" class="btn add">新增</a>
+				<a href="javascript:;" class="btn add">新增</a>
 			</div>
 			<div class="table">
-				<table>
-					<thead>
-						<tr>
-							<th>序号</th>
-							<th>地区名</th>
-							<th>最后修改时间</th>
-							<th>最后修改人</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>北京</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>上海</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>深圳</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>广州</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>武汉</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>6</td>
-							<td>厦门</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>6</td>
-							<td>杭州</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
+				<form action="" method="GET" name="address">
+					<table>
+						<thead>
+							<tr>
+								<th>序号</th>
+								<th>地区名</th>
+								<th>最后修改时间</th>
+								<th>最后修改人</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($addressData as $key => $address): ?>
+							<tr>
+								<td><?=$address['id']?></td>
+								<td><?=$address['name']?></td>
+								<td><?=get_date($address['last_edit_time'])?></td>
+								<td>1</td>
+								<td>
+									<a href="#" class="btn modify" onclick="group_edit(<?=$address['id']?>)">修改</a>
+									<a href="#" class="btn delete" onclick="delete_by_id(<?=$address['id']?>)">删除</a>
+								</td>
+							</tr>
+							<?php endforeach ?>
+						</tbody>
+					</table>
+				</form>
 				<div class="paginate">
 					<ul class="clear">
-						<div id="page">
-							<li><span>首页</span></li>
-							<li><span>上一页</span></li>
-							<li><a href="?page=1" title="第1页" class="active">1</a></li>
-							<li><a href="?page=2" title="第2页">2</a></li>
-							<li><a href="?page=2" title="下一页">下一页</a></li>
-							<li><a href="?page=2" title="尾页">尾页</a></li>
-							<p class="pageRemark">共<b> 2 </b>页<b> 16 </b>条数据</p>
-						</div>
+						<?php if ($count > $pageNum): ?>
+							<?=$pageList?>
+						<?php endif ?>
 					</ul>
 				</div>
 			</div> <!-- end table -->
@@ -112,21 +49,57 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
+				<form action="<?php echo base_url('address/add')?>" class="operateForm"  id="from" method="POST" name="add_from" id="add_from">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
 					<div class="entry">
 						<label>地区名:</label>
-						<input type="text" name="address_name" id="address_name" value="" placeholder="">
+						<input type="text" name="name" id="name" value="" placeholder="">
 					</div>
 				</form>
 			</div>
 			<div class="operate">
-				<a href="#" class="btn save">保存</a>
-				<a href="#" class="btn cancle">取消</a>
+				<a href="javascript:document.add_from.submit();" class="btn save">保存</a>
+				<a href="#" class="btn cancle" onclick="cancel()">取消</a>
 			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
+			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close" onclick="cancel()"></i></a></div> 
+
+			<script>
+
+			/**
+			 * 修改时获取数据
+			 */
+			function group_edit(id)
+			{
+				$.get('<?=base_url('address/get_by_pk')?>',{id:id}, function(data) {
+					if(data) {
+						$("#id").val(data.id);
+						$("#name").val(data.name);
+					}
+				}, 'JSON');
+			}
+
+			/**
+			 * 取消 清空数据
+			 */
+			function cancel()
+			{
+				$("#id").val('');
+				$("#name").val('');
+			}
+
+			/**
+			 * 根据ID删除数据
+			 */
+			function delete_by_id(id)
+			{
+				if(confirm('确定删除？') == true){
+					$("#from").attr('action', '<?=base_url('address/delete_by_id')?>' + '?id=' + id);
+					$("#from").submit();
+				}
+			}
+			</script>
 		</div>
 	</div><!-- end popup -->
 <?php view('footer'); ?>

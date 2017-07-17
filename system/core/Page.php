@@ -81,7 +81,7 @@ class Page
         if ($this->myde_page != 1) {
             return "<li><a href='" . $this->page_replace(1) . "' title='首页'>首页</a></li>";
         } else {
-            return "<li><p>首页</p></li>";
+            return "<li><span>首页</span></li>";
         }
     }
 
@@ -90,7 +90,7 @@ class Page
         if ($this->myde_page != 1) {
             return "<li><a href='" . $this->page_replace($this->myde_page - 1) . "' title='上一页'>上一页</a></li>";
         } else {
-            return "<li><p>上一页</p></li>";
+            return "<li><span>上一页</span></li>";
         }
     }
 
@@ -99,7 +99,7 @@ class Page
         if ($this->myde_page != $this->myde_page_count) {
             return "<li><a href='" . $this->page_replace($this->myde_page + 1) . "' title='下一页'>下一页</a></li>";
         } else {
-            return"<li><p>下一页</p></li>";
+            return"<li><span>下一页</span></li>";
         }
     }
 
@@ -108,7 +108,7 @@ class Page
         if ($this->myde_page != $this->myde_page_count) {
             return "<li><a href='" . $this->page_replace($this->myde_page_count) . "' title='尾页'>尾页</a></li>";
         } else {
-            return "<li><p>尾页</p></li>";
+            return "<li><span>尾页</span></li>";
         }
     }
 
@@ -118,7 +118,7 @@ class Page
         $str.=$this->myde_home();
         $str.=$this->myde_prev();
         if ($this->myde_i > 1) {
-            $str.="<p class='pageEllipsis'>...</p>";
+            $str.="<span class='pageEllipsis'>...</span>";
         }
         for ($i = $this->myde_i; $i <= $this->myde_en; $i++) {
             // 如果是当前页增加class=cur的属性
@@ -129,7 +129,7 @@ class Page
             }
         }
         if ($this->myde_en < $this->myde_page_count) {
-            $str.="<p class='pageEllipsis'>...</p>";
+            $str.="<span class='pageEllipsis'>...</span>";
         }
         $str.=$this->myde_next();
         $str.=$this->myde_last();

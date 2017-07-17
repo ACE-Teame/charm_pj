@@ -124,7 +124,14 @@
 					</div>
 					<div class="entry">
 						<label>屏蔽地区:</label>
-						<select name="address" id="address" multiple>
+						<div class="address-box">							
+							<input name="address" type="checkbox" value="1" />北京 
+							<input name="address" type="checkbox" value="2" />深圳 
+							<input name="address" type="checkbox" value="3" />广州 
+							<input name="address" type="checkbox" value="4" />上海 
+							<input name="address" type="checkbox" value="5" />武汉 
+						</div>
+<!-- 						<select name="address" id="address" multiple>
 							<option value ="北京" selected>北京</option>
 							<option value ="上海">上海</option>
 							<option value ="深圳">深圳</option>
@@ -133,7 +140,7 @@
 							<option value ="广州">广州</option>
 							<option value ="武汉">武汉</option>
 							<option value ="杭州">杭州</option>
-						</select>
+						</select> -->
 					</div>
 				</form>
 			</div>

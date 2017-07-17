@@ -93,7 +93,7 @@
 					</div>
 					<div class="entry">
 						<label>部门:</label>
-						<select name="section_id" id="section_id" multiple>
+						<select name="section_id" id="section_id">
 						<?php foreach ($sectionData as $key => $section): ?>
 							<option value ="<?=$section['id']?>"><?=$section['name']?></option>
 						<?php endforeach ?>
@@ -101,7 +101,7 @@
 					</div>
 					<div class="entry">
 						<label>组别:</label>
-						<select name="group_id" id="group_id" multiple>
+						<select name="group_id" id="group_id">
 							<?php foreach ($groupData as $key => $group): ?>
 								<option value ="<?=$group['id']?>"><?=$group['name']?></option>
 							<?php endforeach ?>

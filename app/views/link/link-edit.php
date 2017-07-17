@@ -25,7 +25,7 @@
 								<label>负责人:</label>
 							</div>
 							<div class="fl">
-								<select name="user_id" id="user_id" multiple>
+								<select name="user_id" id="user_id">
 									<option value ="1" selected>admin</option>
 									<option value ="2">Mike</option>
 									<option value ="3">John</option>
