@@ -3,7 +3,7 @@ namespace app\Controller;
 use system\core\Config;
 use system\core\Page;
 use app\core\C_Controller;
-use app\model\addressModel;
+use app\model\AddressModel;
 /**
  * 默认控制器(测试)
  */
