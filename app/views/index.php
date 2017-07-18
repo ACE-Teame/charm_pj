@@ -14,36 +14,18 @@
 						</tr>
 					</thead>
 					<tbody>
+					<?php foreach ($userData as $key => $user): ?>
 						<tr>
-							<td>1</td>
-							<td>John</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>192.168.1.1</td>
+							<td><?=$user['id']?></td>
+							<td><?=$user['name']?></td>
+							<td>
+							<?php if (!empty($user['login_time'])): ?>
+								<?=get_date($user['login_time'])?>
+							<?php endif ?>
+							</td>
+							<td><?=$user['ip']?></td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td>admin</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>192.168.1.1</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>Mike</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>192.168.1.1</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>admin</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>192.168.1.1</td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>John</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>192.168.1.1</td>
-						</tr>
+					<?php endforeach ?>
 					</tbody>
 				</table>
 			</div> <!-- end table -->

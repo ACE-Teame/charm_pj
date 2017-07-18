@@ -1,27 +1,25 @@
 <?php 
 namespace app\Controller;
-
 use system\core\Config;
 use app\core\C_Controller;
+use app\model\UserModel;
+
 /**
  * 默认控制器(测试)
  */
 class IndexController extends C_Controller
 {
+
+	/**
+	 * 首页列表
+	 */
 	public function index()
 	{
-
-		// $model = new Model();
-		// $res = $model->query('select * from user');
-
-		// dump($res->fetchAll());
-		// 
-		// echo base_url();exit;
-		view('index', ['title' => '测试标题', 'content' => '我是测试内容啊喂']);
+		$userModel        = new UserModel();
+		$data['userData'] = $userModel->select('', ['id', 'name', 'login_time', 'ip'],
+			['ORDER' => ['login_time' => DESC], 'LIMIT' => 8]);
+		view('index', $data);
 	}
 
-	public function login()
-	{
-		echo 222;exit;
-	}
+	
 }

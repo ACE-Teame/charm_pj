@@ -20,6 +20,12 @@ class CommonController extends Controller
 			$userModel = new UserModel();
 			$userInfo  = $userModel->select('user', ['id', 'pwd'], ['name' => trim(post('name'))])[0];
 			if(password_verify(post('pwd'), $userInfo['pwd']) == TRUE){
+				// 记录用户最后一次登录时间
+				$userModel->update('user', [
+					'login_time' => time(),
+					'ip'         => getIp()], 
+					['id' => $userInfo['id']]
+					);
 				$_SESSION['uid']  = $userInfo['id'];
 				$_SESSION['name'] = trim(post('name'));
 				redirect('index');
