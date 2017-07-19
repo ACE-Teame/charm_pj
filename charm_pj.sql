@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-07-18 23:08:38
+Date: 2017-07-19 23:04:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,14 +49,17 @@ DROP TABLE IF EXISTS `domain`;
 CREATE TABLE `domain` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(36) NOT NULL COMMENT '域名',
+  `domain` varchar(36) NOT NULL,
   `create_uid` int(11) NOT NULL COMMENT '创建者ID',
   `create_time` int(10) NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='域名管理';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='域名管理';
 
 -- ----------------------------
 -- Records of domain
 -- ----------------------------
+INSERT INTO `domain` VALUES ('1', '百度', 'www.baidu.com', '1', '1500467645');
+INSERT INTO `domain` VALUES ('2', '搜狐', 'www.sohu.com', '1', '1500467666');
 
 -- ----------------------------
 -- Table structure for `group`
@@ -92,12 +95,18 @@ CREATE TABLE `link` (
   `audit_link` varchar(128) DEFAULT NULL COMMENT '审核链接',
   `creat_uid` int(11) NOT NULL COMMENT '创建者ID',
   `creat_time` int(10) NOT NULL COMMENT '创建时间',
+  `last_edit_uid` int(11) NOT NULL,
+  `last_edit_time` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='链接跳转表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='链接跳转表';
 
 -- ----------------------------
 -- Records of link
 -- ----------------------------
+INSERT INTO `link` VALUES ('1', '1', '1', '', '', '2.php', '1', '1500470125', '1', '1500470125');
+INSERT INTO `link` VALUES ('2', '1', '1', '1.hp', '3.php', '2.php', '1', '1500470227', '1', '1500470125');
+INSERT INTO `link` VALUES ('3', '1', '1', '1.hp', '3.php', '2.php', '1', '1500470320', '1', '1500470125');
+INSERT INTO `link` VALUES ('4', '1', '1', '1.hp', '3.php', '2.php', '1', '1500470387', '0', '1500470125');
 
 -- ----------------------------
 -- Table structure for `link_address`
@@ -111,6 +120,10 @@ CREATE TABLE `link_address` (
 -- ----------------------------
 -- Records of link_address
 -- ----------------------------
+INSERT INTO `link_address` VALUES ('4', '5');
+INSERT INTO `link_address` VALUES ('4', '10');
+INSERT INTO `link_address` VALUES ('4', '12');
+INSERT INTO `link_address` VALUES ('4', '14');
 
 -- ----------------------------
 -- Table structure for `link_content`
@@ -180,7 +193,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '$2y$10$Yhis6.Ph76n1StRMFv/cqeOlwyFRwmpTKLCP0yhdMYvy.wDErcapm', '2', '2', '1500190776', '1500304057', '1500386262', '127.0.0.1', '1');
+INSERT INTO `user` VALUES ('1', 'admin', '$2y$10$Yhis6.Ph76n1StRMFv/cqeOlwyFRwmpTKLCP0yhdMYvy.wDErcapm', '2', '2', '1500190776', '1500304057', '1500467599', '127.0.0.1', '1');
 INSERT INTO `user` VALUES ('2', '测试', '$2y$10$AaMn.P5IufgJWqPFHyMyGOFnpnsbYX.pNL1NQqdgZXOFY65hPx1QG', '2', '1', '1500190931', '1500202634', '1500385198', null, '1');
 INSERT INTO `user` VALUES ('3', 'local', '$2y$10$xYiRivRPy8sZT210IgGTEeWTYmP4VTqzn2Fc5Grn48qI6e7CibWdi', '3', '2', '1500190971', '1500190971', null, null, '1');
 INSERT INTO `user` VALUES ('4', '三胖', '$2y$10$eVNy0sdyw7DHCsy5f2meYen1S4nsWZVnvfZzVzNYMmQpw.5UVCjia', '2', '2', '1500191438', '1500210382', null, null, '1');
