@@ -65,6 +65,14 @@
 					</li>
 				</ul>
 			</li>
+			<li>
+				<div class="menu-title">域名管理</div>
+				<ul>
+					<li>
+						<a href="<?php echo base_url('domain/index')?>" id="domain" class="menu-name"><i class="iconfont icon-domain"></i>域名</a>
+					</li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 	<div class="copyright">

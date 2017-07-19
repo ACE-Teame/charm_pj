@@ -35,25 +35,31 @@
             console.log(ret);
         }
 
-        $('body').on('click', '.modify', function(){
+        if(window.screen.width < 768){
+            var clicktoggle = 'touchstart';
+        }else{
+            var clicktoggle = 'click';        
+        }
+
+        $('body').on('clicktoggle', '.modify', function(){
             $('.popup').addClass('active');
             return false;
         });
-        $('body').on('click', '.add,.edit', function(){
+        $('body').on('clicktoggle', '.add,.edit', function(){
             $('.popup').addClass('active');
             return false;
         });
-        $('body').on('click', '.popup .close', function(){
+        $('body').on('clicktoggle', '.popup .close', function(){
             $('.popup').removeClass('active');
             return false;
         });
-        $('body').on('click', '.popup .cancle', function(){
+        $('body').on('clicktoggle', '.popup .cancle', function(){
             $('.popup').removeClass('active');
             return false;
         });
 
         // 链接内容 tab 改变
-        $('body').on('click', '.page-header .nav li', function(){
+        $('body').on('clicktoggle', '.page-header .nav li', function(){
             $('.page-header .nav li').removeClass('active');
             $(this).addClass('active');
             var key = $(this).attr("id");
@@ -62,14 +68,16 @@
             return false;
         });
 
+
+
         // 手机端 菜单
-        $('body').on('click', '.nav-toggle .open', function(){
+        $('body').on('clicktoggle', '.nav-toggle .open', function(){
             $('.nav-toggle .close').addClass('active');
             $(this).removeClass('active');
             $('.menu').addClass('active');
             return false;
         });
-        $('body').on('click', '.nav-toggle .close', function(){
+        $('body').on('clicktoggle', '.nav-toggle .close', function(){
             $('.nav-toggle .open').addClass('active');
             $(this).removeClass('active');
             $('.menu').removeClass('active');            

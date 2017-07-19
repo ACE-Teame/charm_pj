@@ -4,6 +4,7 @@
 		<div class="main fr">
 			<h1>链接跳转</h1>
 			<div class="operate">
+				<a href="<?php echo base_url('skip/skipEdit')?>" class="btn add">新增</a>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
@@ -141,7 +142,18 @@
 							<option value ="武汉">武汉</option>
 							<option value ="杭州">杭州</option>
 						</select> -->
+
 					</div>
+					<div class="entry">
+						<label>负责人:</label>
+						<select name="user_id" id="user_id" >
+						<option value ="1" selected>Nino</option>
+							<option value ="2">Mike</option>
+							<option value ="3">John</option>
+							<option value ="4">Jenney</option>
+							<option value ="5">Ivy</option>
+						</select> 
+					</div>	
 				</form>
 			</div>
 			<div class="operate">
