@@ -190,4 +190,6 @@ form .entry label { display: inline-block; min-width: 75px; }
   .paginate ul li a { padding: 3px 10px; }
   .paginate ul li span { padding: 4px 0; }
   .paginate ul .pageRemark { padding-top: 35px; }
+  /*.menu ｛ overflow-y: scroll; max-height: 475px; }*/
+
 }

@@ -64,15 +64,9 @@
 
 				<div class="paginate">
 					<ul class="clear">
-						<div id="page">
-							<li><span>首页</span></li>
-							<li><span>上一页</span></li>
-							<li><a href="?page=1" title="第1页" class="active">1</a></li>
-							<li><a href="?page=2" title="第2页">2</a></li>
-							<li><a href="?page=2" title="下一页">下一页</a></li>
-							<li><a href="?page=2" title="尾页">尾页</a></li>
-							<p class="pageRemark">共<b> 2 </b>页<b> 16 </b>条数据</p>
-						</div>
+						<?php if ($count > $pageNum): ?>
+							<?=$pageList?>
+						<?php endif ?>
 					</ul>
 				</div>
 			</div> <!-- end table -->

@@ -17,7 +17,7 @@ class IndexController extends C_Controller
 	{
 		$userModel        = new UserModel();
 		$data['userData'] = $userModel->select('', ['id', 'name', 'login_time', 'ip'],
-			['ORDER' => ['login_time' => DESC], 'LIMIT' => 8]);
+			['ORDER' => ['login_time' => DESC], 'LIMIT' => 3]);
 		view('index', $data);
 	}
 

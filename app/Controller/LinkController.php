@@ -1,5 +1,7 @@
 <?php 
 namespace app\Controller;
+use system\core\Config;
+use system\core\Page;
 use app\core\C_Controller;
 
 /**
@@ -13,7 +15,7 @@ class LinkController extends C_Controller
 	}
 
 	/**
-	 * 整合链接数据 取出负责人姓名和屏蔽读取
+	 * 整合链接数据 取出负责人姓名和屏蔽地区
 	 * @param  array &$data 待整合数组
 	 */
 	private function _arrangeData(&$data)
@@ -24,9 +26,9 @@ class LinkController extends C_Controller
 				$data[$key]['leadName'] = $userModel->byPkGetInfo($value['leading_uid'], 'name');
 				$addressIds = $this->_model->select('link_address', 'address_id', ['link_id' => $value['id']]);
 				if($addressIds) {
-					$addressName = '';
+					$addressName  = '';
 					$addressModel = new \app\model\AddressModel();
-					foreach ($addressIds as $key => $addressId) {
+					foreach ($addressIds as $addressId) {
 						$addressName .= $addressModel->byPkGetInfo($addressId, 'name') . ',';
 					}
 					$data[$key]['addressName'] = rtrim($addressName, ',');
@@ -45,13 +47,37 @@ class LinkController extends C_Controller
 		$data['domainData']  = $this->_model->select('domain', ['id', 'domain']);
 		$data['addressData'] = $this->_model->select('address', ['id', 'name']);
 
-		$data['linkData'] = $this->_model->select('link', '*');
+		if(isset($_GET['page'])) {
+			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
+		}else {
+			$now_page = 1;
+		}
+		// 取得每页条数
+		$pageNum           = Config::get('PAGE_NUM', 'page');
+		// 计算偏移量
+		$offset            = $pageNum * ($now_page - 1);
+
+		$data['count']     = $this->_model->count('link', $where);
+		$where['LIMIT']    = [$offset, $pageNum];
+
+		$data['linkData']  = $this->_model->select('link', '*', $where);
+		// dump($this->_model->last());
+		// 分页处理
+		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
+		$data['pageNum']   = $pageNum;
+		$data['pageList']  = $objPage->myde_write();
+		// $data['linkData']    = $this->_model->select('link', '*');
+		
 		$this->_arrangeData($data['linkData']);
+		// dump($data['linkData']);
 		view('link/skip', $data);
 	}
 
 
-
+	/**
+	 * 增加/修改链接
+	 * 备注：修改未完成
+	 */
 	public function add()
 	{
 		if(post()) {
@@ -90,10 +116,13 @@ class LinkController extends C_Controller
 		}
 		redirect('link/skip');
 	}
+
 	public function link()
 	{
 		view('link/link');
 	}
+
+	
 	public function linkEdit()
 	{
 		view('link/link-edit');

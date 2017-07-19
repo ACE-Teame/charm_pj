@@ -57,7 +57,7 @@ class UserController extends C_Controller
 
 		$data['count']     = $this->_userModel->count('user', $where);
 		// dump($this->_userModel->last());
-		$where['LIKE']     = [$offset, $pageNum];
+		$where['LIMIT']     = [$offset, $pageNum];
 
 		$data['userData']  = $this->_userModel->select('user', '*', $where);
 		// dump($this->_userModel->last());
