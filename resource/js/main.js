@@ -41,25 +41,25 @@
             var clicktoggle = 'click';        
         }
 
-        $('body').on('clicktoggle', '.modify', function(){
+        $('body').on(clicktoggle, '.modify', function(){
             $('.popup').addClass('active');
             return false;
         });
-        $('body').on('clicktoggle', '.add,.edit', function(){
+        $('body').on(clicktoggle, '.add,.edit', function(){
             $('.popup').addClass('active');
             return false;
         });
-        $('body').on('clicktoggle', '.popup .close', function(){
+        $('body').on(clicktoggle, '.popup .close', function(){
             $('.popup').removeClass('active');
             return false;
         });
-        $('body').on('clicktoggle', '.popup .cancle', function(){
+        $('body').on(clicktoggle, '.popup .cancle', function(){
             $('.popup').removeClass('active');
             return false;
         });
 
         // 链接内容 tab 改变
-        $('body').on('clicktoggle', '.page-header .nav li', function(){
+        $('body').on(clicktoggle, '.page-header .nav li', function(){
             $('.page-header .nav li').removeClass('active');
             $(this).addClass('active');
             var key = $(this).attr("id");
@@ -71,13 +71,13 @@
 
 
         // 手机端 菜单
-        $('body').on('clicktoggle', '.nav-toggle .open', function(){
+        $('body').on(clicktoggle, '.nav-toggle .open', function(){
             $('.nav-toggle .close').addClass('active');
             $(this).removeClass('active');
             $('.menu').addClass('active');
             return false;
         });
-        $('body').on('clicktoggle', '.nav-toggle .close', function(){
+        $('body').on(clicktoggle, '.nav-toggle .close', function(){
             $('.nav-toggle .open').addClass('active');
             $(this).removeClass('active');
             $('.menu').removeClass('active');            

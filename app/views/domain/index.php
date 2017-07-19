@@ -9,14 +9,14 @@
 			</div>
 
 			<div class="search">
-				<form action="#" class="searchForm" method="GET" name="search">
+				<form action="<?php echo base_url('domain');?>#" class="searchForm" method="GET" name="search">
 					<div class="entry">
 						<label>域名:</label>
-						<input type="text" name="domainname" placeholder="">
+						<input type="text" name="name" placeholder="">
 					</div>
 					<div class="entry">
 						<label>修改人:</label>
-						<input type="text" name="user_id" placeholder="">
+						<input type="text" name="create_uid" placeholder="">
 					</div>				
 				</form>
 			</div>
@@ -33,70 +33,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>www.baidu.com</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>www.baidu.com</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>www.baidu.com</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>www.baidu.com</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>5</td>
-							<td>www.baidu.com</td>
-							<td>2017-05-16 11:55:44</td>
-							<td>John</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
+						<?php foreach ($domainData as $key => $domain): ?>
+							<tr>
+								<td><?=$domain['id']?></td>
+								<td><?=$domain['name']?></td>
+								<td><?=get_date($domain['create_time'])?></td>
+								<td>1</td>
+								<td>
+									<a href="#" class="btn modify" onclick="group_edit(<?=$domain['id']?>)">修改</a>
+									<a href="#" class="btn delete" onclick="delete_by_id(<?=$domain['id']?>)">删除</a>
+								</td>
+							</tr>
+						<?php endforeach ?>
 					</tbody>
 				</table>
 
 				<div class="paginate">
 					<ul class="clear">
-						<div id="page">
-							<li><span>首页</span></li>
-							<li><span>上一页</span></li>
-							<li><a href="?page=1" title="第1页" class="active">1</a></li>
-							<li><a href="?page=2" title="第2页">2</a></li>
-							<li><a href="?page=2" title="下一页">下一页</a></li>
-							<li><a href="?page=2" title="尾页">尾页</a></li>
-							<p class="pageRemark">共<b> 2 </b>页<b> 16 </b>条数据</p>
-						</div>
+						<?php if ($count > $pageNum): ?>
+							<?=$pageList?>
+						<?php endif ?>
 					</ul>
 				</div>
 			</div> <!-- end table -->
@@ -107,22 +63,58 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
+				<form action="<?php echo base_url('domain/add')?>" class="operateForm" id="from" method="POST" name="add_from" id="add_from">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
 					<div class="entry">
 						<label>域名:</label>
-						<input type="text" name="address_name" id="address_name" value="" placeholder="">
+						<input type="text" name="name" id="name" value="" placeholder="">
 					</div>
 				</form>
 			</div>
 			<div class="operate">
-				<a href="#" class="btn save">保存</a>
-				<a href="#" class="btn cancle">取消</a>
+				<a href="javascript:document.add_from.submit();" class="btn save">保存</a>
+				<a href="#" class="btn cancle" onclick="cancel()">取消</a>
 			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
+			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close" onclick="cancel()"></i></a></div> 
 		</div>
+
+		<script>
+
+			/**
+			 * 修改时获取数据
+			 */
+			function group_edit(id)
+			{
+				$.get('<?=base_url('domain/get_by_pk')?>',{id:id}, function(data) {
+					if(data) {
+						$("#id").val(data.id);
+						$("#name").val(data.name);
+					}
+				}, 'JSON');
+			}
+
+			/**
+			 * 取消 清空数据
+			 */
+			function cancel()
+			{
+				$("#id").val('');
+				$("#name").val('');
+			}
+
+			/**
+			 * 根据ID删除数据
+			 */
+			function delete_by_id(id)
+			{
+				if(confirm('确定删除？') == true){
+					$("#from").attr('action', '<?=base_url('domain/delete_by_id')?>' + '?id=' + id);
+					$("#from").submit();
+				}
+			}
+		</script>
 	</div><!-- end popup -->
 <?php view('footer'); ?>
 	
