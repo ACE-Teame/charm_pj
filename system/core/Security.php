@@ -5,7 +5,6 @@ class Security
 {
 
 
-	public $arr = [123];
 	/**
      * XSS 过滤函数
      * @param  string  &$string 字符串
@@ -31,14 +30,18 @@ class Security
         }
         $keys = array_keys ( $string );
         foreach ( $keys as $key ) {
-            clean_xss ( $string [$key] );
+            $this->clean_xss ( $string [$key] );
         }
     }
 
 
 	public function isEscape($val, $isboor = false) {
         if (! get_magic_quotes_gpc ()) {
-            $val = addslashes ( $val );
+            if(is_array($val)) {
+                foreach ($val as $key => $v) {
+                    $val[$key] = htmlspecialchars ( $v );
+                }
+            }
         }
         if ($isboor) {
             $val = strtr ( $val, array (

@@ -44,45 +44,21 @@
 						</tr>
 					</thead>
 					<tbody>
+					<?php foreach ($linkData as $key => $link): ?>
 						<tr>
-							<td>1</td>
-							<td><a href="#" class="original-link">1.php</a></td>
-							<td><a href="#" class="verify-link">http://www.baidu.com</a></td>
-							<td><a href="#" class="spread-link">http://www.iconfont.cn</a></td>
-							<td class="tb-modify-time">2017-05-16 11:55:44</td>
-							<td class="tb-modify-user">admin</td>
-							<td class="tb-address">北京</td>
+							<td><?=$link['id']?></td>
+							<td><a href="#" class="original-link"><?=$link['orginal_link']?></a></td>
+							<td><a href="#" class="verify-link"><?=$link['audit_link']?></a></td>
+							<td><a href="#" class="spread-link"><?=$link['referral_link']?></a></td>
+							<td class="tb-modify-time"><?=get_date($link['last_edit_time'])?></td>
+							<td class="tb-modify-user"><?=$link['leadName']?></td>
+							<td class="tb-address"><?=$link['addressName']?></td>
 							<td>
 								<a href="#" class="btn modify">修改</a>
 								<a href="#" class="btn delete">删除</a>
 							</td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td><a href="#" class="original-link">2.php</a></td>
-							<td><a href="#"  class="verify-link">http://www.baidu.com</a></td>
-							<td><a href="#" class="spread-link">https://www.aliyun.com</a></td>
-							<td class="tb-modify-time">2017-05-16 11:55:44</td>
-							<td class="tb-modify-user">John</td>
-							<td class="tb-address">上海，广州</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td><a href="#" class="original-link">3.php</a></td>
-							<td><a href="#"  class="verify-link">localhost/3.php</a></td>
-							<td><a href="#" class="spread-link">https://www.aliyun.com</a></td>
-							<td class="tb-modify-time">2017-05-16 11:55:44</td>
-							<td class="tb-modify-user">John</td>
-							<td class="tb-address">深圳</td>
-							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
-							</td>
-						</tr>
+					<?php endforeach ?>
 					</tbody>
 				</table>
 
@@ -135,7 +111,7 @@
 						<label>屏蔽地区:</label>
 						<div class="address-box">
 							<?php foreach ($addressData as $key => $address): ?>
-								<input name="address" type="checkbox" value="<?=$address['id']?>" /><?=$address['name']?> 				
+								<input name="address_id[]" type="checkbox" value="<?=$address['id']?>" /><?=$address['name']?> 				
 							<?php endforeach ?>
 						</div>
 					</div>

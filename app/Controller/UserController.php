@@ -26,7 +26,7 @@ class UserController extends C_Controller
 	 * 2.取出部门和组信息列表
 	 * @param  array &$data 
 	 */
-	private function _arrange_data(&$data)
+	private function _arrangeData(&$data)
 	{
 		$groumModel   = new \app\model\GroupModel;
 		$sectionModel = new \app\model\SectionModel;
@@ -34,7 +34,7 @@ class UserController extends C_Controller
 			$data['userData'][$key]['groupName'] = $groumModel->byPkGetInfo($user['group_id'], ['name'])['name'];
 		}
 
-		$data['groupData'] = $groumModel->select('', ['id', 'name']);
+		$data['groupData']   = $groumModel->select('', ['id', 'name']);
 		$data['sectionData'] = $sectionModel->select('', ['id', 'name']);
 
 	}
@@ -66,7 +66,7 @@ class UserController extends C_Controller
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
 
-		$this->_arrange_data($data);
+		$this->_arrangeData($data);
 		view('user/index', $data);
 	}
 
