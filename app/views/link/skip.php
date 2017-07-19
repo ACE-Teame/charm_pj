@@ -107,51 +107,44 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="#" class="operateForm" method="POST" name="form1">
+				<form action="<?=base_url('link/add')?>" class="operateForm" method="POST" name="form1">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
 					<div class="entry">
+						<label>主域名:</label>
+						<select name="domain_id" id="domain_id">
+						<?php foreach ($domainData as $key => $domain): ?>
+							<option value ="<?=$domain['id']?>"><?=$domain['domain']?></option>
+						<?php endforeach ?>
+						</select>
+					</div>
+					<div class="entry">
 						<label>原链接:</label>
-						<input type="text" name="link_id" id="link_id" value="" placeholder="http://">
+						<input type="text" name="orginal_link" id="orginal_link" value="" placeholder="http://">
 					</div>
 					<div class="entry">
 						<label>审核链接</label>
-						<input type="text" name="verify_link" id="verify_link" value="" placeholder="http://">
+						<input type="text" name="audit_link" id="audit_link" value="" placeholder="http://">
 					</div>
 					<div class="entry">
 						<label>推广链接:</label>
-						<input type="text" name="spread_link" id="spread_link" value="" placeholder="http://">
+						<input type="text" name="referral_link" id="referral_link" value="" placeholder="http://">
 					</div>
 					<div class="entry">
 						<label>屏蔽地区:</label>
-						<div class="address-box">							
-							<input name="address" type="checkbox" value="1" />北京 
-							<input name="address" type="checkbox" value="2" />深圳 
-							<input name="address" type="checkbox" value="3" />广州 
-							<input name="address" type="checkbox" value="4" />上海 
-							<input name="address" type="checkbox" value="5" />武汉 
+						<div class="address-box">
+							<?php foreach ($addressData as $key => $address): ?>
+								<input name="address" type="checkbox" value="<?=$address['id']?>" /><?=$address['name']?> 				
+							<?php endforeach ?>
 						</div>
-<!-- 						<select name="address" id="address" multiple>
-							<option value ="北京" selected>北京</option>
-							<option value ="上海">上海</option>
-							<option value ="深圳">深圳</option>
-							<option value ="武汉">武汉</option>
-							<option value ="厦门">厦门</option>
-							<option value ="广州">广州</option>
-							<option value ="武汉">武汉</option>
-							<option value ="杭州">杭州</option>
-						</select> -->
-
 					</div>
 					<div class="entry">
 						<label>负责人:</label>
-						<select name="user_id" id="user_id" >
-						<option value ="1" selected>Nino</option>
-							<option value ="2">Mike</option>
-							<option value ="3">John</option>
-							<option value ="4">Jenney</option>
-							<option value ="5">Ivy</option>
+						<select name="leading_uid" id="leading_uid" >
+						<?php foreach ($userData as $key => $user): ?>
+							<option value ="<?=$user['id']?>"><?=$user['name']?></option>
+						<?php endforeach ?>
 						</select> 
 					</div>	
 				</form>

@@ -115,8 +115,7 @@ class UserController extends C_Controller
 				$this->_userModel->insert('user', $insData);
 			}
 		}
-		// redirect('user/index');
-		$this->index();
+		redirect('user');
 	}
 
 	/**

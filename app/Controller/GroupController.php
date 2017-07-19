@@ -65,7 +65,7 @@ class GroupController extends C_Controller
 			}
 		}
 
-		$this->index();
+		redirect('group');
 	}
 
 	/**
