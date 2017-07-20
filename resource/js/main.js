@@ -40,7 +40,7 @@
         //     var clicktoggle = 'click';        
         // }
         // console.log(clicktoggle);
-        
+
         $('body').on('click', '.modify', function(){
             $('.popup').addClass('active');
             return false;
@@ -77,6 +77,7 @@
         }).on('touchmove',function(event){
             event.stopPropagation();
             event.preventDefault();
+            return false;
         });
         $('body').on('click', '.nav-toggle .close', function(){
             $('.nav-toggle .open').addClass('active');
@@ -86,6 +87,7 @@
         }).on('touchmove',function(event){
             event.stopPropagation();
             event.preventDefault();
+            return false;
         });
     });
 })(jQuery);
