@@ -164,7 +164,7 @@ form .entry label { display: inline-block; min-width: 75px; }
   .sidebar .personInfo .logout { width: auto; margin-top: 0; margin-left: 5%; }
 
   .sidebar .menu { opacity: 0; visibility: hidden; -webkit-transition: all .3s; transition: all .3s; position: absolute; top: 75px; left: 0; width: 100%; background: #4d5e70; height: 0; overflow-y: scroll; }
-  .sidebar .menu.active { opacity: 1; visibility: visible; height: 450px; }
+  .sidebar .menu.active { opacity: 1; visibility: visible; height: 400px; }
   .sidebar .copyright { display: none; }
 
   .main { width: 100%; padding: 85px 10px 0; }
