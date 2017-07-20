@@ -54,8 +54,8 @@
 							<td class="tb-modify-user"><?=$link['leadName']?></td>
 							<td class="tb-address"><?=$link['addressName']?></td>
 							<td>
-								<a href="#" class="btn modify">修改</a>
-								<a href="#" class="btn delete">删除</a>
+								<a href="#" class="btn modify" onclick="link_edit(<?=$link['id']?>)" >修改</a>
+								<a href="#" class="btn delete" onclick="delete_by_id(<?=$link['id']?>)">删除</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -77,7 +77,7 @@
 		<div class="content">
 			<div class="title"><i class="iconfont icon-modify"></i> 编辑</div>
 			<div class="form">						
-				<form action="<?=base_url('link/add')?>" class="operateForm" method="POST" name="form1">
+				<form action="<?=base_url('link/add')?>" class="operateForm" method="POST" name="addlink" id="from">
 					<div class="entry">
 						<input type="hidden" name="id" id="id" value="">
 					</div>
@@ -120,11 +120,60 @@
 				</form>
 			</div>
 			<div class="operate">
-				<a href="#" class="btn save">保存</a>
-				<a href="#" class="btn cancle">取消</a>
+				<a href="javascript:document.addlink.submit();" class="btn save">保存</a>
+				<a href="#" class="btn cancle" onclick="cancel()">取消</a>
 			</div>			
-			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close"></i></a></div> 
+			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close" onclick="cancel()"></i></a></div> 
 		</div>
+		<script>
+
+			/**
+			 * 修改时获取数据
+			 */
+			function link_edit(id)
+			{
+				$.get('<?=base_url('link/get_by_pk')?>',{id:id}, function(data) {
+					if(data != 0) {
+						$("input[name='address_id[]']").each(function() {
+							var v   = $(this).val();
+							var obj = $(this);
+
+							$.each(data.linkAddData, function(n, val) {
+								if(v == val) {
+									obj.attr('checked', true);
+								}
+							});
+						});
+						$('#orginal_link').val(data.linkData.orginal_link);
+						$('#audit_link').val(data.linkData.audit_link);
+						$('#referral_link').val(data.linkData.referral_link);
+						$('#id').val(data.linkData.id);
+						$("#domain_id").find("option[value='"+data.linkData.domain_id+"']").attr("selected",true);
+					}else {
+						alert('数据错误');
+					}
+				}, 'JSON');
+			}
+
+			/**
+			 * 取消 清空数据
+			 */
+			function cancel()
+			{
+				location.reload();
+			}
+
+			/**
+			 * 根据ID删除数据
+			 */
+			function delete_by_id(id)
+			{
+				if(confirm('确定删除？') == true){
+					$("#from").attr('action', '<?=base_url('link/del_skip')?>' + '?id=' + id);
+					$("#from").submit();
+				}
+			}
+		</script>
 	</div><!-- end popup -->
 <?php view('footer'); ?>
 	

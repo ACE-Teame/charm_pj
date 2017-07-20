@@ -5,7 +5,9 @@ use system\core\Page;
 use app\core\C_Controller;
 
 /**
- * 默认控制器(测试)
+ * 链接跳转
+ * @author 命中水、
+ * @date(2017.7.20)
  */
 class LinkController extends C_Controller
 {
@@ -61,27 +63,24 @@ class LinkController extends C_Controller
 		$where['LIMIT']    = [$offset, $pageNum];
 
 		$data['linkData']  = $this->_model->select('link', '*', $where);
-		// dump($this->_model->last());
 		// 分页处理
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
-		// $data['linkData']    = $this->_model->select('link', '*');
 		
 		$this->_arrangeData($data['linkData']);
-		// dump($data['linkData']);
 		view('link/skip', $data);
 	}
 
 
 	/**
 	 * 增加/修改链接
-	 * 备注：修改未完成
 	 */
 	public function add()
 	{
 		if(post()) {
-			if(intval(post('id'))) {
+			$id = intval(post('id'));
+			if(!empty($id)) {
 				$uptData = [
 					'leading_uid'    => post('leading_uid'),
 					'domain_id'      => post('domain_id'),
@@ -91,7 +90,8 @@ class LinkController extends C_Controller
 					'last_edit_uid'  => $_SESSION['uid'],
 					'last_edit_time' => time()
 				];
-				$this->_model->update('link', $uptData, ['id' => intval(post('id'))]);
+				$this->_model->delete('link_address', ['link_id' => $id]);
+				$this->_model->update('link', $uptData, ['id' => $id]);
 			}else {
 				$insData = [
 					'leading_uid'    => post('leading_uid'),
@@ -106,15 +106,47 @@ class LinkController extends C_Controller
 				];
 				$this->_model->insert('link', $insData);
 				$insId      = $this->_model->id();
-				$addressIds = post('address_id');
-				if($insId) {
-					foreach ($addressIds as $key => $addressId) {
-						$this->_model->insert('link_address', ['link_id' => $insId, 'address_id' => $addressId]);
-					}
+				
+			}
+			$linkId    = $insId ? $insId : $id;
+			$addressIds = post('address_id');
+			if($linkId) {
+				foreach ($addressIds as $key => $addressId) {
+					$this->_model->insert('link_address', ['link_id' => $linkId, 'address_id' => $addressId]);
 				}
 			}
 		}
 		redirect('link/skip');
+	}
+
+	/**
+	 * 获取链接数据
+	 */
+	public function get_by_pk()
+	{
+		$linkId = intval(get('id'));
+		if($linkId) {
+			$linkModel   = new \app\model\LinkModel();
+			$data['linkData']    = $linkModel->byPkGetInfo($linkId);
+			$data['linkAddData'] = $linkModel->select('link_address', 'address_id', ['link_id' => $linkId]);
+			ajaxReturn($data);
+
+		}else {
+			echo 0;
+		}
+	}
+
+	/**
+	 * 删除链接跳转
+	 */
+	public function del_skip()
+	{
+		$id = intval(get('id'));
+		if($id) {
+			$linkModel  = new \app\model\LinkModel();
+			$flag       = $linkModel->byPkDel($id);
+			if($flag) redirect('link/skip');
+		}
 	}
 
 	public function link()
