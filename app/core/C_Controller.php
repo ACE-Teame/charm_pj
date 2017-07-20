@@ -18,6 +18,16 @@ class C_Controller extends Controller
 		}
 	}
 
+	// 组合查询数据到url
+	public function getSearchParam() {
+		$searchParam = '';
+		foreach (get() as $key => $value) {
+			if( $key == 'page' ) continue;
+			if( !empty($value) ) $searchParam .= '&'. $key . '=' . $value;
+		}
+
+		return $searchParam;
+	}
 	
 }
 

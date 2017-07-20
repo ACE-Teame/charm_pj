@@ -54,6 +54,8 @@ class LinkController extends C_Controller
 		}else {
 			$now_page = 1;
 		}
+		// 获得查询条件
+		$where = $this->_getSearch();
 		// 取得每页条数
 		$pageNum           = Config::get('PAGE_NUM', 'page');
 		// 计算偏移量
@@ -61,15 +63,34 @@ class LinkController extends C_Controller
 
 		$data['count']     = $this->_model->count('link', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
-
 		$data['linkData']  = $this->_model->select('link', '*', $where);
 		// 分页处理
-		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
+		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
-		
 		$this->_arrangeData($data['linkData']);
 		view('link/skip', $data);
+	}
+
+	/**
+	 * 组装查询条件
+	 */
+	private function _getSearch()
+	{
+		if(get('orginal_link')) {
+			$where['orginal_link[~]'] = get('orginal_link');
+		}
+		if(get('audit_link')) {
+			$where['audit_link[~]']   = get('audit_link');
+		}
+		if(get('referral_link')) {
+			$where['referral_link[~]'] = get('referral_link');
+		}
+		if(intval(get('leading_uid'))) {
+			$where['leading_uid'] = intval(get('leading_uid'));
+		}
+
+		return $where;
 	}
 
 
@@ -110,7 +131,7 @@ class LinkController extends C_Controller
 			}
 			$linkId    = $insId ? $insId : $id;
 			$addressIds = post('address_id');
-			if($linkId) {
+			if($linkId && $addressIds) {
 				foreach ($addressIds as $key => $addressId) {
 					$this->_model->insert('link_address', ['link_id' => $linkId, 'address_id' => $addressId]);
 				}

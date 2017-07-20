@@ -4,27 +4,32 @@
 		<div class="main fr">
 			<h1>链接跳转</h1>
 			<div class="operate">
-				<a href="<?php echo base_url('skip/skipEdit')?>" class="btn add">新增</a>
+				<a href="<?php //echo base_url('skip/skipEdit')?>" class="btn add">新增</a>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
 			<div class="search">
-				<form action="#" class="searchForm" method="GET" name="search">
+				<form action="<?=base_url('link/skip')?>" class="searchForm" method="GET" name="search">
 					<div class="entry">
 						<label>原链接:</label>
-						<input type="text" name="link_id" placeholder="">
+						<input type="text" name="orginal_link" placeholder="">
 					</div>
 					<div class="entry">
 						<label>审核链接:</label>
-						<input type="text" name="verify_link" placeholder="">
+						<input type="text" name="audit_link" placeholder="">
 					</div>	
 					<div class="entry">
 						<label>推广链接:</label>
-						<input type="text" name="spread_link" placeholder="">
+						<input type="text" name="referral_link" placeholder="">
 					</div>	
 					<div class="entry">
 						<label>负责人:</label>
-						<input type="text" name="user_id" placeholder="">
+						<select name="leading_uid" style="width: 20%">
+						<option value="">请选择</option>
+						<?php foreach ($userData as $key => $user): ?>
+							<option value ="<?=$user['id']?>"><?=$user['name']?></option>
+						<?php endforeach ?>
+						</select> 
 					</div>			
 				</form>
 			</div>
