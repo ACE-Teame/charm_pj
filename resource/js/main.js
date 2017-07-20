@@ -15,13 +15,22 @@
             positions.push(pos);
             pos = str.indexOf("/", pos + 1);
         }
+        console.log('pos:' + pos);
 
-        i = positions[positions.length - 2];
-        j = positions[positions.length - 1];
+        // i = positions[positions.length - 2];
+        // j = positions[positions.length - 1];
+        var i = positions[0];
+        var j = positions[1];
+
+        console.log('str:' + positions);
+
+        console.log('str:' + str);
+        console.log('i:' + i);
+        console.log('j:' + j);
 
         var ret = str.substring(i+1, j);
 
-        console.log(ret);
+        console.log('ret:' + ret);
         $('#' + ret).addClass('active');
         if(ret == 'link'){
             $('#' + ret).removeClass('active');
