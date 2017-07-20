@@ -21,7 +21,7 @@
 
         var ret = str.substring(i+1, j);
 
-
+        console.log(ret);
         $('#' + ret).addClass('active');
         if(ret == 'link'){
             $('#' + ret).removeClass('active');
@@ -33,6 +33,9 @@
                 $('#' + ret).addClass('active');
             }
         }
+        if(ret == '' || ret == 'index' || ret == 'index#' ){
+            return false;
+        }
 
         // if(window.screen.width < 768){
         //     var clicktoggle = 'touchstart';
@@ -40,7 +43,7 @@
         //     var clicktoggle = 'click';        
         // }
             // console.log(clicktoggle);
-            
+
         $('body').on('click', '.modify', function(){
             $('.popup').addClass('active');
             return false;
