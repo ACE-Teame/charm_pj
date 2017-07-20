@@ -87,4 +87,14 @@
             return false;
         });
     });
+
+
 })(jQuery);
+
+    /**
+     * 取消 清空数据
+     */
+    function cancel()
+    {
+        location.reload();
+    }

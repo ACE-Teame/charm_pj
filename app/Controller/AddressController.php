@@ -13,6 +13,7 @@ class AddressController extends C_Controller
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_address = new addressModel();
 	}
 

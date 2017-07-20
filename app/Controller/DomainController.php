@@ -13,27 +13,48 @@ class DomainController extends C_Controller
 
 	public function __construct()
 	{
-		$this->_domain = new domainModel();
+		parent::__construct();
+		$this->_domain = new DomainModel();
 	}
+
+	/**
+	 * 组装查询条件
+	 */
+	private function _getSearch()
+	{
+		if(get('domain')) {
+			$where['domain[~]'] = get('domain');
+		}
+		if(get('url')) {
+			$where['url[~]']    = get('url');
+		}
+		return $where;
+	}
+
 
 	public function index()
 	{
-		// $domainData = $this->_domain->select('domain', '*');
-
+		
 		if(isset($_GET['page'])) {
 			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
 		}else {
 			$now_page = 1;
 		}
+
+		// 获得查询条件
+		$where = $this->_getSearch();
+
 		// 取得每页条数
 		$pageNum           = Config::get('PAGE_NUM', 'page');
 		// 计算偏移量
 		$offset            = $pageNum * ($now_page - 1);
 
-		$data['count']     = $this->_domain->count('domain');
-		$data['domainData'] = $this->_domain->select('domain', '*', ['LIMIT' => [$offset, $pageNum]]);
+		$data['count']     = $this->_domain->count('domain', $where);
+
+		$where['LIMIT'] = [$offset, $pageNum];
+		$data['domainData'] = $this->_domain->select('domain', '*', $where);
 		// 分页处理
-		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
+		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
 		view('domain/index', $data);
@@ -57,23 +78,26 @@ class DomainController extends C_Controller
 	public function add()
 	{
 		if(post()) {
-			if(intval(post('id'))) {
+			$id = intval(post('id'));
+			if($id) {
 				$uptData = [
-					'name'           => post('name'),
-					'create_time'    => time()
+					'domain'      => post('domain'),
+					'url'         => post('url'),
 				];
-				$this->_domain->update('domain', $uptData, ['id' => intval(post('id'))]);
+				$this->_domain->update('domain', $uptData, ['id' => $id]);
 			}else {
 				$insData = [
-					'name'           => post('name'),
-					'create_time'    => time(),
-					'create_uid'  => 1
+					'domain'      => post('domain'),
+					'url'         => post('url'),
+					'create_time' => time(),
+					'create_uid'  => $_SESSION['uid']
 				];
+
+
 				$this->_domain->insert('domain', $insData);
 			}
 		}
-		$this->index();
-		// view('domain/index');
+		redirect('domain');
 	}
 
 	/**
@@ -93,7 +117,7 @@ class DomainController extends C_Controller
 		$id = intval(get('id'));
 		if($id) {
 			$flag = $this->_domain->byPkDel($id);
-			if($flag) $this->index();
+			if($flag) redirect('domain');
 		}
 	}
 }

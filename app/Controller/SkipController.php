@@ -13,6 +13,7 @@ class SkipController extends C_Controller
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_skip = new skipModel();
 	}
 

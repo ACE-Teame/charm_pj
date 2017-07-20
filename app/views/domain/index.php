@@ -12,11 +12,11 @@
 				<form action="<?php echo base_url('domain');?>#" class="searchForm" method="GET" name="search">
 					<div class="entry">
 						<label>域名:</label>
-						<input type="text" name="name" placeholder="">
+						<input type="text" name="domain" placeholder="">
 					</div>
 					<div class="entry">
-						<label>修改人:</label>
-						<input type="text" name="create_uid" placeholder="">
+						<label>地址:</label>
+						<input type="text" name="url" placeholder="">
 					</div>				
 				</form>
 			</div>
@@ -36,7 +36,7 @@
 						<?php foreach ($domainData as $key => $domain): ?>
 							<tr>
 								<td><?=$domain['id']?></td>
-								<td><?=$domain['name']?></td>
+								<td><?=$domain['domain'] . '：'?><a href="http://<?=$domain['url']?>" target='_blank' style="color: blue"><?=$domain['url']?></a></td>
 								<td><?=get_date($domain['create_time'])?></td>
 								<td>1</td>
 								<td>
@@ -69,7 +69,11 @@
 					</div>
 					<div class="entry">
 						<label>域名:</label>
-						<input type="text" name="name" id="name" value="" placeholder="">
+						<input type="text" name="domain" id="domain" value="" placeholder="">
+					</div>
+					<div class="entry">
+						<label>地址</label>
+						<input type="text" name="url" id="url" value="" placeholder="">
 					</div>
 				</form>
 			</div>
@@ -90,18 +94,10 @@
 				$.get('<?=base_url('domain/get_by_pk')?>',{id:id}, function(data) {
 					if(data) {
 						$("#id").val(data.id);
-						$("#name").val(data.name);
+						$("#domain").val(data.domain);
+						$("#url").val(data.url);
 					}
 				}, 'JSON');
-			}
-
-			/**
-			 * 取消 清空数据
-			 */
-			function cancel()
-			{
-				$("#id").val('');
-				$("#name").val('');
 			}
 
 			/**

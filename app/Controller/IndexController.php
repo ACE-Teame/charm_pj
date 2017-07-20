@@ -10,6 +10,10 @@ use app\model\UserModel;
 class IndexController extends C_Controller
 {
 
+	public function __construct()
+	{
+		parent::__construct();
+	}
 	/**
 	 * 首页列表
 	 */

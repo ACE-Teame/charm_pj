@@ -44,7 +44,6 @@ class LinkController extends C_Controller
 	 */
 	public function skip()
 	{
-
 		$data['userData']    = $this->_model->select('user', ['id', 'name']);
 		$data['domainData']  = $this->_model->select('domain', ['id', 'domain']);
 		$data['addressData'] = $this->_model->select('address', ['id', 'name']);

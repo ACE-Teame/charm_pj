@@ -16,6 +16,7 @@ class UserController extends C_Controller
 	private $_userModel;
 	public function __construct()
 	{
+		parent::__construct();
 		$this->_userModel = new UserModel();
 	}
 
@@ -135,7 +136,7 @@ class UserController extends C_Controller
 		$id = intval(get('id'));
 		if($id) {
 			$flag = $this->_userModel->byPkDel($id);
-			if($flag) $this->index();
+			if($flag) redirect('user');
 		}
 	}
 }
