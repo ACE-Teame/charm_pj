@@ -113,7 +113,7 @@ form .entry label { display: inline-block; min-width: 75px; }
 .popup.active { display: block; } 
 .popup .content { position: absolute; left: 50%; top: 50%; margin-top: -250px; margin-left: -200px; width: 400px; background: #fff; border-radius: 5px; }
 .popup .content .title { padding: 10px 20px; background: #1c9efe; text-align: left; color: #fff; border-top-right-radius: 5px; border-top-left-radius: 5px; font-size: 20px; }
-.popup .form { padding: 20px; }
+.popup .form { padding: 20px; max-height: 320px; overflow-y: scroll; }
 .popup .form .operateForm label { display: inline-block; width: 30%; }
 .popup .form .operateForm input { display: inline-block; width: 63%; }
 .popup .form .operateForm .address-box { display: inline-block; width: 63%; vertical-align: text-top; }
@@ -140,6 +140,9 @@ form .entry label { display: inline-block; min-width: 75px; }
   .sidebar .personInfo .name { width: 100%; }
   .sidebar .personInfo .logout { width: 100%; margin-top: 5px; }
 }
+@media all and (max-height: 700px) {
+  .sidebar .menu { height: calc(100% - 183px); overflow-y: scroll; }
+}
 @media all and (max-width: 480px) {
   h1 { padding-bottom: 10px; }
   input[type="text"], input[type="password"] { min-width: 170px; }
@@ -160,8 +163,8 @@ form .entry label { display: inline-block; min-width: 75px; }
   .sidebar .personInfo .name { width: auto; }
   .sidebar .personInfo .logout { width: auto; margin-top: 0; margin-left: 5%; }
 
-  .sidebar .menu { opacity: 0; visibility: hidden; -webkit-transition: all .3s; transition: all .3s; position: absolute; top: 75px; left: 0; width: 100%; background: #4d5e70; }
-  .sidebar .menu.active { opacity: 1; visibility: visible; }
+  .sidebar .menu { opacity: 0; visibility: hidden; -webkit-transition: all .3s; transition: all .3s; position: absolute; top: 75px; left: 0; width: 100%; background: #4d5e70; height: 0; overflow-y: scroll; }
+  .sidebar .menu.active { opacity: 1; visibility: visible; height: 450px; }
   .sidebar .copyright { display: none; }
 
   .main { width: 100%; padding: 85px 10px 0; }
@@ -190,6 +193,4 @@ form .entry label { display: inline-block; min-width: 75px; }
   .paginate ul li a { padding: 3px 10px; }
   .paginate ul li span { padding: 4px 0; }
   .paginate ul .pageRemark { padding-top: 35px; }
-  /*.menu ｛ overflow-y: scroll; max-height: 475px; }*/
-
 }
