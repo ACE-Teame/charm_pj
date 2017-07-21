@@ -17,6 +17,16 @@ class DomainController extends C_Controller
 		$this->_domain = new DomainModel();
 	}
 
+	private function _arrangeData(&$data)
+	{
+		$userModel = new \app\model\UserModel();
+		if(is_array($data) && !empty($data)) {
+			foreach ($data as $key => $value) {
+				$data[$key]['createName'] = $userModel->byPkGetInfo($value['create_uid'], 'name');
+			}
+		}
+	}
+
 	/**
 	 * 组装查询条件
 	 */
@@ -30,7 +40,6 @@ class DomainController extends C_Controller
 		}
 		return $where;
 	}
-
 
 	public function index()
 	{
@@ -57,22 +66,8 @@ class DomainController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
+		$this->_arrangeData($data['domainData']);		
 		view('domain/index', $data);
-	}
-
-	/**
-	 * 拼接查询条件
-	 * @return array
-	 */
-	public function getSearch()
-	{
-		if(get('name')) 
-			$where['name[~]'] = get('name');
-		if(get('create_uid')) {
-
-		}
-		
-		return $where;
 	}
 
 	public function add()
@@ -83,6 +78,8 @@ class DomainController extends C_Controller
 				$uptData = [
 					'domain'      => post('domain'),
 					'url'         => post('url'),
+					'create_time' => time(),
+					'create_uid'  => $_SESSION['uid']					
 				];
 				$this->_domain->update('domain', $uptData, ['id' => $id]);
 			}else {

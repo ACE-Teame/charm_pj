@@ -17,6 +17,16 @@ class AddressController extends C_Controller
 		$this->_address = new addressModel();
 	}
 
+	private function _arrangeData(&$data)
+	{
+		$userModel = new \app\model\UserModel();
+		if(is_array($data) && !empty($data)) {
+			foreach ($data as $key => $value) {
+				$data[$key]['createName'] = $userModel->byPkGetInfo($value['create_uid'], 'name');
+			}
+		}
+	}
+
 	public function index()
 	{
 		// $addressData = $this->_address->select('address', '*');
@@ -47,7 +57,7 @@ class AddressController extends C_Controller
 				$uptData = [
 					'name'           => post('name'),
 					'last_edit_time' => time(),
-					'last_edit_uid'  => 1
+					'last_edit_uid'  => $_SESSION['uid']
 				];
 				$this->_address->update('address', $uptData, ['id' => intval(post('id'))]);
 			}else {
@@ -55,7 +65,7 @@ class AddressController extends C_Controller
 					'name'           => post('name'),
 					'create_time'    => time(),
 					'last_edit_time' => time(),
-					'last_edit_uid'  => 1
+					'last_edit_uid'  => $_SESSION['uid']
 				];
 				$this->_address->insert('address', $insData);
 			}

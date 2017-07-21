@@ -24,7 +24,7 @@
 								<td><?=$address['id']?></td>
 								<td><?=$address['name']?></td>
 								<td><?=get_date($address['last_edit_time'])?></td>
-								<td>1</td>
+								<td><?=$address['last_edit_uid']?></td>
 								<td>
 									<a href="#" class="btn modify" onclick="group_edit(<?=$address['id']?>)">修改</a>
 									<a href="#" class="btn delete" onclick="delete_by_id(<?=$address['id']?>)">删除</a>

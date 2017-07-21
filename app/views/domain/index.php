@@ -36,9 +36,9 @@
 						<?php foreach ($domainData as $key => $domain): ?>
 							<tr>
 								<td><?=$domain['id']?></td>
-								<td><?=$domain['domain'] . '：'?><a href="http://<?=$domain['url']?>" target='_blank' style="color: blue"><?=$domain['url']?></a></td>
+								<td><?=$domain['domain'] . '：'?><a href="http://<?=$domain['url']?>" class="original-link" target='_blank'><?=$domain['url']?></a></td>
 								<td><?=get_date($domain['create_time'])?></td>
-								<td>1</td>
+								<td><?=$domain['createName']?></td>
 								<td>
 									<a href="#" class="btn modify" onclick="group_edit(<?=$domain['id']?>)">修改</a>
 									<a href="#" class="btn delete" onclick="delete_by_id(<?=$domain['id']?>)">删除</a>

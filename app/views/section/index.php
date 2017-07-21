@@ -24,7 +24,7 @@
 								<td><?=$section['id']?></td>
 								<td><?=$section['name']?></td>
 								<td><?=get_date($section['last_edit_time'])?></td>
-								<td>1</td>
+								<td><?=$section['modifyName']?></td>
 								<td>
 									<a href="#" class="btn modify" onclick="group_edit(<?=$section['id']?>)">修改</a>
 									<a href="#" class="btn delete" onclick="delete_by_id(<?=$section['id']?>)">删除</a>

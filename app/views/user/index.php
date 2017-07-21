@@ -16,11 +16,21 @@
 					</div>
 					<div class="entry">
 						<label>部门:</label>
-						<input type="text" name="section_id" placeholder="">
+						<select name="section_id" >
+						<option value="">请选择</option>
+						<?php foreach ($sectionData as $key => $section): ?>
+							<option value ="<?=$section['id']?>"><?=$section['name']?></option>
+						<?php endforeach ?>
+						</select> 
 					</div>	
 					<div class="entry">
 						<label>组别:</label>
-						<input type="text" name="group_id" placeholder="">
+						<select name="group_id" >
+						<option value="">请选择</option>
+						<?php foreach ($groupData as $key => $group): ?>
+							<option value ="<?=$group['id']?>"><?=$group['name']?></option>
+						<?php endforeach ?>
+						</select> 
 					</div>				
 				</form>
 			</div>
@@ -46,10 +56,10 @@
 							<td><?=$user['id']?></td>
 							<td><?=$user['name']?></td>
 							<td class="tb-password">***</td>
-							<td><?=$user['section_id']?></td>
+							<td><?=$user['sectionName']?></td>
 							<td class="tb-register-time"><?=get_date($user['create_time'])?></td>
-							<td><?=$user['id']?></td>
-							<td class="tb-ip"><?=$user['id']?></td>
+							<td><?=get_date($user['login_time'])?></td>
+							<td class="tb-ip"><?=$user['ip']?></td>
 							<td><?=$user['groupName']?></td>
 							<td>
 								<a href="javascript:;" class="btn modify" onclick="group_edit(<?=$user['id']?>)">修改</a>

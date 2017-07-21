@@ -29,13 +29,14 @@ class UserController extends C_Controller
 	 */
 	private function _arrangeData(&$data)
 	{
-		$groumModel   = new \app\model\GroupModel;
+		$groupModel   = new \app\model\GroupModel;
 		$sectionModel = new \app\model\SectionModel;
 		foreach ($data['userData'] as $key => $user) {
-			$data['userData'][$key]['groupName'] = $groumModel->byPkGetInfo($user['group_id'], ['name'])['name'];
+			$data['userData'][$key]['groupName'] = $groupModel->byPkGetInfo($user['group_id'], ['name'])['name'];
+			$data['userData'][$key]['sectionName'] = $sectionModel->byPkGetInfo($user['section_id'], ['name'])['name'];
 		}
 
-		$data['groupData']   = $groumModel->select('', ['id', 'name']);
+		$data['groupData']   = $groupModel->select('', ['id', 'name']);
 		$data['sectionData'] = $sectionModel->select('', ['id', 'name']);
 
 	}
@@ -45,7 +46,7 @@ class UserController extends C_Controller
 	 */
 	public function index()
 	{
-		$where = $this->getSearch();
+		$where = $this->_getSearch();
 		if(isset($_GET['page'])) {
 			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
 		}else {
@@ -75,15 +76,15 @@ class UserController extends C_Controller
 	 * 拼接查询条件
 	 * @return array
 	 */
-	public function getSearch()
+	public function _getSearch()
 	{
 		if(get('name')) 
 			$where['name[~]'] = get('name');
 		if(get('section_id')) {
-
+			$where['section_id[~]'] = get('section_id');			
 		}
 		if(get('group_id')) {
-
+			$where['group_id[~]'] = get('group_id');
 		}
 		return $where;
 	}

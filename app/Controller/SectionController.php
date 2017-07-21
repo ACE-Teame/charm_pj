@@ -17,6 +17,16 @@ class SectionController extends C_Controller
 		$this->_section = new SectionModel();
 	}
 
+	private function _arrangeData(&$data)
+	{
+		$userModel = new \app\model\UserModel();
+		if(is_array($data) && !empty($data)) {
+			foreach ($data as $key => $value) {
+				$data[$key]['modifyName'] = $userModel->byPkGetInfo($value['last_edit_uid'], 'name');
+			}
+		}
+	}
+
 	public function index()
 	{
 		// $sectionData = $this->_section->select('section', '*');
@@ -37,6 +47,7 @@ class SectionController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
+		$this->_arrangeData($data['sectionData']);		
 		view('section/index', $data);
 	}
 
@@ -47,7 +58,7 @@ class SectionController extends C_Controller
 				$uptData = [
 					'name'           => post('name'),
 					'last_edit_time' => time(),
-					'last_edit_uid'  => 1
+					'last_edit_uid'  => $_SESSION['uid']
 				];
 				$this->_section->update('section', $uptData, ['id' => intval(post('id'))]);
 			}else {
@@ -55,7 +66,7 @@ class SectionController extends C_Controller
 					'name'           => post('name'),
 					'create_time'    => time(),
 					'last_edit_time' => time(),
-					'last_edit_uid'  => 1
+					'last_edit_uid'  => $_SESSION['uid']
 				];
 				$this->_section->insert('section', $insData);
 			}

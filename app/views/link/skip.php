@@ -24,7 +24,7 @@
 					</div>	
 					<div class="entry">
 						<label>负责人:</label>
-						<select name="leading_uid" style="width: 20%">
+						<select name="leading_uid" >
 						<option value="">请选择</option>
 						<?php foreach ($userData as $key => $user): ?>
 							<option value ="<?=$user['id']?>"><?=$user['name']?></option>
