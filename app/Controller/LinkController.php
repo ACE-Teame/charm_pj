@@ -22,10 +22,12 @@ class LinkController extends C_Controller
 	 */
 	private function _arrangeData(&$data)
 	{
-		$userModel = new \app\model\UserModel();
+		$userModel   = new \app\model\UserModel();
+		$domainModel = new \app\model\domainModel();
 		if(is_array($data) && !empty($data)) {
 			foreach ($data as $key => $value) {
 				$data[$key]['leadName'] = $userModel->byPkGetInfo($value['leading_uid'], 'name');
+				$data[$key]['domain'] = $domainModel->byPkGetInfo($value['domain_id'], 'domain');
 				$addressIds = $this->_model->select('link_address', 'address_id', ['link_id' => $value['id']]);
 				if($addressIds) {
 					$addressName  = '';
@@ -175,8 +177,40 @@ class LinkController extends C_Controller
 	}
 
 	
+	/**
+	 * 添加/修改链接内容
+	 */
 	public function linkEdit()
 	{
-		view('link/link-edit');
+		$data['domainData'] = $this->_model->select('domain', ['id', 'domain']);
+
+		view('link/linkedit', $data);
+	}
+
+	public function by_domainid_get_pinfo()
+	{
+		$domain_id = intval(post('domain_id'));
+		if($domain_id) {
+			$linkData = $this->_model->select('link',['id', 'orginal_link'], ['domain_id' => $domain_id]);
+			ajaxReturn(200, $linkData);
+		}
+		ajaxReturn(202);
+	}
+
+	public function by_linkid_get_leader()
+	{
+		$linkId = intval(post('link_id'));
+		$linkModel = new \app\model\linkModel();
+		if($linkId) {
+			$leadId = $this->_model->select('link', 'leading_uid', ['id' => $linkId])[0];
+
+			if($leadId) {
+				$userName = $this->_model->select('user', 'name', ['id' => $leadId])[0];
+				ajaxReturn(200, $userName);
+
+			}
+			ajaxReturn(202);
+		}
+		ajaxReturn(202);
 	}
 }

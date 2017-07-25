@@ -39,6 +39,7 @@
 					<thead>
 						<tr>
 							<th>序号</th>
+							<th>域名</th>
 							<th>原链接</th>
 							<th>审核链接</th>
 							<th>推广链接</th>
@@ -52,6 +53,7 @@
 					<?php foreach ($linkData as $key => $link): ?>
 						<tr>
 							<td><?=$link['id']?></td>
+							<td><a href="#" class="original-link"><?=$link['domain']?></a></td>
 							<td><a href="#" class="original-link"><?=$link['orginal_link']?></a></td>
 							<td><a href="#" class="verify-link"><?=$link['audit_link']?></a></td>
 							<td><a href="#" class="spread-link"><?=$link['referral_link']?></a></td>

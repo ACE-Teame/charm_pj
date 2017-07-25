@@ -20,19 +20,18 @@
 						<div class="entry clear">
 							<input type="hidden" name="id" id="id" value="">
 						</div>
-						<div class="entry clear">
+						<div class="entry clear" id="domaindiv">
 							<div class="fl">
-								<label>负责人:</label>
+								<label>域名:</label>
 							</div>
 							<div class="fl">
-								<select name="user_id" id="user_id">
-									<option value ="1" selected>admin</option>
-									<option value ="2">Mike</option>
-									<option value ="3">John</option>
-									<option value ="4">Iris</option>
-									<option value ="5">Jack</option>
+								<select name="domain_id" id="domain_id" onchange="change_domain(this)">
+									<option value="">请选择</option>
+								<?php foreach ($domainData as $key => $domain): ?>
+									<option value="<?=$domain['id']?>"><?=$domain['domain']?></option>
+								<?php endforeach ?>
 								</select>
-							</div>
+							</div><br>
 						</div>
 						<div class="entry clear">
 							<div class="fl">
@@ -207,6 +206,72 @@
         var proc = UE.getEditor('process'); // 购买流程
         var desc = UE.getEditor('description'); // 产品描述
         var reply = UE.getEditor('reply'); // 客户留言
+
+        /**
+         * 选择域名取出子链接
+         */
+        function change_domain(it)
+        {
+        	var domain_id = $(it).val();
+        	$.post('<?php echo base_url('link/by_domainid_get_pinfo')?>', {domain_id: domain_id}, function(data) {
+
+        		if(data.status == 200) {
+        			var html = '';
+        			var msg  = data.msg;
+        			if($("#domain_pid").length >= 1) {
+        				html = '<option value="">请选择</option>';
+        				$.each(msg, function(key, val) {
+							html +=  '<option value="'+val.id+'">'+val.orginal_link+'</option>';
+						});
+        				$("#domain_pid").html(html);
+        			}else {
+        				var html = '<div class="entry clear" id="domaindiv">';
+						html += '<div class="fl">';	
+						html += '<label>域名:</label>';
+						html += '</div>'
+						html += '<div class="fl">';
+						html += '<select name="domain_pid" id="domain_pid" onchange="change_pdomain(this)">';
+						html += '<option value="">请选择</option>';
+						$.each(msg, function(key, val) {
+							html +=  '<option value="'+val.id+'">'+val.orginal_link+'</option>';
+						});
+						html += '</select></div></div>';
+						$("#domain_id").parent().parent().after(html);
+	        		}
+        		}else {
+        			alert('操作失败');
+        		}
+        		console.log(data);
+        	}, 'JSON');
+        }
+
+        /**
+         * 选择子链接取出负责人
+         */
+        function change_pdomain(it)
+        {
+        	$.post('<?php echo base_url('link/by_linkid_get_leader')?>', {link_id: $(it).val()}, function(data) {
+        		if(data.status == 200) {
+
+        			if($('#leader_name').length >= 1) {
+        				$("#leader_name").val(data.msg);
+        			}else {
+        				var html = '';
+		        		html += '<div class="entry clear">';
+						html += '<div class="fl">';
+						html += '<label>负责人:</label>';
+						html += '</div>';
+						html += '<div class="fl">';
+						html += '<input type="text" name="leader_name" id="leader_name" value="'+data.msg+'" readonly="readonly">';
+						html += '</div>';
+						html += '</div>';
+						$("#domain_pid").parent().parent().after(html);
+        			}
+        		}else {
+        			alert('数据异常');
+        		}
+        	}, 'JSON');
+        }
     </script>
 <?php view('footer'); ?>
 	
