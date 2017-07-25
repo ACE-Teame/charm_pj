@@ -200,7 +200,6 @@ class LinkController extends C_Controller
 	public function by_linkid_get_leader()
 	{
 		$linkId = intval(post('link_id'));
-		$linkModel = new \app\model\linkModel();
 		if($linkId) {
 			$leadId = $this->_model->select('link', 'leading_uid', ['id' => $linkId])[0];
 
