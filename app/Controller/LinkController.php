@@ -23,7 +23,7 @@ class LinkController extends C_Controller
 	private function _arrangeData(&$data)
 	{
 		$userModel   = new \app\model\UserModel();
-		$domainModel = new \app\model\domainModel();
+		$domainModel = new \app\model\DomainModel();
 		if(is_array($data) && !empty($data)) {
 			foreach ($data as $key => $value) {
 				$data[$key]['leadName'] = $userModel->byPkGetInfo($value['leading_uid'], 'name');
