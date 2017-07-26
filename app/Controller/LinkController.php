@@ -182,6 +182,12 @@ class LinkController extends C_Controller
 	 */
 	public function linkEdit()
 	{
+		if(post()) {
+			dump(post());
+			dump(htmlspecialchars_decode(post('main_image')));
+			exit;
+		}
+		
 		$data['domainData'] = $this->_model->select('domain', ['id', 'domain']);
 
 		view('link/linkedit', $data);

@@ -15,7 +15,6 @@ class Security
         if (! is_array ( $string ))
         {
             $string = trim ( $string );
-            $string = strip_tags ( $string );
             $string = htmlspecialchars ( $string );
             if ($low) return TRUE;
 
