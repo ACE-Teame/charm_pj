@@ -22,7 +22,7 @@ class AddressController extends C_Controller
 		$userModel = new \app\model\UserModel();
 		if(is_array($data) && !empty($data)) {
 			foreach ($data as $key => $value) {
-				$data[$key]['createName'] = $userModel->byPkGetInfo($value['create_uid'], 'name');
+				$data[$key]['createName'] = $userModel->byPkGetInfo($value['last_edit_uid'], 'name');
 			}
 		}
 	}
@@ -47,6 +47,7 @@ class AddressController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
+		$this->_arrangeData($data['addressData']);				
 		view('address/index', $data);
 	}
 

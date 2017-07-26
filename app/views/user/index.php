@@ -58,7 +58,7 @@
 							<td class="tb-password">***</td>
 							<td><?=$user['sectionName']?></td>
 							<td class="tb-register-time"><?=get_date($user['create_time'])?></td>
-							<td><?=get_date($user['login_time'])?></td>
+							<td><?php if($user['login_time']){ echo get_date($user['login_time']); }else{ echo '未登录'; } ?></td>
 							<td class="tb-ip"><?=$user['ip']?></td>
 							<td><?=$user['groupName']?></td>
 							<td>
