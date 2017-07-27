@@ -3,8 +3,6 @@
 		<?php view('sidebar'); ?>
 		<div class="main fr">
 			<h1>编辑链接内容</h1>
-
-			
 			<div class="page-header">
 				<ul class="nav clear">
 					<li class="active" id="tab-1"><a href="#">产品参数</a></li>
@@ -43,14 +41,14 @@
 									(当不选中时,页面是显示产品简介的内容)
 								</div>
 							</div>
-							<div class="entry clear">
+							<!-- <div class="entry clear">
 								<div class="fl">
 									<label>链接名称:</label>
 								</div>
 								<div class="fl">
 									<input type="text" name="link_name" id="link_name" value="" placeholder="">
 								</div>
-							</div>
+							</div> -->
 							<div class="entry clear">
 								<div class="fl">
 									<label>标题:</label>
@@ -206,19 +204,19 @@
         		if(data.status == 200) {
         			var html = '';
         			var msg  = data.msg;
-        			if($("#domain_pid").length >= 1) {
+        			if($("#link_id").length >= 1) {
         				html = '<option value="">请选择</option>';
         				$.each(msg, function(key, val) {
 							html +=  '<option value="'+val.id+'">'+val.orginal_link+'</option>';
 						});
-        				$("#domain_pid").html(html);
+        				$("#link_id").html(html);
         			}else {
         				var html = '<div class="entry clear" id="domaindiv">';
 						html += '<div class="fl">';	
 						html += '<label>链接名称:</label>';
 						html += '</div>'
 						html += '<div class="fl">';
-						html += '<select name="domain_pid" id="domain_pid" onchange="change_pdomain(this)">';
+						html += '<select name="link_id" id="link_id" onchange="change_pdomain(this)">';
 						html += '<option value="">请选择</option>';
 						$.each(msg, function(key, val) {
 							html +=  '<option value="'+val.id+'">'+val.orginal_link+'</option>';
@@ -253,7 +251,7 @@
 						html += '<input type="text" name="leader_name" id="leader_name" value="'+data.msg+'" readonly="readonly">';
 						html += '</div>';
 						html += '</div>';
-						$("#domain_pid").parent().parent().after(html);
+						$("#link_id").parent().parent().after(html);
         			}
         		}else {
         			alert('数据异常');
@@ -272,7 +270,12 @@
         		dataType: 'json',
         		data: $('#formlink').serialize(),
         		success:function(data){
-        			
+        			if(data.status == 200) {
+        				alert('添加成功');
+        				window.location.href = "<?php echo base_url('link/link')?>";
+        			}else {
+        				alert('操作失败');
+        			}
         		},
         	})
         }

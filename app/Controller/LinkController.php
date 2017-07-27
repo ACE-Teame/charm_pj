@@ -183,9 +183,24 @@ class LinkController extends C_Controller
 	public function linkEdit()
 	{
 		if(post()) {
-			dump(post());
-			dump(htmlspecialchars_decode(post('main_image')));
-			exit;
+			$postData = post();
+			if(empty(post('id'))){
+				unset($postData['id'], $postData['domain_id'], $postData['leader_name']);
+				$postData['create_time'] = $postData['update_time'] = time();
+
+				$flag = $this->_model->insert('link_content', $postData);
+				
+				if($flag) {
+					ajaxReturn(200);
+				}else {
+					ajaxReturn(202);
+				}
+
+			// $insert
+				// dump(post());
+				dump(htmlspecialchars_decode(post('main_image')));
+				exit;
+			}
 		}
 		
 		$data['domainData'] = $this->_model->select('domain', ['id', 'domain']);
