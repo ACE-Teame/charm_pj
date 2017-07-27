@@ -171,10 +171,64 @@ class LinkController extends C_Controller
 		}
 	}
 
+	/**
+	 * 链接内容获取搜索条件
+	 * @return array 
+	 */
+	private function _getSearchLink()
+	{
+		if(get('user_id')) {
+			$where['leading_uid'] = get('user_id');
+		}
+		if(get('company_name')) {
+			$where['company_name[~]']   = get('company_name');
+		}
+		return $where;
+	}
+
+
+	/**
+	 * 链接内容列表
+	 */
 	public function link()
 	{
-		view('link/link');
+		if(isset($_GET['page'])) {
+			$now_page = intval($_GET['page']) ? intval($_GET['page']) : 1;
+		}else {
+			$now_page = 1;
+		}
+		// 获得查询条件
+		$where = $this->_getSearchLink();
+		// 取得每页条数
+		$pageNum           = Config::get('PAGE_NUM', 'page');
+		// 计算偏移量
+		$offset            = $pageNum * ($now_page - 1);
+
+		$data['count']     = $this->_model->count('link_content', $where);
+		$where['LIMIT']    = [$offset, $pageNum];
+
+		$data['linkContentData'] = $this->_model->select('link_content', [
+				'[>]link'   => ['link_id' => 'id'],
+				'[>]domain' => ['link.domain_id' => 'id'],
+				'[>]user'   => ['link.leading_uid' => 'id']
+			],[
+				'link_content.id',
+				'domain.url',
+				'link.orginal_link',
+				'link_content.company_name',
+				'link_content.create_time',
+				'link_content.update_time',
+				'user.name'
+			], $where);
+
+		// 分页处理
+		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
+		$data['pageNum']   = $pageNum;
+		$data['pageList']  = $objPage->myde_write();
+		$data['userData'] = $this->_model->select('user', ['id', 'name']);
+		view('link/link', $data);
 	}
+
 
 	
 	/**
@@ -189,17 +243,12 @@ class LinkController extends C_Controller
 				$postData['create_time'] = $postData['update_time'] = time();
 
 				$flag = $this->_model->insert('link_content', $postData);
-				
+
 				if($flag) {
 					ajaxReturn(200);
 				}else {
 					ajaxReturn(202);
 				}
-
-			// $insert
-				// dump(post());
-				dump(htmlspecialchars_decode(post('main_image')));
-				exit;
 			}
 		}
 		
@@ -208,6 +257,9 @@ class LinkController extends C_Controller
 		view('link/linkedit', $data);
 	}
 
+	/**
+	 * 通过域名ID获取子链接
+	 */
 	public function by_domainid_get_pinfo()
 	{
 		$domain_id = intval(post('domain_id'));
@@ -218,18 +270,18 @@ class LinkController extends C_Controller
 		ajaxReturn(202);
 	}
 
+	/**
+	 * 通过链接ID获得负责人
+	 */
 	public function by_linkid_get_leader()
 	{
 		$linkId = intval(post('link_id'));
 		if($linkId) {
 			$leadId = $this->_model->select('link', 'leading_uid', ['id' => $linkId])[0];
-
 			if($leadId) {
 				$userName = $this->_model->select('user', 'name', ['id' => $leadId])[0];
 				ajaxReturn(200, $userName);
-
 			}
-			ajaxReturn(202);
 		}
 		ajaxReturn(202);
 	}
