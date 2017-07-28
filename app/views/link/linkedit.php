@@ -17,7 +17,7 @@
 					<div class="tab-pane tab-1 active">
 						
 							<div class="entry clear">
-								<input type="hidden" name="id" id="id" value="">
+								<input type="hidden" name="id" id="id" value="<?=$id?>">
 							</div>
 							<div class="entry clear" id="domaindiv">
 								<div class="fl">
@@ -27,17 +27,50 @@
 									<select name="domain_id" id="domain_id" onchange="change_domain(this)">
 										<option value="">请选择</option>
 									<?php foreach ($domainData as $key => $domain): ?>
-										<option value="<?=$domain['id']?>"><?=$domain['domain']?></option>
+										<option value="<?=$domain['id']?>" <?php if ($domain_id == $domain['id']): ?>
+											selected
+										<?php endif ?> ><?=$domain['domain']?></option>
 									<?php endforeach ?>
 									</select>
 								</div><br>
 							</div>
+
+							<?php if ($domainSonLink): ?>
+							<div class="entry clear" id="domaindiv">
+								<div class="fl">
+									<label>链接名称:</label>
+								</div>
+								<div class="fl">
+									<select name="link_id" id="link_id" onchange="change_pdomain(this)">
+										<option value="">请选择</option>
+									<?php foreach ($domainSonLink as $key => $sonLink): ?>
+										<option value="<?=$sonLink['id']?>" <?php if ($linkContentData['link_id'] == $sonLink['id']): ?>
+											selected
+										<?php endif ?> ><?=$sonLink['orginal_link']?></option>
+									<?php endforeach ?>
+									</select>
+								</div><br>
+							</div>
+							<?php endif ?>
+							<?php if ($leader_name): ?>
+							<div class="entry clear" id="domaindiv">
+								<div class="fl">
+									<label>负责人:</label>
+								</div>
+								<div class="fl">
+									<input type="text" name="leader_name" id="leader_name" value="<?=$leader_name?>" readonly="readonly">
+								</div><br>
+							</div>	
+							<?php endif ?>
+							
 							<div class="entry clear">
 								<div class="fl">
 									<label>是否属于订单类页面:</label>
 								</div>
 								<div class="fl">
-									<input name="display_page" id="display_page"  type="checkbox" value="" />
+									<input name="display_page" id="display_page" <?php if ($linkContentData['display_page']): ?>
+										checked
+									<?php endif ?> type="checkbox" value="" />
 									(当不选中时,页面是显示产品简介的内容)
 								</div>
 							</div>
@@ -54,7 +87,7 @@
 									<label>标题:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="title" id="title" value="" placeholder="">
+									<input type="text" name="title" id="title" value="<?=$linkContentData['title']?>" placeholder="">
 								</div>
 							</div>
 							<div class="entry clear">
@@ -62,7 +95,7 @@
 									<label>价格:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="price" id="price" value="" placeholder="">
+									<input type="text" name="price" id="price" value="<?=$linkContentData['price']?>" placeholder="">
 								</div>
 							</div>
 							<div class="entry clear">
@@ -70,7 +103,9 @@
 									<label>是否显示折扣、购买人数、结束时间:</label>
 								</div>
 								<div class="fl">
-									<input name="is_show_time" id="is_show_time"  type="checkbox" value="" />
+									<input name="is_show_time" id="is_show_time" <?php if ($linkContentData['is_show_time']): ?>
+										checked
+									<?php endif ?> type="checkbox" value="" />
 								</div>
 							</div>
 							<div class="entry clear">
@@ -78,7 +113,7 @@
 									<label>购买人数:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="buy_count" id="buy_count" value="" placeholder="">
+									<input type="text" name="buy_count" id="buy_count" value="<?=$linkContentData['buy_count']?>" placeholder="">
 								</div>
 							</div>
 							<div class="entry clear">
@@ -86,7 +121,7 @@
 									<label>折扣:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="discount" id="discount" value="" placeholder="">
+									<input type="text" name="discount" id="discount" value="<?=$linkContentData['discount']?>" placeholder="">
 								</div>
 							</div>
 							<div class="entry clear">
@@ -94,7 +129,7 @@
 									<label>结束时间:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="end_time" id="end_time" value="" placeholder="">
+									<input type="text" name="end_time" id="end_time" value="<?=$linkContentData['end_time']?>" placeholder="">
 								</div>
 							</div>
 							<div class="entry clear">
@@ -102,7 +137,7 @@
 									<label>公司名称:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="company_name" id="company_name" value="" placeholder="">
+									<input type="text" name="company_name" id="company_name" value="<?=$linkContentData['company_name']?>" placeholder="">
 								</div>
 							</div>	
 							<div class="entry clear">
@@ -110,7 +145,7 @@
 									<label>ICP:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="icp" id="icp" value="" placeholder="">
+									<input type="text" name="icp" id="icp" value="<?=$linkContentData['icp']?>" placeholder="">
 								</div>
 							</div>	
 							<div class="entry clear">
@@ -118,7 +153,7 @@
 									<label>电话:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="phone" id="phone" value="" placeholder="">
+									<input type="text" name="phone" id="phone" value="<?=$linkContentData['phone']?>" placeholder="">
 								</div>
 							</div>	
 							<div class="entry clear">
@@ -126,7 +161,7 @@
 									<label>微信号:</label>
 								</div>
 								<div class="fl">
-									<input type="text" name="wechat" id="wechat" value="" placeholder="">
+									<input type="text" name="wechat" id="wechat" value="<?=$linkContentData['wechat']?>" placeholder="">
 								</div>
 							</div>	
 					</div>
@@ -183,7 +218,7 @@
 
 		</div><!-- end main -->
 	</div><!-- end container -->
-
+	
     <!-- 加载编辑器的容器 -->
     <?php echo js('ueditor/ueditor.config.js'); ?>
     <?php echo js('ueditor/ueditor.all.js'); ?>
@@ -192,7 +227,29 @@
 		var proc    = UE.getEditor('process'); // 购买流程
 		var desc    = UE.getEditor('description'); // 产品描述
 		var reply   = UE.getEditor('reply'); // 客户留言
+		mainImg.ready(function() {
+		    <?php if ($linkContentData['main_image']): ?>
+		    	mainImg.setContent('<?php echo htmlspecialchars_decode($linkContentData['main_image']);?>');
+		    <?php endif ?>
+		});
+		
+		proc.ready(function() {
+		    <?php if ($linkContentData['process']): ?>
+		    	proc.setContent('<?php echo htmlspecialchars_decode($linkContentData['process']) ?>');
+		    <?php endif ?>
+		});
 
+		desc.ready(function() {
+		    <?php if ($linkContentData['description']): ?>
+		    	desc.setContent('<?php echo htmlspecialchars_decode($linkContentData['description']) ?>');
+		    <?php endif ?>
+		});
+
+		reply.ready(function() {
+		    <?php if ($linkContentData['reply']): ?>
+		    	reply.setContent('<?php echo htmlspecialchars_decode($linkContentData['reply']) ?>');
+		    <?php endif ?>
+		});
         /**
          * 选择域名取出子链接
          */
@@ -224,6 +281,11 @@
 						html += '</select></div></div>';
 						$("#domain_id").parent().parent().after(html);
 	        		}
+
+	        		if($('#leader_name').length >= 1) {
+        				$("#leader_name").parent().parent().remove();
+        			}
+
         		}else {
         			alert('操作失败');
         		}
@@ -264,14 +326,20 @@
          */
         function save()
         {
+        	var url;
+        	if($('#id').val()) {
+        		url = "<?php echo base_url('link/ajax_edit_link_content')?>";
+        	}else {
+        		url = "<?php echo base_url('link/ajax_add_link_content')?>";
+        	}
         	$.ajax({
-        		url: "<?php echo base_url('link/linkEdit')?>",
+        		url: url,
         		type: 'POST',
         		dataType: 'json',
         		data: $('#formlink').serialize(),
         		success:function(data){
         			if(data.status == 200) {
-        				alert('添加成功');
+        				alert(data.msg);
         				window.location.href = "<?php echo base_url('link/link')?>";
         			}else {
         				alert('操作失败');

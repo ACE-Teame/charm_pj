@@ -3,6 +3,7 @@ namespace app\Controller;
 use system\core\Config;
 use system\core\Page;
 use app\core\C_Controller;
+use app\model\LinkModel;
 
 /**
  * 链接跳转
@@ -207,6 +208,9 @@ class LinkController extends C_Controller
 		$data['count']     = $this->_model->count('link_content', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
 
+		/**
+		 * 数据表关联 取出数据
+		 */
 		$data['linkContentData'] = $this->_model->select('link_content', [
 				'[>]link'   => ['link_id' => 'id'],
 				'[>]domain' => ['link.domain_id' => 'id'],
@@ -229,31 +233,41 @@ class LinkController extends C_Controller
 		view('link/link', $data);
 	}
 
-
-	
 	/**
 	 * 添加/修改链接内容
 	 */
 	public function linkEdit()
 	{
-		if(post()) {
-			$postData = post();
-			if(empty(post('id'))){
-				unset($postData['id'], $postData['domain_id'], $postData['leader_name']);
-				$postData['create_time'] = $postData['update_time'] = time();
+		$linkContId = intval(get('id'));
+		if($linkContId) {
+			$linkContentData = $this->_model->select('link_content', '*', ['id' => $linkContId, 'LIMIT' => 1])[0];
+			$linkData = $this->_model->select('link',[
+					'[>]user' => ['leading_uid' => 'id']
+				], ['user.name', 'link.domain_id'], [
+					'link.id' => $linkContentData['link_id']
+				])[0];
 
-				$flag = $this->_model->insert('link_content', $postData);
+			$domainSonLink = $this->_model->select('link', ['id', 'orginal_link'], ['domain_id' => $linkData['domain_id']]);
 
-				if($flag) {
-					ajaxReturn(200);
-				}else {
-					ajaxReturn(202);
-				}
-			}
+			/**
+			 * 当为修改时 赋值模板变量内容为 
+			 * 1、链接内容ID
+			 * 2、域名ID
+			 * 3、负责人名字
+			 * 4、子链接列表
+			 * 5、链接内容数据
+			 */
+			$data = [
+				'id' 			  => $linkContId,
+				'domain_id'       => $linkData['domain_id'],
+				'leader_name'     => $linkData['name'],
+				'domainSonLink'   => $domainSonLink,
+				'linkContentData' => $linkContentData
+			];
+
 		}
-		
+		// 取出域名列表
 		$data['domainData'] = $this->_model->select('domain', ['id', 'domain']);
-
 		view('link/linkedit', $data);
 	}
 
@@ -284,5 +298,47 @@ class LinkController extends C_Controller
 			}
 		}
 		ajaxReturn(202);
+	}
+
+	/**
+	 * 通过ajax添加链接跳转内容
+	 */
+	public function ajax_add_link_content()
+	{
+		dump(post());exit;
+		if(post()) {
+			$postData = post();
+			if(empty(post('id'))){
+				unset($postData['id'], $postData['domain_id'], $postData['leader_name']);
+				$postData['create_time'] = $postData['update_time'] = time();
+
+				$flag = $this->_model->insert('link_content', $postData);
+
+				if($flag) {
+					ajaxReturn(200, '添加成功');
+				}else {
+					ajaxReturn(202);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 通过ajax修改链接跳转内容
+	 */
+	public function ajax_edit_link_content()
+	{
+		$linkContId = intval(post('id'));
+		if($linkContId) {
+			$postData = post();
+			unset($postData['id'], $postData['domain_id'], $postData['leader_name']);
+			$postData['update_time'] = time();
+			$flag = $this->_model->update('link_content', $postData, ['id' => $linkContId]);
+			if($flag) {
+				ajaxReturn(200, '修改成功');
+			}else {
+				ajaxReturn(202);
+			}
+		}
 	}
 }

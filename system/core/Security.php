@@ -18,7 +18,7 @@ class Security
             $string = htmlspecialchars ( $string );
             if ($low) return TRUE;
 
-            $string = str_replace ( array ('"', "\\", "'", "/", "..", "../", "./", "//" ), '', $string );
+            // $string = str_replace ( array ('"', "\\", "'", "/", "..", "../", "./", "//" ), '', $string );
             $no = '/%0[0-8bcef]/';
             $string = preg_replace ( $no, '', $string );
             $no = '/%1[0-9a-f]/';
