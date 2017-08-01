@@ -18,7 +18,7 @@ class CommonController extends Controller
 		if(post('name') && post('pwd')) {
 			session_start();
 			$userModel = new UserModel();
-			$userInfo  = $userModel->select('user', ['id', 'pwd'], ['name' => trim(post('name'))])[0];
+			$userInfo  = $userModel->select('user', ['id', 'pwd', 'group_id'], ['name' => trim(post('name'))])[0];
 			if(password_verify(post('pwd'), $userInfo['pwd']) == TRUE){
 				// 记录用户最后一次登录时间
 				$userModel->update('user', [
@@ -26,9 +26,10 @@ class CommonController extends Controller
 					'ip'         => getIp()], 
 					['id' => $userInfo['id']]
 					);
-				$_SESSION['uid']  = $userInfo['id'];
-				$_SESSION['name'] = trim(post('name'));
-				redirect('index');
+				$_SESSION['uid']  	  = $userInfo['id'];
+				$_SESSION['name'] 	  = trim(post('name'));
+				$_SESSION['group_id'] = $userInfo['group_id'];
+				redirect('home');
 			}
 		}
 		view('login/index');
@@ -36,7 +37,7 @@ class CommonController extends Controller
 
 	public function logout()
 	{
-		unset($_SESSION['uid']);
+		unset($_SESSION['uid'], $_SESSION['name'], $_SESSION['group_id']);
 		redirect('common/login');
 	}
 }

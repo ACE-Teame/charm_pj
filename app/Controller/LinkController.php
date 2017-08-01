@@ -341,4 +341,18 @@ class LinkController extends C_Controller
 			}
 		}
 	}
+
+	/**
+	 * 删除链接内容
+	 */
+	public function del_link_content()
+	{
+		$id = intval(post('id'));
+		if($id) {
+			$delFlag = $this->_model->delete('link_content', ['id' => $id]);
+			if($delFlag) ajaxReturn(200);
+			ajaxReturn(202);
+		}
+	}
+
 }

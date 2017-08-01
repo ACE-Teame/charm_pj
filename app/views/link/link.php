@@ -8,7 +8,7 @@
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 			<div class="search">
-				<form action="<?php echo base_url('link/link') ?>" class="searchForm" method="GET" name="search">
+				<form action="<?php echo base_url('link/link') ?>" class="searchForm" method="GET" name="search" id="from">
 					<!-- <div class="entry">
 						<label>原链接:</label>
 						<input type="text" name="link_id" placeholder="">
@@ -53,7 +53,7 @@
 							<td><?=$linkContent['name']?></td>
 							<td>
 								<a href="<?php echo base_url('link/linkEdit') . '?id=' . $linkContent['id'] ?>" class="btn modify-link">修改</a>
-								<a href="#" class="btn delete">删除</a>
+								<a href="#" class="btn delete" onclick="delete_by_id(<?=$linkContent['id']?>)">删除</a>
 							</td>
 						</tr>
 					<?php endforeach ?>
@@ -70,6 +70,28 @@
 			</div> <!-- end table -->
 		</div><!-- end main -->
 	</div><!-- end container -->
+	<script>
+		/**
+		 * 根据ID删除数据
+		 */
+		function delete_by_id(id)
+		{
+
+			if(confirm('确定删除？') == true){
+				$.post("<?php echo base_url('link/del_link_content'); ?>", {id: id}, function(data) {
+					if(data.status == 200) {
+						alert('删除成功');
+					}else {
+						alert('删除失败');
+					}
+					window.location.href = "<?php echo base_url('link/link')?>";
+				}, 'JSON');
+				// $("#from").attr('action', '<?=base_url('link/del_link_content')?>' + '?id=' + id);
+				// $("#from").submit();
+			}
+		}
+
+	</script>
 
 
 <?php view('footer'); ?>
