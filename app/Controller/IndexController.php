@@ -3,13 +3,13 @@ namespace app\Controller;
 use system\core\Controller;
 
 /**
- * 登陆控制器(测试)
+ * 默认控制器
  */
 class IndexController extends Controller
 {
 
 	public function index()
 	{
-		
+
 	}
 }
