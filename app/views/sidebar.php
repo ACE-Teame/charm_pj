@@ -34,16 +34,11 @@
 				</ul>
 			</li>
 			<li>
-				<div class="menu-title">链接跳转管理</div>
+				<div class="menu-title">链接管理</div>
 				<ul>
 					<li>
 						<a href="<?php echo base_url('link/skip')?>" id="skip" class="menu-name"><i class="iconfont icon-link"></i>链接跳转</a>
 					</li>
-				</ul>
-			</li>
-			<li>
-				<div class="menu-title">链接内容管理</div>
-				<ul>
 					<li>
 						<a href="<?php echo base_url('link/link')?>" id="link" class="menu-name"><i class="iconfont icon-product"></i>链接内容</a>
 					</li>
