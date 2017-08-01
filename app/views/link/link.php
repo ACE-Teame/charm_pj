@@ -76,7 +76,6 @@
 		 */
 		function delete_by_id(id)
 		{
-
 			if(confirm('确定删除？') == true){
 				$.post("<?php echo base_url('link/del_link_content'); ?>", {id: id}, function(data) {
 					if(data.status == 200) {
@@ -86,13 +85,10 @@
 					}
 					window.location.href = "<?php echo base_url('link/link')?>";
 				}, 'JSON');
-				// $("#from").attr('action', '<?=base_url('link/del_link_content')?>' + '?id=' + id);
-				// $("#from").submit();
 			}
 		}
 
 	</script>
-
 
 <?php view('footer'); ?>
 	
