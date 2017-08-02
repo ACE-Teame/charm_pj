@@ -22,8 +22,6 @@ class C_Controller extends Controller
 		if(!isset(self::$menuData)) {
 			self::$menuData = $this->getGroupMenu();
 		}
-
-		// dump(self::$menuData);
 	}
 
 
@@ -36,10 +34,13 @@ class C_Controller extends Controller
 		$menuIds = $this->_model->select('groupmenu', 'menu_id', ['group_id' => $loginGroupId]);
 
 		foreach ($menuIds as $menuId) {
+			// 获取子菜单信息
 			$menuSonData = $this->_model->select('menu', ['pid', 'url', 'name'], ['status' => 1, 'id' => $menuId])[0];
 			if($menuSonData['pid'] > 0) {
+				// 获取父菜单数据
 				$menuParent = $this->_model->select('menu', ['id', 'url', 'name'], ['status' => 1, 'id' => $menuSonData['pid']])[0];
 				if($menuParent && is_array($menuParent)) {
+					// 简单树形赋值
 					if(!isset($menuData[$menuParent['id']])) {
 						$menuData[$menuParent['id']] = $menuParent;
 						$menuData[$menuParent['id']]['son'][$menuId] = $menuSonData;
@@ -49,9 +50,7 @@ class C_Controller extends Controller
 				}
 			}
 		}
-
 		return $menuData;
-		// dump($menuData);exit;
 	}
 
 	// 组合查询数据到url
