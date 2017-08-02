@@ -14,6 +14,6 @@ class IndexController extends C_Controller
 
 	public function index()
 	{
-		// echo 222;
+		redirect('home');
 	}
 }
