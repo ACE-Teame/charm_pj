@@ -11,7 +11,8 @@ use app\model\LinkModel;
  * @date(2017.7.20)
  */
 class LinkController extends C_Controller
-{
+{	
+	public $selfGroupIds = [5, 6];
 	public function __construct()
 	{
 		parent::__construct();
@@ -94,7 +95,9 @@ class LinkController extends C_Controller
 		if(intval(get('leading_uid'))) {
 			$where['leading_uid'] = intval(get('leading_uid'));
 		}
-
+		if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
+			$where['leading_uid'] = $_SESSION['uid'];
+		}
 		return $where;
 	}
 
