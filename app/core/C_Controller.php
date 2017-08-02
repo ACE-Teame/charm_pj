@@ -8,7 +8,8 @@ use system\core\Controller;
 class C_Controller extends Controller
 {
 	public $_model;
-	public function __construct() {
+	public function __construct() 
+	{
 		if(empty($this->_model)) {
 			$this->_model =& model();
 		}
@@ -19,7 +20,8 @@ class C_Controller extends Controller
 	}
 
 	// 组合查询数据到url
-	public function getSearchParam() {
+	public function getSearchParam() 
+	{
 		$searchParam = '';
 		foreach (get() as $key => $value) {
 			if( $key == 'page' ) continue;
