@@ -29,6 +29,7 @@ class CommonController extends Controller
 				$_SESSION['uid']  	  = $userInfo['id'];
 				$_SESSION['name'] 	  = trim(post('name'));
 				$_SESSION['group_id'] = $userInfo['group_id'];
+				$_SESSION['menu']     = '';
 				redirect('home');
 			}
 		}

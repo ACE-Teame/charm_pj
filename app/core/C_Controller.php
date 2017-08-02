@@ -18,7 +18,6 @@ class C_Controller extends Controller
 		if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])) {
 			redirect('common/login');
 		}
-
 		$this->setMenu();
 	}
 
