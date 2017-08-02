@@ -10,6 +10,11 @@ use app\model\UserModel;
 class CommonController extends Controller
 {
 
+	public function __construct()
+	{
+		session_start();
+	}
+
 	/**
 	 * 登陆
 	 */
@@ -36,9 +41,13 @@ class CommonController extends Controller
 		view('login/index');
 	}
 
+	/**
+	 * 	退出时销毁session && 跳转到登陆页面
+	 */
 	public function logout()
 	{
-		unset($_SESSION['uid'], $_SESSION['name'], $_SESSION['group_id']);
+		unset($_SESSION);
+		session_destroy(); 
 		redirect('common/login');
 	}
 }
