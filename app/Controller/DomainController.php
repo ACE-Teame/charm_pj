@@ -66,7 +66,9 @@ class DomainController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
-		$this->_arrangeData($data['domainData']);		
+		$this->_arrangeData($data['domainData']);	
+		// 获取菜单列表
+		$data['menu']['menuData'] = self::$menuData;	
 		view('domain/index', $data);
 	}
 

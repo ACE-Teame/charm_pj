@@ -8,6 +8,7 @@ use system\core\Controller;
 class C_Controller extends Controller
 {
 	public $_model;
+	public static $menuData;
 	public function __construct() 
 	{
 		if(empty($this->_model)) {
@@ -17,6 +18,40 @@ class C_Controller extends Controller
 		if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])) {
 			redirect('common/login');
 		}
+
+		if(!isset(self::$menuData)) {
+			self::$menuData = $this->getGroupMenu();
+		}
+
+		// dump(self::$menuData);
+	}
+
+
+	/**
+	 * 获取当前用户的菜单列表
+	 */
+	public function getGroupMenu()
+	{
+		$loginGroupId = $_SESSION['group_id'];
+		$menuIds = $this->_model->select('groupmenu', 'menu_id', ['group_id' => $loginGroupId]);
+
+		foreach ($menuIds as $menuId) {
+			$menuSonData = $this->_model->select('menu', ['pid', 'url', 'name'], ['status' => 1, 'id' => $menuId])[0];
+			if($menuSonData['pid'] > 0) {
+				$menuParent = $this->_model->select('menu', ['id', 'url', 'name'], ['status' => 1, 'id' => $menuSonData['pid']])[0];
+				if($menuParent && is_array($menuParent)) {
+					if(!isset($menuData[$menuParent['id']])) {
+						$menuData[$menuParent['id']] = $menuParent;
+						$menuData[$menuParent['id']]['son'][$menuId] = $menuSonData;
+					}else {
+						$menuData[$menuParent['id']]['son'][$menuId] = $menuSonData;
+					}
+				}
+			}
+		}
+
+		return $menuData;
+		// dump($menuData);exit;
 	}
 
 	// 组合查询数据到url

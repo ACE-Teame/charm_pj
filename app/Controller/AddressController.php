@@ -47,7 +47,8 @@ class AddressController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
-		$this->_arrangeData($data['addressData']);				
+		$this->_arrangeData($data['addressData']);	
+		$data['menu']['menuData'] = self::$menuData;			
 		view('address/index', $data);
 	}
 

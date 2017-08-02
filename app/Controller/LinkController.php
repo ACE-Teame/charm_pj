@@ -71,6 +71,9 @@ class LinkController extends C_Controller
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
 		$this->_arrangeData($data['linkData']);
+		// 获取菜单列表
+		$data['menu']['menuData'] = self::$menuData;
+
 		view('link/skip', $data);
 	}
 
@@ -230,6 +233,8 @@ class LinkController extends C_Controller
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
 		$data['userData'] = $this->_model->select('user', ['id', 'name']);
+		// 获取菜单列表
+		$data['menu']['menuData'] = self::$menuData;
 		view('link/link', $data);
 	}
 

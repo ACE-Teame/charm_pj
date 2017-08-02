@@ -58,17 +58,17 @@ class UserController extends C_Controller
 		$offset            = $pageNum * ($now_page - 1);
 
 		$data['count']     = $this->_userModel->count('user', $where);
-		// dump($this->_userModel->last());
 		$where['LIMIT']     = [$offset, $pageNum];
 
 		$data['userData']  = $this->_userModel->select('user', '*', $where);
-		// dump($this->_userModel->last());
 		// 分页处理
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}');
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
 
 		$this->_arrangeData($data);
+		// 获取菜单列表
+		$data['menu']['menuData'] = self::$menuData;
 		view('user/index', $data);
 	}
 
