@@ -315,7 +315,6 @@ class LinkController extends C_Controller
 	 */
 	public function ajax_add_link_content()
 	{
-		dump(post());exit;
 		if(post()) {
 			$postData = post();
 			if(empty(post('id'))){

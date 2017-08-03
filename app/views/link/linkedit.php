@@ -70,7 +70,7 @@
 								<div class="fl">
 									<input name="display_page" id="display_page" <?php if ($linkContentData['display_page']): ?>
 										checked
-									<?php endif ?> type="checkbox" value="" />
+									<?php endif ?> type="checkbox" value="1" />
 									(当不选中时,页面是显示产品简介的内容)
 								</div>
 							</div>
@@ -105,7 +105,7 @@
 								<div class="fl">
 									<input name="is_show_time" id="is_show_time" <?php if ($linkContentData['is_show_time']): ?>
 										checked
-									<?php endif ?> type="checkbox" value="" />
+									<?php endif ?> type="checkbox" value="1" />
 								</div>
 							</div>
 							<div class="entry clear">
@@ -332,11 +332,20 @@
         	}else {
         		url = "<?php echo base_url('link/ajax_add_link_content')?>";
         	}
+        	var display_page = $("#display_page:checked").val();
+        	var is_show_time = $("#is_show_time:checked").val();
+        	if(display_page == undefined) {
+        		display_page = 0
+        	}
+        	if(is_show_time == undefined) {
+        		is_show_time = 0
+        	}
+        	var url_parma = '&display_page=' + display_page + '&is_show_time=' + is_show_time;
         	$.ajax({
         		url: url,
         		type: 'POST',
         		dataType: 'json',
-        		data: $('#formlink').serialize(),
+        		data: $('#formlink').serialize() + url_parma,
         		success:function(data){
         			if(data.status == 200) {
         				alert(data.msg);
