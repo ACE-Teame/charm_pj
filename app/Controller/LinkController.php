@@ -4,7 +4,6 @@ use system\core\Config;
 use system\core\Page;
 use app\core\C_Controller;
 use app\model\LinkModel;
-
 /**
  * 链接跳转
  * @author 命中水、
@@ -12,7 +11,8 @@ use app\model\LinkModel;
  */
 class LinkController extends C_Controller
 {	
-	public $selfGroupIds = [5, 6];
+	private $_selfGroupIds   = [5, 6];
+	private $_managerGroupId = 4;
 	public function __construct()
 	{
 		parent::__construct();
@@ -95,11 +95,21 @@ class LinkController extends C_Controller
 		if(intval(get('leading_uid'))) {
 			$where['leading_uid'] = intval(get('leading_uid'));
 		}
-		if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
+		if(in_array($_SESSION['uid'], $this->_selfGroupIds)) {
 			$where['leading_uid'] = $_SESSION['uid'];
+		}else if($_SESSION['group_id'] == $this->_managerGroupId) {
+			/**
+			 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
+			 * 作为跳转链接里负责人的查询条件
+			 */
+			$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
+			$userIds        = $this->_model->select('user', 'id', ['section_id' => $loginSectionId]);
+			$where['OR']    = ['leading_uid' => $userIds];
 		}
+
 		return $where;
 	}
+
 
 
 	/**
@@ -159,7 +169,6 @@ class LinkController extends C_Controller
 			$data['linkData']    = $linkModel->byPkGetInfo($linkId);
 			$data['linkAddData'] = $linkModel->select('link_address', 'address_id', ['link_id' => $linkId]);
 			ajaxReturn($data);
-
 		}else {
 			echo 0;
 		}
@@ -189,6 +198,27 @@ class LinkController extends C_Controller
 		}
 		if(get('company_name')) {
 			$where['company_name[~]']   = get('company_name');
+		}
+
+		if(in_array($_SESSION['group_id'], $this->_selfGroupIds)) {
+			$linkIds = $this->_model->select('link', 'id', ['leading_uid' => $_SESSION['uid']]);
+			if($linkIds && is_array($linkIds)) {
+				$where['OR']   = [
+					'link_id' => $linkIds
+				];
+			}
+		}else if($_SESSION['group_id'] == $this->_managerGroupId) {
+			/**
+			 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
+			 * 通过人员ID作为负责人条件 查询取得链接跳转ID
+			 * 把链接跳转ID作为链接内容的查询条件
+			 */
+			$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
+			$userIds        = $this->_model->select('user', 'id', ['section_id' => $loginSectionId]);
+			$linkIds	    = $this->_model->select('link', 'id', ['OR' => ['leading_uid' => $userIds]]);
+			$where['OR']    = [
+					'link_id' => $linkIds
+				];
 		}
 		return $where;
 	}
@@ -230,7 +260,6 @@ class LinkController extends C_Controller
 				'link_content.update_time',
 				'user.name'
 			], $where);
-
 		// 分页处理
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
