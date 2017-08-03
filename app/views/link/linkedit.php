@@ -1,6 +1,6 @@
 <?php view('header'); ?>
 	<div class="container clear">
-		<?php view('sidebar'); ?>
+		<?php view('sidebar', $menu); ?>
 		<div class="main fr">
 			<h1>编辑链接内容</h1>
 			<div class="page-header">

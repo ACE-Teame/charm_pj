@@ -276,6 +276,8 @@ class LinkController extends C_Controller
 		}
 		// 取出域名列表
 		$data['domainData'] = $this->_model->select('domain', ['id', 'domain']);
+		// 获取菜单列表
+		$data['menu']['menuData'] = self::$menuData;
 		view('link/linkedit', $data);
 	}
 
