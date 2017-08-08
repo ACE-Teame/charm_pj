@@ -123,6 +123,10 @@
 							<option value ="<?=$user['id']?>"><?=$user['name']?></option>
 						<?php endforeach ?>
 						</select> 
+					</div>
+					<div class="entry">
+						<label>是否生效</label>
+						<input name="is_pass" id="is_pass" type="checkbox" value="1" />
 					</div>	
 				</form>
 			</div>
@@ -155,6 +159,12 @@
 						$('#audit_link').val(data.linkData.audit_link);
 						$('#referral_link').val(data.linkData.referral_link);
 						$('#id').val(data.linkData.id);
+						$("#domain_id").find("option[value='"+data.linkData.domain_id+"']").attr("selected",true);
+						if(data.linkData.is_pass == 1) {
+							$('#is_pass').attr('checked', 'checked');
+						}else {
+							$('#is_pass').removeAttr('checked');
+						}
 						$("#domain_id").find("option[value='"+data.linkData.domain_id+"']").attr("selected",true);
 					}else {
 						alert('数据错误');

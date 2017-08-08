@@ -117,6 +117,8 @@ class LinkController extends C_Controller
 	 */
 	public function add()
 	{
+
+		// dump(post());exit;
 		if(post()) {
 			$id = intval(post('id'));
 			if(!empty($id)) {
@@ -127,7 +129,8 @@ class LinkController extends C_Controller
 					'referral_link'  => post('referral_link'),
 					'audit_link'     => post('audit_link'),
 					'last_edit_uid'  => $_SESSION['uid'],
-					'last_edit_time' => time()
+					'last_edit_time' => time(),
+					'is_pass'        => post('is_pass')
 				];
 				$this->_model->delete('link_address', ['link_id' => $id]);
 				$this->_model->update('link', $uptData, ['id' => $id]);
@@ -141,7 +144,8 @@ class LinkController extends C_Controller
 					'creat_uid'      => $_SESSION['uid'],
 					'creat_time'     => time(),
 					'last_edit_uid'  => $_SESSION['uid'],
-					'last_edit_time' => time()
+					'last_edit_time' => time(),
+					'is_pass'        => post('is_pass')
 				];
 				$this->_model->insert('link', $insData);
 				$insId      = $this->_model->id();

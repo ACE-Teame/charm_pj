@@ -1,7 +1,8 @@
 <?php 
 namespace app\core;
+
 use system\core\Controller;
-// use system\core\Session;
+use Detection\MobileDetect;
 /**
  * 公共控制器
  */
@@ -14,13 +15,60 @@ class C_Controller extends Controller
 		if(empty($this->_model)) {
 			$this->_model =& model();
 		}
+
 		session_start();
+		dump($_SESSION);
+		if(!isset($_SESSION['is_url_check'])) {
+			$this->_check_domain();
+		}
 		if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])) {
 			redirect('common/login');
 		}
 		$this->setMenu();
 	}
 
+	/**
+	 * 检测当前域名的可跳转性
+	 */
+	private function _check_domain()
+	{
+		if(strpos($_SERVER['HTTP_HOST'], ':') === FALSE) {
+			$urlName = trim($_SERVER['HTTP_HOST'], '/');
+		}else {
+			$urlName = explode(':', $_SERVER['HTTP_HOST'])[0];
+		}
+		// dump($urlName);
+		$domainId = $this->_model->select('domain', 'id', ['url' => $urlName, 'LIMIT' => 1])[0];
+		
+		// dump($domainId);
+		if($domainId) {
+			$ontLink = $this->_model->select('link', ['id', 'referral_link', 'audit_link', 'is_pass'], [
+				'domain_id'    => $domainId,
+				'orginal_link' => get('c'),
+				'LIMIT'        => 1
+				])[0];
+			
+			if($ontLink) {
+				$_SESSION['is_url_check'] = 1;
+				$detector = new MobileDetect();
+				if($detector->isMobile() === false) {
+
+				}
+			}else {
+				$_SESSION['is_url_check'] = 0;
+				view('error');
+			}
+		}else {
+			if($urlName != 'link.teamtoptech.com') {
+			// if($urlName != 'charmpj.com') {
+				$_SESSION['is_url_check'] = 0;
+				view('error');
+			}else {
+				$_SESSION['is_url_check'] = 1;
+			}
+		}
+	}
+	
 	/**
 	 * 设置当前用户的菜单数据到SESSION && 赋值menuData
 	 */
