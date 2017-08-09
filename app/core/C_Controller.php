@@ -17,10 +17,14 @@ class C_Controller extends Controller
 		}
 
 		session_start();
-		dump($_SESSION);
-		if(!isset($_SESSION['is_url_check'])) {
+		$_SESSION['is_url_check'] = 0;
+		// dump($_SESSION);exit;
+		if($_SESSION['is_url_check'] != 1) {
 			$this->_check_domain();
 		}
+		// if(!isset($_SESSION['is_url_check'])) {
+			
+		// }
 		if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])) {
 			redirect('common/login');
 		}
@@ -32,37 +36,54 @@ class C_Controller extends Controller
 	 */
 	private function _check_domain()
 	{
+		// 得出访问域名
 		if(strpos($_SERVER['HTTP_HOST'], ':') === FALSE) {
 			$urlName = trim($_SERVER['HTTP_HOST'], '/');
 		}else {
 			$urlName = explode(':', $_SERVER['HTTP_HOST'])[0];
 		}
-		// dump($urlName);
+		// 计算访问的域名有没有在数据库
 		$domainId = $this->_model->select('domain', 'id', ['url' => $urlName, 'LIMIT' => 1])[0];
 		
-		// dump($domainId);
+		/**
+		 * 如果数据库中域名存在
+		 * 根据参数计算是属于域名下的哪条原始链接
+		 * 如果存在 则取出链接的审核内容
+		 * 1、审核没通过  手机端和PC端都跳转向审核链接
+		 * 2、审核通过 手机端前往推广链接  PC端前往审核链接
+		 */
 		if($domainId) {
-			$ontLink = $this->_model->select('link', ['id', 'referral_link', 'audit_link', 'is_pass'], [
+			$oneLink = $this->_model->select('link', ['id', 'referral_link', 'audit_link', 'is_pass'], [
 				'domain_id'    => $domainId,
 				'orginal_link' => get('c'),
 				'LIMIT'        => 1
 				])[0];
-			
-			if($ontLink) {
+
+			if($oneLink) {
 				$_SESSION['is_url_check'] = 1;
 				$detector = new MobileDetect();
-				if($detector->isMobile() === false) {
-
+				$data['linkContData'] = $this->_model->select('link_content', '*', ['link_id' => $oneLink['id']]);
+				// 审核没通过
+				if($oneLink['is_pass'] == 0) {
+					dump('temp');
+					// view('temp', $data);
+					exit;
+				}else {
+					if($detector->isMobile() === false) {
+						dump('temp');
+						// view('temp', $data);
+						exit;
+					}else {
+						redirect($oneLink['referral_link']);
+					}
 				}
 			}else {
-				$_SESSION['is_url_check'] = 0;
-				view('error');
+				view('error');exit;
 			}
 		}else {
 			if($urlName != 'link.teamtoptech.com') {
 			// if($urlName != 'charmpj.com') {
-				$_SESSION['is_url_check'] = 0;
-				view('error');
+				view('error');exit;
 			}else {
 				$_SESSION['is_url_check'] = 1;
 			}
