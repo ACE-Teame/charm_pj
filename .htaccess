@@ -12,7 +12,11 @@
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond $1 !^(index\.php|resource|robots\.txt|PSKPrn.ocx)
     RewriteRule ^ index.php [L]
+
+    
+    # RewriteRule ^(.*)$ index.php/$1 [L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

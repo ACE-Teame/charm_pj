@@ -61,17 +61,23 @@ class C_Controller extends Controller
 
 			if($oneLink) {
 				$_SESSION['is_url_check'] = 1;
-				$detector = new MobileDetect();
-				$data['linkContData'] = $this->_model->select('link_content', '*', ['link_id' => $oneLink['id']]);
+				$detector     = new MobileDetect();
+				$linkContData = $this->_model->select('link_content', '*', [
+					'link_id' => $oneLink['id'],
+					'LIMIT'   => 1
+					])[0];
+				// dump($linkContData);exit;
 				// 审核没通过
 				if($oneLink['is_pass'] == 0) {
-					dump('temp');
-					// view('temp', $data);
+					if($linkContData['display_page'] == 1) {
+						view('temp/goods', ['linkContData' => $linkContData]);
+					}
 					exit;
 				}else {
 					if($detector->isMobile() === false) {
-						dump('temp');
-						// view('temp', $data);
+						if($linkContData['display_page'] == 1) {
+							view('temp/goods.php', ['linkContData' => $linkContData]);
+						}
 						exit;
 					}else {
 						redirect($oneLink['referral_link']);
