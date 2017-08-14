@@ -18,13 +18,10 @@ class C_Controller extends Controller
 
 		session_start();
 		$_SESSION['is_url_check'] = 0;
-		// dump($_SESSION);exit;
 		if($_SESSION['is_url_check'] != 1) {
 			$this->_check_domain();
 		}
-		// if(!isset($_SESSION['is_url_check'])) {
-			
-		// }
+		
 		if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])) {
 			redirect('common/login');
 		}
