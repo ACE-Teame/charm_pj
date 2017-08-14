@@ -1,6 +1,3 @@
-<?php 
-dump($linkContData);
- ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
