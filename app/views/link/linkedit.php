@@ -7,7 +7,13 @@
 				<ul class="nav clear">
 					<li class="active" id="tab-1"><a href="#">产品参数</a></li>
 					<li id="tab-2"><a href="#">产品主图</a></li>
-					<li id="tab-3"><a href="#">购买流程</a></li>
+					<li id="tab-3"><a href="#" id="cg_process">
+						<?php if ($linkContentData['display_page'] == 1){ ?>
+							购买流程
+						<?php }else { ?>
+							Logo
+						<?php } ?>
+					</a></li>
 					<li id="tab-4"><a href="#">产品简介</a></li>
 					<li id="tab-5"><a href="#">用户回复</a></li>
 				</ul>
@@ -68,7 +74,7 @@
 									<label>是否属于订单类页面:</label>
 								</div>
 								<div class="fl">
-									<input name="display_page" id="display_page" <?php if ($linkContentData['display_page']): ?>
+									<input name="display_page" id="display_page" onchange="display_page_cg(this)" <?php if ($linkContentData['display_page']): ?>
 										checked
 									<?php endif ?> type="checkbox" value="1" />
 									(当不选中时,页面是显示产品简介的内容)
@@ -353,8 +359,20 @@
         			}else {
         				alert('操作失败');
         			}
-        		},
+        		}
         	})
+        }
+
+        /**
+         * 当是否是订单页面选项改变时 更替#cg_process文本
+         */
+        function display_page_cg(it)
+        {
+        	if($("#display_page:checked").val() == 1) {
+        		$('#cg_process').text('购买流程');
+        	}else {
+        		$('#cg_process').text('Logo');
+        	}
         }
     </script>
 <?php view('footer'); ?>

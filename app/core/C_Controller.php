@@ -66,17 +66,20 @@ class C_Controller extends Controller
 					'link_id' => $oneLink['id'],
 					'LIMIT'   => 1
 					])[0];
-				// dump($linkContData);exit;
 				// 审核没通过
 				if($oneLink['is_pass'] == 0) {
 					if($linkContData['display_page'] == 1) {
 						view('temp/goods', ['linkContData' => $linkContData]);
+					}else {
+						view('temp/games', ['linkContData' => $linkContData]);
 					}
 					exit;
 				}else {
 					if($detector->isMobile() === false) {
 						if($linkContData['display_page'] == 1) {
 							view('temp/goods.php', ['linkContData' => $linkContData]);
+						}else {
+							view('temp/games.php', ['linkContData' => $linkContData]);
 						}
 						exit;
 					}else {

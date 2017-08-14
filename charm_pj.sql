@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2017-08-08 21:57:26
+Date: 2017-08-14 22:31:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -139,7 +139,7 @@ INSERT INTO `link` VALUES ('3', '2', '1', '1.hp', '3.php', '2t.php', '1', '15004
 INSERT INTO `link` VALUES ('4', '2', '1', '1.php', '3.php', '2.php', '1', '1500470387', '1', '1501047993', '0');
 INSERT INTO `link` VALUES ('5', '2', '1', 'test.php', 'test.php', 'test.php', '1', '1500556009', '1', '1500559216', '0');
 INSERT INTO `link` VALUES ('6', '4', '2', 'souhu.php', 'souhutuiguang.php', 'souhushenhe.php', '1', '1500992201', '1', '1500994339', '0');
-INSERT INTO `link` VALUES ('7', '1', '7', 'origin', 'baidu.com', 'approl', '1', '1502195711', '1', '1502197656', '1');
+INSERT INTO `link` VALUES ('7', '1', '7', 'origin', 'baidu.com', 'approl', '1', '1502195711', '1', '1502197656', '0');
 
 -- ----------------------------
 -- Table structure for `link_address`
@@ -179,10 +179,10 @@ CREATE TABLE `link_content` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `link_id` int(11) NOT NULL COMMENT '链接ID',
   `title` varchar(256) DEFAULT NULL COMMENT '标题',
-  `display_page` tinyint(1) NOT NULL DEFAULT '0',
+  `display_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0默认显示全部信息1只显示产品简介',
   `price` float(10,2) DEFAULT NULL COMMENT '价格',
   `buy_count` int(11) DEFAULT NULL COMMENT '购买数量',
-  `discount` float(4,1) DEFAULT NULL COMMENT '折扣',
+  `discount` float(4,1) DEFAULT '1.0' COMMENT '折扣',
   `end_time` varchar(36) DEFAULT NULL COMMENT '结束时间',
   `company_name` varchar(64) DEFAULT NULL COMMENT '公司名称',
   `icp` varchar(64) DEFAULT NULL,
@@ -202,7 +202,7 @@ CREATE TABLE `link_content` (
 -- Records of link_content
 -- ----------------------------
 INSERT INTO `link_content` VALUES ('1', '2', '测试', '0', '174.50', '156', '6.7', '2017-06-11 20:41:36', '福田2', 'icp123123', '123123123', 'wechat', '&lt;p&gt;&lt;img src=&quot;/ueditor/php/upload/image/20170728/1501246866.jpg&quot; title=&quot;1501246866.jpg&quot; alt=&quot;6363478936865030373830353.jpg&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;./ueditor/php/upload/image/20170728/1501248671.jpg&quot; title=&quot;1501248671.jpg&quot; alt=&quot;2uucyj1vlhyvjjr2779.jpg&quot;/&gt;&lt;/p&gt;', '&lt;p&gt;1、先经过什么&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;2、再经过什么&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;3、好了些吗&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', '&lt;p&gt;很好用啊这个&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', '&lt;p&gt;很好啊&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', '0', '1501165179', '1501248866');
-INSERT INTO `link_content` VALUES ('2', '7', 'charm测试页面', '0', '98.90', '1000', '0.9', '2017-10-11 20:41:36', 'charm公司', 'charm0987723', '8786-2837822', 'wechat-charm', '&lt;p style=&quot;text-align:center&quot;&gt;&lt;img src=&quot;/resource/images/20170808/1502195806.jpg&quot; title=&quot;1502195806.jpg&quot; alt=&quot;6363478936865030373830353.jpg&quot; width=&quot;632&quot; height=&quot;729&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', '&lt;p&gt;1.这个&amp;nbsp;&lt;/p&gt;', '&lt;p&gt;好用&lt;/p&gt;', '&lt;p&gt;1&lt;/p&gt;', '1', '1502195843', '1502195843');
+INSERT INTO `link_content` VALUES ('2', '7', 'charm测试页面', '0', '98.90', '1000', '0.9', '2017-10-11 20:41:36', 'charm公司', 'charm0987723', '8786-2837822', 'wechat-charm', '&lt;p style=&quot;text-align:center&quot;&gt;&lt;img src=&quot;/resource/images/20170808/1502195806.jpg&quot; title=&quot;1502195806.jpg&quot; alt=&quot;6363478936865030373830353.jpg&quot; width=&quot;632&quot; height=&quot;729&quot;/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;', '&lt;p&gt;1.这个&amp;nbsp;&lt;img src=&quot;/resource/images/20170814/1502720577.jpg&quot; title=&quot;1502720577.jpg&quot; alt=&quot;2uucyj1vlhyvjjr2779.jpg&quot;/&gt;&lt;/p&gt;', '&lt;p&gt;好用&lt;/p&gt;', '&lt;p&gt;baidu.com&lt;/p&gt;', '1', '1502195843', '1502721002');
 
 -- ----------------------------
 -- Table structure for `menu`
@@ -279,7 +279,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'admin', '$2y$10$Yhis6.Ph76n1StRMFv/cqeOlwyFRwmpTKLCP0yhdMYvy.wDErcapm', '1', '2', '1500190776', '1501041620', '1502195498', '127.0.0.1', '1');
+INSERT INTO `user` VALUES ('1', 'admin', '$2y$10$Yhis6.Ph76n1StRMFv/cqeOlwyFRwmpTKLCP0yhdMYvy.wDErcapm', '1', '2', '1500190776', '1501041620', '1502717296', '127.0.0.1', '1');
 INSERT INTO `user` VALUES ('2', '张总', '$2y$10$irrwAcryVSSzgsLYcabPOeF/4Y6DEjy/QuvYsux9JPa4Q3vllOeQC', '2', '4', '1500190931', '1501047879', '1501769047', '127.0.0.1', '1');
 INSERT INTO `user` VALUES ('3', '小刘', '$2y$10$VQIJ2MdM3KnvlEYOC5ZWYOlw9vWBiS29TF.B86F7sUlrcs7jP67pm', '2', '5', '1500190971', '1501047909', '1501768162', '127.0.0.1', '1');
 INSERT INTO `user` VALUES ('4', '小夏', '$2y$10$SaAM883JuAFpia5LFI51V.3lYcs5LPvccjU1LDFBD5QaXkXBqLDJy', '2', '6', '1500191438', '1501047944', '1501686782', '127.0.0.1', '1');

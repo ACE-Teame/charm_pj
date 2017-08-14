@@ -4,36 +4,37 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-	<title>防水全自动机械表</title>
+	<title><?php echo $linkContData['title'] ?></title>
 	<?php echo css('goods/font/iconfont.css'); ?>
 	<?php echo css('goods/main.css'); ?>
 </head>
 <body>
 <div class="container">
-	<h1>防水全自动机械表</h1>
+	<h1><?php echo $linkContData['title'] ?></h1>
 	<section class="main-pic">
-		<img src="<?php echo base_url('resource/images/goods/1.jpg') ?>">
+		<!-- strip_tags去掉html标签 只保留img标签 需要更改请自行改之 -->
+		<?php echo strip_tags(htmlspecialchars_decode($linkContData['main_image']), '<img>') ?>
 	</section>
 	<section class="banner">
 		<div class="price">			
 			<ul class="list clear">
-				<li>￥398元</li>
+				<li>￥<?php echo $linkContData['price'] * $linkContData['discount'] ?></li>
 				<li>
 					<div class="title">原价</div>
-					<div class="number">398元</div>
+					<div class="number"><?php echo $linkContData['price'] ?></div>
 				</li>
 				<li>
 					<div class="title">折扣</div>
-					<div class="number">0</div>
+					<div class="number"><?php echo $linkContData['discount'] ?>0</div>
 				</li>
 				<li>
 					<div class="title">节省</div>
-					<div class="number">0</div>
+					<div class="number"><?php echo $linkContData['price'] - ($linkContData['price'] * $linkContData['discount']); ?></div>
 				</li>
 			</ul>
 
 			<ul class="time clear">
-				<li>8125人已购买</li>
+				<li><?php echo $linkContData['buy_count'] ?>人已购买</li>
 				<li>
 					<span id="_d">00</span>天
 				    <span id="_h">00</span>小时
@@ -47,14 +48,14 @@
 	</section>
 	<section>
 		<h2>购买流程</h2>
-		<div><img src="<?php echo base_url('resource/images/goods/5.jpg') ?>"></div>
-		<div><img src="<?php echo base_url('resource/images/goods/6.jpg') ?>"></div>
-		<div><img src="<?php echo base_url('resource/images/goods/7.jpg') ?>"></div>
+		<div>
+			<?php echo htmlspecialchars_decode($linkContData['process']) ?>
+		</div>
 	</section>
 	<section>
 		<h2>详细信息</h2>
 		<div class="swrap">
-			<ul class="item">		
+			<!-- <ul class="item">		
 				<li>显示方式: 指针式</li>
 				<li>表盘厚度: 12mm</li>
 				<li>表盘直径: 40mm</li>
@@ -63,11 +64,13 @@
 				<li>表壳材质: 精钢</li>
 				<li>颜色分类: 白面白壳皮带款 黑面白壳皮带款 白面咖壳皮带款 黑面咖壳皮带款 咖面咖色皮带款 白面白壳钢带款 黑面白壳钢带款 白面咖壳钢带款 黑面咖壳钢带款 咖面咖壳钢带款</li>
 				<li>表底类型: 普通</li>
-			</ul>
+			</ul> -->
+			<?php echo htmlspecialchars_decode($linkContData['description']) ?>
+
 		</div>
-		<div><img src="<?php echo base_url('resource/images/goods/2.jpg') ?>"></div>
+		<!-- <div><img src="<?php echo base_url('resource/images/goods/2.jpg') ?>"></div>
 		<div><img src="<?php echo base_url('resource/images/goods/3.jpg') ?>"></div>
-		<div><img src="<?php echo base_url('resource/images/goods/4.jpg') ?>"></div>
+		<div><img src="<?php echo base_url('resource/images/goods/4.jpg') ?>"></div> -->
 	</section>
 
 	<section class="order" id="order">
@@ -157,8 +160,8 @@
 
 	<footer>
 		<div style="text-align: center"><img src="<?php echo base_url('resource/images/goods/foot.png') ?>"></div>
-		<p>深圳名创钟表有限公司</p>
-		<p>京ICP备15020340号-1</p>
+		<p><?php echo $linkContData['company_name'] ?></p>
+		<p><?php echo $linkContData['icp'] ?></p>
 	</footer>
 	<nav>
 		<ul class="menu clear">
@@ -179,7 +182,9 @@
 		var date = new Date();  
 		var now = date.getTime();  
 		//设置截止时间  
-		var endDate = new Date("2017-08-25 23:23:23");  
+		var endDate = new Date("<?php echo $linkContData['end_time'] ?>");  
+
+
 		var end = endDate.getTime();  
 		//时间差  
 		var leftTime = end - now;  
@@ -240,10 +245,11 @@
 	      setTotal();  
 	    })  
 	  	function setTotal(){  
+	  		var total = <?php echo $linkContData['price'] * $linkContData['discount'] ?>;
 	  		if(t.val() < 0){
-	  			$("#total").val(398);
+	  			$("#total").val(total);
 	  		}else{
-	      		$("#total").val((parseInt(t.val()) * 398).toFixed(2));  
+	      		$("#total").val((parseInt(t.val()) * total).toFixed(2));  
 	  		}
 	    }  
 	    setTotal();  
