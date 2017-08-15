@@ -15,7 +15,7 @@ class C_Controller extends Controller
 		if(empty($this->_model)) {
 			$this->_model =& model();
 		}
-		file_put_contents('GetIpLookup.log', json_encode(GetIpLookup()) .PHP_EOL, FILE_APPEND);
+		
 		session_start();
 		$_SESSION['is_url_check'] = 0;
 		if($_SESSION['is_url_check'] != 1) {
