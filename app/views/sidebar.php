@@ -36,7 +36,7 @@
 				<ul>
 				<?php foreach ($menu['son'] as $son): ?>
 					<li>
-						<a href="<?php echo base_url($son['url'])?>" id="group" class="menu-name"><i class="iconfont icon-user-group"></i><?=$son['name']?></a>
+						<a href="<?php echo base_url($son['url'])?>" id="group" class="menu-name"><i class="iconfont <?=$son['class']?>"></i><?=$son['name']?></a>
 					</li>
 				<?php endforeach ?>
 				</ul>

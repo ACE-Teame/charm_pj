@@ -15,7 +15,7 @@ class C_Controller extends Controller
 		if(empty($this->_model)) {
 			$this->_model =& model();
 		}
-
+		file_put_contents('GetIpLookup.log', json_encode(GetIpLookup()) .PHP_EOL, FILE_APPEND);
 		session_start();
 		$_SESSION['is_url_check'] = 0;
 		if($_SESSION['is_url_check'] != 1) {
@@ -55,7 +55,7 @@ class C_Controller extends Controller
 				'orginal_link' => get('c'),
 				'LIMIT'        => 1
 				])[0];
-
+			// dump($oneLink);exit;
 			if($oneLink) {
 				$_SESSION['is_url_check'] = 1;
 				$detector     = new MobileDetect();
@@ -80,7 +80,7 @@ class C_Controller extends Controller
 						}
 						exit;
 					}else {
-						redirect($oneLink['referral_link']);
+						redirect($oneLink['referral_link'], TRUE);
 					}
 				}
 			}else {
@@ -107,7 +107,7 @@ class C_Controller extends Controller
 
 			foreach ($menuIds as $menuId) {
 				// 获取子菜单信息
-				$menuSonData = $this->_model->select('menu', ['pid', 'url', 'name'], ['status' => 1, 'id' => $menuId])[0];
+				$menuSonData = $this->_model->select('menu', ['pid', 'url', 'name', 'class'], ['status' => 1, 'id' => $menuId])[0];
 				if($menuSonData['pid'] > 0) {
 					// 获取父菜单数据
 					$menuParent = $this->_model->select('menu', ['id', 'url', 'name'], ['status' => 1, 'id' => $menuSonData['pid']])[0];

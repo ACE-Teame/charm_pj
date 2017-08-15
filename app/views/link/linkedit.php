@@ -40,6 +40,17 @@
 									</select>
 								</div><br>
 							</div>
+							
+							<?php if ($leader_name): ?>
+							<div class="entry clear" id="domaindiv">
+								<div class="fl">
+									<label>负责人:</label>
+								</div>
+								<div class="fl">
+									<input type="text" name="leader_name" id="leader_name" value="<?=$leader_name?>" readonly="readonly">
+								</div><br>
+							</div>	
+							<?php endif ?>
 
 							<?php if ($domainSonLink): ?>
 							<div class="entry clear" id="domaindiv">
@@ -57,16 +68,6 @@
 									</select>
 								</div><br>
 							</div>
-							<?php endif ?>
-							<?php if ($leader_name): ?>
-							<div class="entry clear" id="domaindiv">
-								<div class="fl">
-									<label>负责人:</label>
-								</div>
-								<div class="fl">
-									<input type="text" name="leader_name" id="leader_name" value="<?=$leader_name?>" readonly="readonly">
-								</div><br>
-							</div>	
 							<?php endif ?>
 							
 							<div class="entry clear">

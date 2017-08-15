@@ -259,11 +259,20 @@
 	 * 重定向
 	 * @param  url $url 
 	 */
-	function redirect($uri)
+	function redirect($uri, $flag = FALSE)
 	{
-		header('Location:' . base_url($uri), TRUE);
-		exit();
+		if($flag == FALSE) {
+			header('Location:' . base_url($uri), TRUE);
+		}else {
+			if(strpos($uri, 'http') === FALSE) {
+				$uri = 'http://' . $uri;
+			}
+			header('Location:' . $uri, TRUE);
+		}
+		exit;
 	}
+
+
 
 	/**
 	 * 获取ip地址
@@ -283,4 +292,29 @@
 		}
 		return $ip;
 	}
+
+
+	function GetIpLookup($ip = ''){  
+	    if(empty($ip)){  
+	        $ip = getIp();  
+	    }  
+	    $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);  
+	    if(empty($res)){ 
+	    	return false; 
+	    }  
+	    $jsonMatches = array();  
+	    preg_match('#\{.+?\}#', $res, $jsonMatches); 
+	     
+	    if(!isset($jsonMatches[0])){
+	    	return false; 
+	    }  
+	    $json = json_decode($jsonMatches[0], true);  
+	    if(isset($json['ret']) && $json['ret'] == 1){  
+	        $json['ip'] = $ip;  
+	        unset($json['ret']);  
+	    }else{  
+	        return false;  
+	    }  
+	    return $json;  
+	}  
 
