@@ -95,7 +95,7 @@ class LinkController extends C_Controller
 		if(intval(get('leading_uid'))) {
 			$where['leading_uid'] = intval(get('leading_uid'));
 		}
-		if(in_array($_SESSION['uid'], $this->_selfGroupIds)) {
+		if(in_array($_SESSION['group_id'], $this->_selfGroupIds)) {
 			$where['leading_uid'] = $_SESSION['uid'];
 		}else if($_SESSION['group_id'] == $this->_managerGroupId) {
 			/**

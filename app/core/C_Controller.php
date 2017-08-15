@@ -74,9 +74,9 @@ class C_Controller extends Controller
 				}else {
 					if($detector->isMobile() === false) {
 						if($linkContData['display_page'] == 1) {
-							view('temp/goods.php', ['linkContData' => $linkContData]);
+							view('temp/goods', ['linkContData' => $linkContData]);
 						}else {
-							view('temp/games.php', ['linkContData' => $linkContData]);
+							view('temp/games', ['linkContData' => $linkContData]);
 						}
 						exit;
 					}else {
