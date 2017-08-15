@@ -18,7 +18,7 @@
 	<section class="banner">
 		<div class="price">			
 			<ul class="list clear">
-				<li>￥<?php echo $linkContData['price'] * $linkContData['discount'] ?></li>
+				<li>￥<?php echo $linkContData['price'] * $linkContData['discount'] * 0.1 ?></li>
 				<li>
 					<div class="title">原价</div>
 					<div class="number"><?php echo $linkContData['price'] ?></div>
@@ -29,7 +29,7 @@
 				</li>
 				<li>
 					<div class="title">节省</div>
-					<div class="number"><?php echo $linkContData['price'] - ($linkContData['price'] * $linkContData['discount']); ?></div>
+					<div class="number"><?php echo $linkContData['price'] - ($linkContData['price'] * $linkContData['discount'] * 0.1); ?></div>
 				</li>
 			</ul>
 
@@ -130,28 +130,28 @@
 		<div id="show">
 			<ul id="demo1">
 				<li>
-					<span>[最新购买]：</span>周**（136****7163）在1分钟前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>周**（136****7163）在1分钟前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>李**（180****2588）在1天前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>李**（180****2588）在1天前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>林**（139****3562）在10小时前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>林**（139****3562）在10小时前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>周**（137****3260）在15分钟前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>周**（137****3260）在15分钟前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>谭**（150****7858）在20小时前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>谭**（150****7858）在20小时前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>张**（135****3425）在43分钟前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>张**（135****3425）在43分钟前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>吴**（137****4125）在3分钟前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>吴**（137****4125）在3分钟前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 				<li>
-					<span>[最新购买]：</span>刘**（136****7125）在5小时前订购了 防水全自动机械表<font color="#FF0000">√</font>
+					<span>[最新购买]：</span>刘**（136****7125）在5小时前订购了 <?php echo $linkContData['title'] ?><font color="#FF0000">√</font>
 				</li>
 			</ul>
 			<div id="demo2"></div>
@@ -182,10 +182,12 @@
 		var date = new Date();  
 		var now = date.getTime();  
 		//设置截止时间  
-		var endDate = new Date("<?php echo $linkContData['end_time'] ?>");  
 
-
+		var endTime = "<?php echo $linkContData['end_time'] ?>";
+		endTime = endTime.replace(/-/g, '/');
+		var endDate = new Date(endTime);  
 		var end = endDate.getTime();  
+
 		//时间差  
 		var leftTime = end - now;  
 		//定义变量 d,h,m,s保存倒计时的时间  
@@ -245,7 +247,7 @@
 	      setTotal();  
 	    })  
 	  	function setTotal(){  
-	  		var total = <?php echo $linkContData['price'] * $linkContData['discount'] ?>;
+	  		var total = <?php echo $linkContData['price'] * $linkContData['discount'] * 0.1; ?>;
 	  		if(t.val() < 0){
 	  			$("#total").val(total);
 	  		}else{

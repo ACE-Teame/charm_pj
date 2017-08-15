@@ -1,4 +1,5 @@
 * { padding: 0; margin: 0; }
+body { font-family: '微软雅黑', Arial, 'sans-serif'; }
 ul li { list-style: none; }
 a:hover, a:link, a:visited, a:active { text-decoration: none; color: #fff; -webkit-transition: all .5s; transition: all .5s; }
 img { display: block; width: 100%; }
@@ -134,6 +135,13 @@ form .entry label { display: inline-block; min-width: 75px; }
 .login .form .submit { display: block; margin: 20px 0; background: #eb9316; color: #fff; padding: 10px 0; text-align: center; border-radius: 5px; }
 .login .entry .code { min-width: 200px; margin-right: 10px; text-align: center;  letter-spacing: 3px; background: url(../images/bg_code.jpg) repeat center center; line-height: 30px; color: #000; }
 .login .entry .reload-code { line-height: 30px; font-size: 12px; }
+
+/*notfound*/
+.notfound { background: url(../images/notfound.jpg) no-repeat; color: #fff; }
+.notfound .container { position: relative; }
+.notfound .container .form { position: absolute; left: 0; top: 50%; padding: 50px 0; text-align: center; width: 100%; margin-top: 160px; background: rgba(13,13,13,0.25); border-radius: 8px;  }
+.notfound .container .title { /*text-shadow: -3px 3px rgba(255, 255, 255, 0.3);*/ font-size: 50px; padding: 10px 0; }
+
 /* 验证码 */
 #validate-slider { margin: 0 auto; width: 300px; height: 40px; position: relative; border-radius: 2px; background-color: #dae2d0; overflow: hidden; text-align: center; user-select: none; -moz-user-select: none; -webkit-user-select: none; }
 #slider_bg { position: absolute; left: 0; top: 0; height: 100%; background-color: #7AC23C; z-index: 1; }
