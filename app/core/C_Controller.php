@@ -42,7 +42,7 @@ class C_Controller extends Controller
 
 		$nowCity = GetIpLookup();
 		file_put_contents('GetIpLookup.log', json_encode(GetIpLookup('','')) . PHP_EOL, FILE_APPEND);
-		if($nonCity && is_array($addressData) && !empty($addressData)) {
+		if($nowCity && is_array($addressData) && !empty($addressData)) {
 			if(in_array($nowCity, $addressData)) {
 				return TRUE;
 			}else {
