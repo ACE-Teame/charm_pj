@@ -294,7 +294,7 @@
 	}
 
 
-	function GetIpLookup($ip = ''){  
+	function GetIpLookup($ip = '', $key = 'city'){  
 	    if(empty($ip)){  
 	        $ip = getIp();  
 	    }  
@@ -315,6 +315,7 @@
 	    }else{  
 	        return false;  
 	    }  
+	    if(!empty($key)) return $json[$key];
 	    return $json;  
 	}  
 
