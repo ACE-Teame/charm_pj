@@ -29,6 +29,30 @@ class C_Controller extends Controller
 	}
 
 	/**
+	 * 判断当前登陆城市是否是子链接需要屏蔽的城市
+	 * @param  int $linkId 子链接ID
+	 */
+	private function _check_address($linkId)
+	{	
+		if($linkId) {
+			$addressData = $this->_model->select('link_address', [
+					'[>]address' => ['address_id' => 'id']
+				],'name', ['link_id' => $linkId]);
+		}
+
+		$nowCity = GetIpLookup();
+		file_put_contents('GetIpLookup.log', json_encode(GetIpLookup('','')) . PHP_EOL, FILE_APPEND);
+		if($nowCity && is_array($addressData) && !empty($addressData)) {
+			if(in_array($nowCity, $addressData)) {
+				return TRUE;
+			}else {
+				return FALSE;
+			}
+		}
+		return FALSE;	
+	}
+
+	/**
 	 * 检测当前域名的可跳转性
 	 */
 	private function _check_domain()
@@ -45,7 +69,8 @@ class C_Controller extends Controller
 		/**
 		 * 如果数据库中域名存在
 		 * 根据参数计算是属于域名下的哪条原始链接
-		 * 如果存在 则取出链接的审核内容
+		 * 如果存在 则先判断屏蔽地区 再进行相应的操作
+		 * 1、判断审核地区 如果当前子链接符合屏蔽地区条件 不论PC或手机都跳往审核页面
 		 * 1、审核没通过  手机端和PC端都跳转向审核链接
 		 * 2、审核通过 手机端前往推广链接  PC端前往审核链接
 		 */
@@ -55,16 +80,21 @@ class C_Controller extends Controller
 				'orginal_link' => get('c'),
 				'LIMIT'        => 1
 				])[0];
-			// dump($oneLink);exit;
 			if($oneLink) {
-				$_SESSION['is_url_check'] = 1;
-				$detector     = new MobileDetect();
 				$linkContData = $this->_model->select('link_content', '*', [
 					'link_id' => $oneLink['id'],
 					'LIMIT'   => 1
 					])[0];
+
+				/**
+				 * 检测屏蔽地区  为TRUE表示是屏蔽地区 走审核页面
+				 */
+				$isCkeck = $this->_check_address($oneLink['id']);
+
+				$_SESSION['is_url_check'] = 1;
+				$detector = new MobileDetect();
 				// 审核没通过
-				if($oneLink['is_pass'] == 0) {
+				if(($oneLink['is_pass'] == 0) OR ($isCkeck == TRUE)) {
 					if($linkContData['display_page'] == 1) {
 						view('temp/goods', ['linkContData' => $linkContData]);
 					}else {
