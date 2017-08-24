@@ -4,7 +4,7 @@
 		<div class="main fr">
 			<h1>链接跳转</h1>
 			<div class="operate">
-				<a href="<?php //echo base_url('skip/skipEdit')?>" class="btn add">新增</a>
+				<!-- <a href="<?php //echo base_url('skip/skipEdit')?>" class="btn add">新增</a> -->
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
@@ -156,6 +156,7 @@
 							});
 						});
 						$('#orginal_link').val(data.linkData.orginal_link);
+						$('#orginal_link').attr('readonly', 'readonly');
 						$('#audit_link').val(data.linkData.audit_link);
 						$('#referral_link').val(data.linkData.referral_link);
 						$('#id').val(data.linkData.id);

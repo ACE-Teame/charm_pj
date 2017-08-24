@@ -30,7 +30,8 @@
 									<label>域名:</label>
 								</div>
 								<div class="fl">
-									<select name="domain_id" id="domain_id" onchange="change_domain(this)">
+									<!-- onchange="change_domain(this)" -->
+									<select name="domain_id" id="domain_id" >
 										<option value="">请选择</option>
 									<?php foreach ($domainData as $key => $domain): ?>
 										<option value="<?=$domain['id']?>" <?php if ($domain_id == $domain['id']): ?>
@@ -40,35 +41,33 @@
 									</select>
 								</div><br>
 							</div>
-							
-							<?php if ($leader_name): ?>
-							<div class="entry clear" id="domaindiv">
-								<div class="fl">
-									<label>负责人:</label>
-								</div>
-								<div class="fl">
-									<input type="text" name="leader_name" id="leader_name" value="<?=$leader_name?>" readonly="readonly">
-								</div><br>
-							</div>	
-							<?php endif ?>
 
-							<?php if ($domainSonLink): ?>
 							<div class="entry clear" id="domaindiv">
 								<div class="fl">
 									<label>链接名称:</label>
 								</div>
 								<div class="fl">
-									<select name="link_id" id="link_id" onchange="change_pdomain(this)">
+									<input type="text" name="orginal_link" id="orginal_link" value="<?=$orginal_link?>">
+								</div><br>
+							</div>
+
+							<div class="entry clear" id="domaindiv">
+								<div class="fl">
+									<label>负责人:</label>
+								</div>
+								<div class="fl">
+									<!-- onchange="change_pdomain(this)" -->
+									<select name="leader_uid" id="leader_uid" >
 										<option value="">请选择</option>
-									<?php foreach ($domainSonLink as $key => $sonLink): ?>
-										<option value="<?=$sonLink['id']?>" <?php if ($linkContentData['link_id'] == $sonLink['id']): ?>
-											selected
-										<?php endif ?> ><?=$sonLink['orginal_link']?></option>
-									<?php endforeach ?>
+										<?php if (is_array($leaderData) && !empty($leaderData)): ?>
+											<?php foreach ($leaderData as $key => $leader): ?>
+												<option value="<?=$leader['id']?>"><?=$leader['name']?></option>
+											<?php endforeach ?>
+										<?php endif ?>
+										
 									</select>
 								</div><br>
 							</div>
-							<?php endif ?>
 							
 							<div class="entry clear">
 								<div class="fl">
@@ -341,6 +340,7 @@
         	}
         	var display_page = $("#display_page:checked").val();
         	var is_show_time = $("#is_show_time:checked").val();
+        	// var domain_id 	 = $("#domain_id").val();
         	if(display_page == undefined) {
         		display_page = 0
         	}

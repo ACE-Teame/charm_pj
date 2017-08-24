@@ -11,8 +11,7 @@ use app\model\LinkModel;
  */
 class LinkController extends C_Controller
 {	
-	private $_selfGroupIds   = [5, 6];
-	private $_managerGroupId = 4;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -95,9 +94,9 @@ class LinkController extends C_Controller
 		if(intval(get('leading_uid'))) {
 			$where['leading_uid'] = intval(get('leading_uid'));
 		}
-		if(in_array($_SESSION['group_id'], $this->_selfGroupIds)) {
+		if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
 			$where['leading_uid'] = $_SESSION['uid'];
-		}else if($_SESSION['group_id'] == $this->_managerGroupId) {
+		}else if($_SESSION['group_id'] == $this->managerGroupId) {
 			/**
 			 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
 			 * 作为跳转链接里负责人的查询条件
@@ -204,14 +203,14 @@ class LinkController extends C_Controller
 			$where['company_name[~]']   = get('company_name');
 		}
 
-		if(in_array($_SESSION['group_id'], $this->_selfGroupIds)) {
+		if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
 			$linkIds = $this->_model->select('link', 'id', ['leading_uid' => $_SESSION['uid']]);
 			if($linkIds && is_array($linkIds)) {
 				$where['OR']   = [
 					'link_id' => $linkIds
 				];
 			}
-		}else if($_SESSION['group_id'] == $this->_managerGroupId) {
+		}else if($_SESSION['group_id'] == $this->managerGroupId) {
 			/**
 			 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
 			 * 通过人员ID作为负责人条件 查询取得链接跳转ID
@@ -279,6 +278,7 @@ class LinkController extends C_Controller
 	 */
 	public function linkEdit()
 	{
+
 		$linkContId = intval(get('id'));
 		if($linkContId) {
 			$linkContentData = $this->_model->select('link_content', '*', ['id' => $linkContId, 'LIMIT' => 1])[0];
@@ -305,12 +305,13 @@ class LinkController extends C_Controller
 				'domainSonLink'   => $domainSonLink,
 				'linkContentData' => $linkContentData
 			];
-
 		}
 		// 取出域名列表
 		$data['domainData'] = $this->_model->select('domain', ['id', 'domain']);
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
+		$data['leaderData'] = $this->byGroupGetUser();
+
 		view('link/linkedit', $data);
 	}
 
@@ -351,9 +352,25 @@ class LinkController extends C_Controller
 		if(post()) {
 			$postData = post();
 			if(empty(post('id'))){
-				unset($postData['id'], $postData['domain_id'], $postData['leader_name']);
+				
 				$postData['create_time'] = $postData['update_time'] = time();
-
+				if($postData['orginal_link']) { 
+					// 组装插入到链接跳转的数据
+					$insertLinkData = [
+						'leading_uid'    => $postData['leader_uid'],
+						'domain_id'      => $postData['domain_id'],
+						'orginal_link'   => $postData['orginal_link'],
+						'creat_uid'      => $_SESSION['uid'],
+						'last_edit_uid'  => $_SESSION['uid'],
+						'creat_time'     => time(),
+						'last_edit_time' => time(),
+					];
+					$insertId = $this->_model->insert('link', $insertLinkData);
+				}else {
+					unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
+				}
+				
+				dump($postData);exit;
 				$flag = $this->_model->insert('link_content', $postData);
 
 				if($flag) {

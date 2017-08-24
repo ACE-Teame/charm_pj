@@ -7,9 +7,39 @@ use Detection\MobileDetect;
  * 公共控制器
  */
 class C_Controller extends Controller
-{
+{	
+	/**
+	 * 生命模型对象变量
+	 */
 	public $_model;
+
+	/**
+	 * 声明菜单组静态变量
+	 */
 	public static $menuData;
+
+	/**
+	 * 声明登陆者管理组变量
+	 */
+	public static $loginGroupId;
+
+	/**
+	 * 最低级管理组ID
+	 */
+	public $selfGroupIds   = [5, 6];
+
+	/**
+	 * 优化师职位管理组ID
+	 */
+	public $managerGroupId = 4;
+
+	/**
+	 * 最高权限组ID
+	 * @var integer
+	 */
+	public $adminGroupId   = 2;
+
+
 	public function __construct() 
 	{
 		if(empty($this->_model)) {
@@ -24,6 +54,10 @@ class C_Controller extends Controller
 		
 		if(!isset($_SESSION['uid']) || empty($_SESSION['uid'])) {
 			redirect('common/login');
+		}
+		if(empty(self::$loginGroupId))
+		{
+			self::$loginGroupId = $_SESSION['group_id'];
 		}
 		$this->setMenu();
 	}
@@ -177,7 +211,19 @@ class C_Controller extends Controller
 
 		return $searchParam;
 	}
-	
+
+	public function byGroupGetUser($flag = TRUE)
+	{
+		// dump(self::$loginGroupId);
+		if(self::$loginGroupId == $this->adminGroupId) {
+			return $this->_model->select('user', ['id', 'name']);
+		}else if(self::$loginGroupId == $this->managerGroupId) {
+			
+		}else if(in_array(self::$loginGroupId, $this->selfGroupIds)) {
+
+		}else {
+			return FALSE;
+		}
+	}
 }
 
- ?>
