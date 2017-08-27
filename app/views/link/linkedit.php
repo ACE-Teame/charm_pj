@@ -61,7 +61,9 @@
 										<option value="">请选择</option>
 										<?php if (is_array($leaderData) && !empty($leaderData)): ?>
 											<?php foreach ($leaderData as $key => $leader): ?>
-												<option value="<?=$leader['id']?>"><?=$leader['name']?></option>
+												<option value="<?=$leader['id']?>" <?php if ($leader_id ==  $leader['id']): ?>
+													selected
+												<?php endif ?>><?=$leader['name']?></option>
 											<?php endforeach ?>
 										<?php endif ?>
 										
@@ -215,13 +217,13 @@
 								</div>
 							</div>
 					</div>
+					<input type="hidden" name="link_id" value="<?php echo $link_id; ?>">
 				</form>
 				<div class="operate">
 					<a href="javascript:;" class="btn save" onclick="save()">保存</a>
 					<a href="javascript:;" class="btn cancle">取消</a>
 				</div>
 			</div>
-
 		</div><!-- end main -->
 	</div><!-- end container -->
 	
