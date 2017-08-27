@@ -47,7 +47,7 @@ class LinkController extends C_Controller
 	 */
 	public function skip()
 	{
-		$data['userData']    = $this->_model->select('user', ['id', 'name']);
+		$data['userData']    = $this->byGroupGetUser();
 		$data['domainData']  = $this->_model->select('domain', ['id', 'domain']);
 		$data['addressData'] = $this->_model->select('address', ['id', 'name']);
 
@@ -267,7 +267,7 @@ class LinkController extends C_Controller
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
 		$data['pageList']  = $objPage->myde_write();
-		$data['userData']  = $this->_model->select('user', ['id', 'name']);
+		$data['userData']  = $this->byGroupGetUser();
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
 		view('link/link', $data);
@@ -298,8 +298,6 @@ class LinkController extends C_Controller
 			 * 4、子链接列表
 			 * 5、链接内容数据
 			 */
-			
-			dump($linkData);
 			$data = [
 				'id'               => $linkContId,
 				'domain_id'        => $linkData['domain_id'] ? $linkData['domain_id'] : $linkContentData['domain_id'],
@@ -315,7 +313,6 @@ class LinkController extends C_Controller
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
 		$data['leaderData'] = $this->byGroupGetUser();
-		dump($data);
 		view('link/linkedit', $data);
 	}
 

@@ -212,15 +212,26 @@ class C_Controller extends Controller
 		return $searchParam;
 	}
 
-	public function byGroupGetUser($flag = TRUE)
+	/**
+	 * 根据当前登录者组别 获取位于权限下的用户列表
+	 * @return array
+	 * @date(2017.8.27)
+	 */
+	public function byGroupGetUser()
 	{
-		// dump(self::$loginGroupId);
 		if(self::$loginGroupId == $this->adminGroupId) {
 			return $this->_model->select('user', ['id', 'name']);
 		}else if(self::$loginGroupId == $this->managerGroupId) {
-			
+			/**
+			 * 如果当前登录者 属于优化经理组 则取出部门下所有人员
+			 * 1、取出登陆者部门
+			 * 2、根据部门ID获取成员信息
+			 */
+			$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
+			return $this->_model->select('user', ['id', 'name'], ['section_id' => $loginSectionId]);
 		}else if(in_array(self::$loginGroupId, $this->selfGroupIds)) {
-
+			// 如果当前登陆者位于普通组别里 则只取出自己的数据
+			return $this->_model->select('user', ['id', 'name'], ['id' => $_SESSION['uid']]);
 		}else {
 			return FALSE;
 		}
