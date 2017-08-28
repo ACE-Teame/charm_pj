@@ -104,31 +104,16 @@ class C_Controller extends Controller
 		 * 如果数据库中域名存在
 		 * 根据参数计算是属于域名下的哪条原始链接
 		 * 如果存在 则先判断屏蔽地区 再进行相应的操作
-		 * 1、判断审核地区 如果当前子链接符合屏蔽地区条件 不论PC或手机都跳往审核页面
-		 * 1、审核没通过  手机端和PC端都跳转向审核链接
-		 * 2、审核通过 手机端前往推广链接  PC端前往审核链接
+		 * 1、判断当前域名c参数是否有值 如果没值说明是单一域名访问 直接查询link_content数据 进行模板赋值
+		 * 2、判断审核地区 如果当前子链接符合屏蔽地区条件 不论PC或手机都跳往审核页面
+		 * 3、审核没通过  手机端和PC端都跳转向审核链接
+		 * 4、审核通过 手机端前往推广链接  PC端前往审核链接
 		 */
 		if($domainId) {
-			$oneLink = $this->_model->select('link', ['id', 'referral_link', 'audit_link', 'is_pass'], [
-				'domain_id'    => $domainId,
-				'orginal_link' => get('c'),
-				'LIMIT'        => 1
-				])[0];
-			if($oneLink) {
-				$linkContData = $this->_model->select('link_content', '*', [
-					'link_id' => $oneLink['id'],
-					'LIMIT'   => 1
-					])[0];
-
-				/**
-				 * 检测屏蔽地区  为TRUE表示是屏蔽地区 走审核页面
-				 */
-				$isCkeck = $this->_check_address($oneLink['id']);
-
-				$_SESSION['is_url_check'] = 1;
-				$detector = new MobileDetect();
-				// 审核没通过
-				if(($oneLink['is_pass'] == 0) OR ($isCkeck == TRUE)) {
+			$c = get('c');
+			if(empty($c)){
+				$linkContData = $this->_model->select('link_content', '*', ['domain_id' => $domainId])[0];
+				if($linkContData && is_array($linkContData)) {
 					if($linkContData['display_page'] == 1) {
 						view('temp/goods', ['linkContData' => $linkContData]);
 					}else {
@@ -136,7 +121,29 @@ class C_Controller extends Controller
 					}
 					exit;
 				}else {
-					if($detector->isMobile() === false) {
+					view('error');exit;
+				}
+			}else {
+				$oneLink = $this->_model->select('link', ['id', 'referral_link', 'audit_link', 'is_pass'], [
+					'domain_id'    => $domainId,
+					'orginal_link' => $c,
+					'LIMIT'        => 1
+					])[0];
+				if($oneLink) {
+					$linkContData = $this->_model->select('link_content', '*', [
+						'link_id' => $oneLink['id'],
+						'LIMIT'   => 1
+						])[0];
+
+					/**
+					 * 检测屏蔽地区  为TRUE表示是屏蔽地区 走审核页面
+					 */
+					$isCkeck = $this->_check_address($oneLink['id']);
+
+					$_SESSION['is_url_check'] = 1;
+					$detector = new MobileDetect();
+					// 审核没通过
+					if(($oneLink['is_pass'] == 0) OR ($isCkeck == TRUE)) {
 						if($linkContData['display_page'] == 1) {
 							view('temp/goods', ['linkContData' => $linkContData]);
 						}else {
@@ -144,11 +151,20 @@ class C_Controller extends Controller
 						}
 						exit;
 					}else {
-						redirect($oneLink['referral_link'], TRUE);
+						if($detector->isMobile() === false) {
+							if($linkContData['display_page'] == 1) {
+								view('temp/goods', ['linkContData' => $linkContData]);
+							}else {
+								view('temp/games', ['linkContData' => $linkContData]);
+							}
+							exit;
+						}else {
+							redirect($oneLink['referral_link'], TRUE);
+						}
 					}
+				}else {
+					view('error');exit;
 				}
-			}else {
-				view('error');exit;
 			}
 		}else {
 			if($urlName != 'link.teamtoptech.com') {
