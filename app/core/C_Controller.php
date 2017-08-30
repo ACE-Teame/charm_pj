@@ -142,6 +142,12 @@ class C_Controller extends Controller
 
 					$_SESSION['is_url_check'] = 1;
 					$detector = new MobileDetect();
+					// 如果是PC端访问并且审核链接有值时 跳转到审核链接
+					if(($detector->isMobile() === false) && $oneLink['audit_link']) {
+						redirect($oneLink['audit_link'], TRUE);
+						exit;
+					}
+
 					// 审核没通过
 					if(($oneLink['is_pass'] == 0) OR ($isCkeck == TRUE)) {
 						if($linkContData['display_page'] == 1) {
