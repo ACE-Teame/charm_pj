@@ -116,14 +116,10 @@ class LinkController extends C_Controller
 	 */
 	public function add()
 	{
-
-		// dump(post());exit;
 		if(post()) {
 			$id = intval(post('id'));
 			if(!empty($id)) {
 				$uptData = [
-					'leading_uid'    => post('leading_uid'),
-					'domain_id'      => post('domain_id'),
 					'orginal_link'   => post('orginal_link'),
 					'referral_link'  => post('referral_link'),
 					'audit_link'     => post('audit_link'),
@@ -169,7 +165,17 @@ class LinkController extends C_Controller
 		$linkId = intval(get('id'));
 		if($linkId) {
 			$linkModel   = new \app\model\LinkModel();
-			$data['linkData']    = $linkModel->byPkGetInfo($linkId);
+			$linkData    = $linkModel->byPkGetInfo($linkId);
+			if($linkData['leading_uid']) {
+				$linkData['leading_name'] = $this->_model->select('user', 'name', ['id' => $linkData['leading_uid']])[0];
+			}
+
+			if($linkData['domain_id']) {
+				$linkData['domain'] = $this->_model->select('domain', 'domain', ['id' => $linkData['domain_id']])[0];
+			}
+			$data['linkData'] = $linkData;
+
+			// dump($data);exit;
 			$data['linkAddData'] = $linkModel->select('link_address', 'address_id', ['link_id' => $linkId]);
 			ajaxReturn($data);
 		}else {
@@ -303,7 +309,6 @@ class LinkController extends C_Controller
 				'domain_id'        => $linkData['domain_id'] ? $linkData['domain_id'] : $linkContentData['domain_id'],
 				'leader_id'        => $linkData['leading_uid'] ? $linkData['leading_uid'] : $linkContentData['leading_uid'],
 				'orginal_link'     => $linkData['orginal_link'],
-				// 'domainSonLink' => $domainSonLink,
 				'linkContentData'  => $linkContentData
 			];
 		}
@@ -346,6 +351,29 @@ class LinkController extends C_Controller
 	}
 
 	/**
+	 * 检查链接内容信息
+	 * @param  array $postData POST数据
+	 * @return json           
+	 */
+	private function _check_link_content($postData)
+	{
+		$linkId = intval(post('link_id'));
+		if(empty(intval($postData['domain_id']))) {
+			ajaxReturn(202, '请先选择域名');
+		}
+
+		if($postData['orginal_link']) {
+			$count = $this->_model->count('link',
+				['domain_id'   => intval($postData['domain_id']),
+				'orginal_link' => $postData['orginal_link'],
+				'id[!]' 	   => $linkId]);
+			if($count) {
+				ajaxReturn(202, '子链接重复');
+			}
+		}
+	}
+
+	/**
 	 * 通过ajax添加链接跳转内容
 	 */
 	public function ajax_add_link_content()
@@ -353,7 +381,9 @@ class LinkController extends C_Controller
 		if(post()) {
 			$postData = post();
 			if(empty(post('id'))){
-				
+				$this->_check_link_content($postData);
+
+				dump($postData);exit;
 				$postData['create_time'] = $postData['update_time'] = time();
 				if($postData['orginal_link']) { 
 					// 组装插入到链接跳转的数据
@@ -406,6 +436,7 @@ class LinkController extends C_Controller
 		$linkId     = intval(post('link_id')); // 获得链接跳转ID
 		if($linkContId) {
 			$postData = post();
+			$this->_check_link_content($postData);
 			/**
 			 * 如果linkId为空 orginal_link也为空的话表示 为单域名页面修改
 			 * 只修改link_content即可

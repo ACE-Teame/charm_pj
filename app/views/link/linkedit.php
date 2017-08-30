@@ -359,6 +359,8 @@
         			if(data.status == 200) {
         				alert(data.msg);
         				window.location.href = "<?php echo base_url('link/link')?>";
+        			}else if(data.status == 202){
+        				alert(data.msg);
         			}else {
         				alert('操作失败');
         			}

@@ -23,25 +23,29 @@
 					<div class="title">原价</div>
 					<div class="number"><?php echo $linkContData['price'] ?></div>
 				</li>
+				<?php if ($linkContData['is_show_time']): ?>
 				<li>
 					<div class="title">折扣</div>
 					<div class="number"><?php echo $linkContData['discount'] ?>0</div>
 				</li>
+				<?php endif ?>
 				<li>
 					<div class="title">节省</div>
 					<div class="number"><?php echo $linkContData['price'] - ($linkContData['price'] * $linkContData['discount'] * 0.1); ?></div>
 				</li>
 			</ul>
-
+			<?php if ($linkContData['is_show_time']): ?>
 			<ul class="time clear">
 				<li><?php echo $linkContData['buy_count'] ?>人已购买</li>
-				<li>
+				<li class="show_time">
 					<span id="_d">00</span>天
 				    <span id="_h">00</span>小时
 				    <span id="_m">00</span>分
 				    <span id="_s">00</span>秒
 		        </li>
 			</ul>
+			<?php endif ?>
+			
 		</div>
 		
 		<div class="buy"><a class="btn" href="#order">立即购买</a></div>
@@ -177,6 +181,9 @@
 <?php echo js('jquery.min.js'); ?>
 <?php echo js('distpicker.js'); ?>
 <script type="text/javascript">  
+	<?php if (empty($linkContData['is_show_time'])): ?>
+		$('.show_time').hide();
+	<?php endif ?>
 	function countTime() {  
 		//获取当前时间  
 		var date = new Date();  

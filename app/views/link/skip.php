@@ -90,11 +90,7 @@
 					</div>
 					<div class="entry">
 						<label>主域名:</label>
-						<select name="domain_id" id="domain_id">
-						<?php foreach ($domainData as $key => $domain): ?>
-							<option value ="<?=$domain['id']?>"><?=$domain['domain']?></option>
-						<?php endforeach ?>
-						</select>
+						<input type="text" name="domain" id="domain_name" value="" disabled='disabled' >
 					</div>
 					<div class="entry">
 						<label>原链接:</label>
@@ -118,11 +114,7 @@
 					</div>
 					<div class="entry">
 						<label>负责人:</label>
-						<select name="leading_uid" id="leading_uid" >
-						<?php foreach ($userData as $key => $user): ?>
-							<option value ="<?=$user['id']?>"><?=$user['name']?></option>
-						<?php endforeach ?>
-						</select> 
+						<input type="text" name="leading_name" id="leading_name" value="" disabled="disabled">
 					</div>
 					<div class="entry">
 						<label>是否生效</label>
@@ -160,13 +152,13 @@
 						$('#audit_link').val(data.linkData.audit_link);
 						$('#referral_link').val(data.linkData.referral_link);
 						$('#id').val(data.linkData.id);
-						$("#domain_id").find("option[value='"+data.linkData.domain_id+"']").attr("selected",true);
 						if(data.linkData.is_pass == 1) {
 							$('#is_pass').attr('checked', 'checked');
 						}else {
 							$('#is_pass').removeAttr('checked');
 						}
-						$("#domain_id").find("option[value='"+data.linkData.domain_id+"']").attr("selected",true);
+						$('#domain_name').val(data.linkData.domain);
+						$('#leading_name').val(data.linkData.leading_name);
 					}else {
 						alert('数据错误');
 					}
