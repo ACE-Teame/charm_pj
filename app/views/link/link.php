@@ -46,11 +46,32 @@
 					<?php foreach ($linkContentData as $key => $linkContent): ?>
 						<tr>
 							<td><?=$linkContent['id']?></td>
-							<td><a href="#" class="original-link"><?=$linkContent['url']?>/<?=$linkContent['orginal_link']?></a></td>
+							<td>
+								<a href="#" class="original-link">
+								<?php 
+									if(empty($linkContent['url'])) {
+										echo $model->select('domain', 'url', ['id' => $linkContent['domain_id']])[0];
+									}else {
+										echo $linkContent['url'];
+									}
+								 ?>
+								<?php if ($linkContent['orginal_link']): ?>
+									<?php echo '/' . $linkContent['orginal_link']; ?>
+								<?php endif ?>
+								</a>
+							</td>
 							<td><?=$linkContent['company_name']?></td>
 							<td class="tb-register-time"><?=get_date($linkContent['create_time'])?></td>
 							<td class="tb-modify-time"><?=get_date($linkContent['update_time'])?></td>
-							<td><?=$linkContent['name']?></td>
+							<td>
+							<?php 
+								if(empty($linkContent['name'])) {
+									echo $model->select('user', 'name', ['id' => $linkContent['leading_uid']])[0];
+								}else {
+									echo $linkContent['name'];
+								}
+							 ?>
+							</td>
 							<td>
 								<a href="<?php echo base_url('link/linkEdit') . '?id=' . $linkContent['id'] ?>" class="btn modify-link">修改</a>
 								<a href="#" class="btn delete" onclick="delete_by_id(<?=$linkContent['id']?>)">删除</a>

@@ -183,7 +183,7 @@ class C_Controller extends Controller
 			}
 		}else {
 			if($urlName != 'link.teamtoptech.com') {
-			// if($urlName != 'charmpj.com') {
+			// if($urlName != 'charm_pj.com') {
 				view('error');exit;
 			}else {
 				$_SESSION['is_url_check'] = 1;

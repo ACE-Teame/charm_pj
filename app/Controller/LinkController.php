@@ -267,6 +267,8 @@ class LinkController extends C_Controller
 				'link_content.company_name',
 				'link_content.create_time',
 				'link_content.update_time',
+				'link_content.leading_uid',
+				'link_content.domain_id',
 				'user.name'
 			], $where);
 		// 分页处理
@@ -276,6 +278,8 @@ class LinkController extends C_Controller
 		$data['userData']  = $this->byGroupGetUser();
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
+		$data['model'] = $this->_model;
+		dump($data);
 		view('link/link', $data);
 	}
 
