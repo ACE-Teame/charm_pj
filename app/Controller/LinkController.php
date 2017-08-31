@@ -482,6 +482,7 @@ class LinkController extends C_Controller
 			 */
 			}else if($linkId && $postData['orginal_link']){
 				$uptLink = [
+					'domain_id'      => $postData['domain_id'],
 					'leading_uid'    => $postData['leader_uid'],
 					'orginal_link'   => $postData['orginal_link'],
 					'last_edit_uid'  => $_SESSION['uid'],

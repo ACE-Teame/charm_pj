@@ -145,11 +145,11 @@ class C_Controller extends Controller
 
 					/**
 					 * 如果审核链接有内容
-					 * 1、当是PC端 跳转到审核链接
+					 * 1、当是PC端或者当前为屏蔽地区时 跳转到审核链接
 					 * 2、当是移动端 跳转到推广链接
 					 */
 					if( !empty($oneLink['audit_link']) ) {
-						if($detector->isMobile() === false) {
+						if(($detector->isMobile() === false) OR ($isCkeck == TRUE)) {
 							redirect($oneLink['audit_link'], TRUE);
 						}else {
 							redirect($oneLink['referral_link'], TRUE);
