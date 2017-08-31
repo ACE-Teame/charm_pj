@@ -203,31 +203,10 @@ class LinkController extends C_Controller
 	private function _getSearchLink()
 	{
 		if(get('user_id')) {
-			$where['leading_uid'] = get('user_id');
+			$where['link_content.leading_uid'] = get('user_id');
 		}
 		if(get('company_name')) {
-			$where['company_name[~]']   = get('company_name');
-		}
-
-		if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
-			$linkIds = $this->_model->select('link', 'id', ['leading_uid' => $_SESSION['uid']]);
-			if($linkIds && is_array($linkIds)) {
-				$where['OR']   = [
-					'link_id' => $linkIds
-				];
-			}
-		}else if($_SESSION['group_id'] == $this->managerGroupId) {
-			/**
-			 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
-			 * 通过人员ID作为负责人条件 查询取得链接跳转ID
-			 * 把链接跳转ID作为链接内容的查询条件
-			 */
-			$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
-			$userIds        = $this->_model->select('user', 'id', ['section_id' => $loginSectionId]);
-			$linkIds	    = $this->_model->select('link', 'id', ['OR' => ['leading_uid' => $userIds]]);
-			$where['OR']    = [
-					'link_id' => $linkIds
-				];
+			$where['link_content.company_name[~]']   = get('company_name');
 		}
 		return $where;
 	}
@@ -252,7 +231,6 @@ class LinkController extends C_Controller
 
 		$data['count']     = $this->_model->count('link_content', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
-
 		/**
 		 * 数据表关联 取出数据
 		 */
@@ -402,7 +380,8 @@ class LinkController extends C_Controller
 					$this->_model->insert('link', $insertLinkData);
 					$insertLinkId = $this->_model->id();
 					// 插入的跳转ID赋值到link_content的link_id字段
-					$postData['link_id'] = $insertLinkId;
+					$postData['link_id']     = $insertLinkId;
+					$postData['leading_uid'] = $postData['leader_uid'];
 					// 删除不需要的数据
 					unset($postData['id'], $postData['orginal_link'], $postData['leader_uid'], $postData['domain_id']);
 				}else {
@@ -466,6 +445,7 @@ class LinkController extends C_Controller
 				// 插入的跳转ID赋值到link_content的link_id字段
 				$postData['link_id']   = $insertLinkId;
 				$postData['domain_id'] = 0;
+				$postData['leading_uid'] = $postData['leader_uid'];
 				// 删除不需要的数据
 				unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
 
@@ -493,6 +473,7 @@ class LinkController extends C_Controller
 				];
 
 				$flag = $this->_model->update('link', $uptLink, ['id' => $linkId]);
+				$postData['leading_uid'] = $postData['leader_uid'];
 				unset($postData['id'], $postData['domain_id'], $postData['leader_uid']);
 
 			}

@@ -1,6 +1,6 @@
 <?php 
 
 return [
-	'PAGE_NUM' => 5
+	'PAGE_NUM' => 10
 ];
 
