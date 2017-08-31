@@ -279,7 +279,6 @@ class LinkController extends C_Controller
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
 		$data['model'] = $this->_model;
-		dump($data);
 		view('link/link', $data);
 	}
 
