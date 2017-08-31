@@ -382,8 +382,6 @@ class LinkController extends C_Controller
 			$postData = post();
 			if(empty(post('id'))){
 				$this->_check_link_content($postData);
-
-				dump($postData);exit;
 				$postData['create_time'] = $postData['update_time'] = time();
 				if($postData['orginal_link']) { 
 					// 组装插入到链接跳转的数据
