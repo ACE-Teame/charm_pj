@@ -32,7 +32,7 @@
 								<div class="fl" >
 									<!-- onchange="change_domain(this)" -->
 									<select name="domain_id" id="domain_id" <?php if (empty($isAdmin)): ?>
-										disabled="disabled"
+										readonly="readonly"
 									<?php endif ?>>
 										<option value="">请选择</option>
 									<?php foreach ($domainData as $key => $domain): ?>
