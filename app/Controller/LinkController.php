@@ -275,6 +275,10 @@ class LinkController extends C_Controller
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
 		$data['model'] = $this->_model;
+
+		if(parent::$loginGroupId == $this->adminGroupId) {
+			$data['isAdmin'] = TRUE;
+		}
 		view('link/link', $data);
 	}
 
@@ -317,6 +321,10 @@ class LinkController extends C_Controller
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
 		$data['leaderData'] = $this->byGroupGetUser();
+		
+		if(parent::$loginGroupId == $this->adminGroupId) {
+			$data['isAdmin'] = TRUE;
+		}
 		view('link/linkedit', $data);
 	}
 

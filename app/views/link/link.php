@@ -4,7 +4,9 @@
 		<div class="main fr">
 			<h1>链接内容</h1>
 			<div class="operate">
+				<?php if ($isAdmin): ?>
 				<a href="<?php echo base_url('link/linkEdit')?>" class="btn add-link">新增</a>
+				<?php endif ?>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 			<div class="search">

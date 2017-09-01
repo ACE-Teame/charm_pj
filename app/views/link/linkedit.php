@@ -29,9 +29,11 @@
 								<div class="fl">
 									<label>域名:</label>
 								</div>
-								<div class="fl">
+								<div class="fl" >
 									<!-- onchange="change_domain(this)" -->
-									<select name="domain_id" id="domain_id" >
+									<select name="domain_id" id="domain_id" <?php if (empty($isAdmin)): ?>
+										disabled="disabled"
+									<?php endif ?>>
 										<option value="">请选择</option>
 									<?php foreach ($domainData as $key => $domain): ?>
 										<option value="<?=$domain['id']?>" <?php if ($domain_id == $domain['id']): ?>
