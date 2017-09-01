@@ -321,7 +321,7 @@ class LinkController extends C_Controller
 		// 获取菜单列表
 		$data['menu']['menuData'] = self::$menuData;
 		$data['leaderData'] = $this->byGroupGetUser();
-		
+
 		if(parent::$loginGroupId == $this->adminGroupId) {
 			$data['isAdmin'] = TRUE;
 		}
@@ -365,8 +365,11 @@ class LinkController extends C_Controller
 	private function _check_link_content($postData)
 	{
 		$linkId = intval(post('link_id'));
-		if(empty(intval($postData['domain_id']))) {
-			ajaxReturn(202, '请先选择域名');
+
+		if(empty(post('isadmin'))) {
+			if(empty(intval($postData['domain_id']))) {
+				ajaxReturn(202, '请先选择域名');
+			}
 		}
 
 		if($postData['orginal_link']) {

@@ -351,7 +351,8 @@
         	if(is_show_time == undefined) {
         		is_show_time = 0
         	}
-        	var url_parma = '&display_page=' + display_page + '&is_show_time=' + is_show_time;
+        	var isadmin = '<?php echo $isAdmin?>';
+        	var url_parma = '&display_page=' + display_page + '&is_show_time=' + is_show_time + '&isadmin=' + isadmin;
         	$.ajax({
         		url: url,
         		type: 'POST',
