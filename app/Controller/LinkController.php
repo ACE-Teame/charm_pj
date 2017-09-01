@@ -515,6 +515,7 @@ class LinkController extends C_Controller
 			if( empty( post('isadmin') ) ) {
 				unset($postData['domain_id']);
 			}
+			unset($postData['isadmin']);
 			$flag = $this->_model->update('link_content', $postData, ['id' => $linkContId]);
 			if($flag) {
 				ajaxReturn(200, '修改成功');
