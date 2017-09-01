@@ -69,7 +69,7 @@
 					</div>
 					<div class="entry">
 						<label>域名:</label>
-						<input type="text" name="domain" id="domain" value="" placeholder="">
+						<input type="text" name="domain" id="domains" value="" placeholder="">
 					</div>
 					<div class="entry">
 						<label>地址</label>
@@ -94,7 +94,7 @@
 				$.get('<?=base_url('domain/get_by_pk')?>',{id:id}, function(data) {
 					if(data) {
 						$("#id").val(data.id);
-						$("#domain").val(data.domain);
+						$("#domains").val(data.domain);
 						$("#url").val(data.url);
 					}
 				}, 'JSON');
