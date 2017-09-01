@@ -469,7 +469,7 @@ class LinkController extends C_Controller
 					'creat_time'     => time(),
 					'last_edit_time' => time(),
 				];
-				if(empty(post('isadmin')) && isset($insertLinkData['domain_id'])) {
+				if( empty( post('isadmin') ) ) {
 					unset($insertLinkData['domain_id']);
 				}
 				$this->_model->insert('link', $insertLinkData);
@@ -503,7 +503,7 @@ class LinkController extends C_Controller
 					'last_edit_uid'  => $_SESSION['uid'],
 					'last_edit_time' => time()
 				];
-				if(empty(post('isadmin')) && isset($uptLink['domain_id'])) {
+				if( empty( post('isadmin') ) ) {
 					unset($uptLink['domain_id']);
 				}
 				$flag = $this->_model->update('link', $uptLink, ['id' => $linkId]);
@@ -512,7 +512,7 @@ class LinkController extends C_Controller
 
 			}
 			$postData['update_time'] = time();
-			if(empty(post('isadmin')) && isset($postData['domain_id'])) {
+			if( empty( post('isadmin') ) ) {
 				unset($postData['domain_id']);
 			}
 			$flag = $this->_model->update('link_content', $postData, ['id' => $linkContId]);
