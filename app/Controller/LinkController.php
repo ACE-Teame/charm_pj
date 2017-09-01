@@ -469,6 +469,9 @@ class LinkController extends C_Controller
 					'creat_time'     => time(),
 					'last_edit_time' => time(),
 				];
+				if(empty(post('isadmin')) && isset($insertLinkData['domain_id'])) {
+					unset($insertLinkData['domain_id']);
+				}
 				$this->_model->insert('link', $insertLinkData);
 				$insertLinkId = $this->_model->id();
 				// 插入的跳转ID赋值到link_content的link_id字段
@@ -500,13 +503,18 @@ class LinkController extends C_Controller
 					'last_edit_uid'  => $_SESSION['uid'],
 					'last_edit_time' => time()
 				];
-
+				if(empty(post('isadmin')) && isset($uptLink['domain_id'])) {
+					unset($uptLink['domain_id']);
+				}
 				$flag = $this->_model->update('link', $uptLink, ['id' => $linkId]);
 				$postData['leading_uid'] = $postData['leader_uid'];
 				unset($postData['id'], $postData['orginal_link'], $postData['domain_id'], $postData['leader_uid']);
 
 			}
 			$postData['update_time'] = time();
+			if(empty(post('isadmin')) && isset($postData['domain_id'])) {
+				unset($postData['domain_id']);
+			}
 			$flag = $this->_model->update('link_content', $postData, ['id' => $linkContId]);
 			if($flag) {
 				ajaxReturn(200, '修改成功');
