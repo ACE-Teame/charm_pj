@@ -366,7 +366,7 @@ class LinkController extends C_Controller
 	{
 		$linkId = intval(post('link_id'));
 
-		if(empty(post('isadmin'))) {
+		if(post('isadmin')) {
 			if(empty(intval($postData['domain_id']))) {
 				ajaxReturn(202, '请先选择域名');
 			}
