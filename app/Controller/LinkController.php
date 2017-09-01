@@ -58,7 +58,6 @@ class LinkController extends C_Controller
 		}
 		// 获得查询条件
 		$where = $this->_getSearch();
-		dump($where);
 		// 取得每页条数
 		$pageNum           = Config::get('PAGE_NUM', 'page');
 		// 计算偏移量
