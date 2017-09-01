@@ -58,6 +58,7 @@ class LinkController extends C_Controller
 		}
 		// 获得查询条件
 		$where = $this->_getSearch();
+		dump($where);
 		// 取得每页条数
 		$pageNum           = Config::get('PAGE_NUM', 'page');
 		// 计算偏移量
@@ -94,17 +95,20 @@ class LinkController extends C_Controller
 		if(intval(get('leading_uid'))) {
 			$where['leading_uid'] = intval(get('leading_uid'));
 		}
-		if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
-			$where['leading_uid'] = $_SESSION['uid'];
-		}else if($_SESSION['group_id'] == $this->managerGroupId) {
-			/**
-			 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
-			 * 作为跳转链接里负责人的查询条件
-			 */
-			$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
-			$userIds        = $this->_model->select('user', 'id', ['section_id' => $loginSectionId]);
-			$where['OR']    = ['leading_uid' => $userIds];
+		if( empty( get('leading_uid') ) ) {
+			if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
+				$where['leading_uid'] = $_SESSION['uid'];
+			}else if($_SESSION['group_id'] == $this->managerGroupId) {
+				/**
+				 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
+				 * 作为跳转链接里负责人的查询条件
+				 */
+				$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
+				$userIds        = $this->_model->select('user', 'id', ['section_id' => $loginSectionId]);
+				$where['OR']    = ['leading_uid' => $userIds];
+			}
 		}
+		
 
 		return $where;
 	}
@@ -208,6 +212,21 @@ class LinkController extends C_Controller
 		if(get('company_name')) {
 			$where['link_content.company_name[~]']   = get('company_name');
 		}
+
+		if( empty( get('user_id') ) ) {
+			if(in_array($_SESSION['group_id'], $this->selfGroupIds)) {
+				$where['link_content.leading_uid'] = $_SESSION['uid'];
+			}else if($_SESSION['group_id'] == $this->managerGroupId) {
+				/**
+				 * 如果当前登录者是优化经理职位 则取出同部门下的所有人员ID
+				 * 作为跳转链接里负责人的查询条件
+				 */
+				$loginSectionId = $this->_model->select('user', 'section_id', ['id' => $_SESSION['uid'], 'LIMIT' => 1])[0];
+				$userIds        = $this->_model->select('user', 'id', ['section_id' => $loginSectionId]);
+				$where['OR']    = ['link_content.leading_uid' => $userIds];
+			}
+		}
+		
 		return $where;
 	}
 
@@ -474,7 +493,7 @@ class LinkController extends C_Controller
 
 				$flag = $this->_model->update('link', $uptLink, ['id' => $linkId]);
 				$postData['leading_uid'] = $postData['leader_uid'];
-				unset($postData['id'], $postData['domain_id'], $postData['leader_uid']);
+				unset($postData['id'], $postData['orginal_link'], $postData['domain_id'], $postData['leader_uid']);
 
 			}
 			$postData['update_time'] = time();
