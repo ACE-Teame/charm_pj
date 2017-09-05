@@ -422,7 +422,7 @@ class LinkController extends C_Controller
 
 					unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
 				}
-				
+				unset($postData['isadmin']);
 				// 插入到链接内容表
 				$flag = $this->_model->insert('link_content', $postData);
 				
