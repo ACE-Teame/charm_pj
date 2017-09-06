@@ -4,7 +4,9 @@
 		<div class="main fr">
 			<h1>链接跳转</h1>
 			<div class="operate">
-				<!-- <a href="<?php //echo base_url('skip/skipEdit')?>" class="btn add">新增</a> -->
+				<?php if ($isAdmin): ?>
+					<a href="<?php echo base_url('skip/skipEdit')?>" class="btn add">新增</a>
+				<?php endif ?>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
@@ -90,11 +92,19 @@
 					</div>
 					<div class="entry">
 						<label>主域名:</label>
-						<input type="text" name="domain" id="domain_name" value="" disabled='disabled' >
+						<select name="domain_id" id="domain_id" <?php if (empty($isAdmin)): ?>
+							disabled='disabled'
+						<?php endif ?> >
+							<?php foreach ($domainData as $domain): ?>
+								<option value="<?php echo $domain['id']?>"><?php echo $domain['domain'] ?></option>
+							<?php endforeach ?>
+						</select>
 					</div>
 					<div class="entry">
 						<label>原链接:</label>
-						<input type="text" name="orginal_link" id="orginal_link" value="" placeholder="http://">
+						<input type="text" name="orginal_link" id="orginal_link" <?php if (empty($isAdmin)): ?>
+							readonly='readonly'
+						<?php endif ?> value="" placeholder="http://">
 					</div>
 					<div class="entry">
 						<label>审核链接</label>
@@ -114,7 +124,13 @@
 					</div>
 					<div class="entry">
 						<label>负责人:</label>
-						<input type="text" name="leading_name" id="leading_name" value="" disabled="disabled">
+						<select name="leading_uid" id="leading_uid" <?php if (empty($isAdmin)): ?>
+							disabled='disabled'
+						<?php endif ?> >
+							<?php foreach ($userData as $user): ?>
+								<option value="<?php echo $user['id']?>"><?php echo $user['name'] ?></option>
+							<?php endforeach ?>
+						</select>
 					</div>
 					<div class="entry">
 						<label>是否生效</label>
@@ -147,8 +163,12 @@
 								}
 							});
 						});
+						var isAdmin = <?php echo $isAdmin ? $isAdmin : 0 ?>;
 						$('#orginal_link').val(data.linkData.orginal_link);
-						$('#orginal_link').attr('readonly', 'readonly');
+						if(isAdmin == 0) {
+							$('#orginal_link').attr('readonly', 'readonly');
+						}
+						
 						$('#audit_link').val(data.linkData.audit_link);
 						$('#referral_link').val(data.linkData.referral_link);
 						$('#id').val(data.linkData.id);
@@ -157,8 +177,8 @@
 						}else {
 							$('#is_pass').removeAttr('checked');
 						}
-						$('#domain_name').val(data.linkData.domain);
-						$('#leading_name').val(data.linkData.leading_name);
+						$('#domain_id').val(data.linkData.domain_id);
+						$('#leading_uid').val(data.linkData.leading_uid);
 					}else {
 						alert('数据错误');
 					}

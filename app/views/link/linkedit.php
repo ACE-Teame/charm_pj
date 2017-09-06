@@ -44,7 +44,7 @@
 								</div><br>
 							</div>
 
-							<div class="entry clear" id="domaindiv">
+							<!-- <div class="entry clear" id="domaindiv">
 								<div class="fl">
 									<label>链接名称:</label>
 								</div>
@@ -52,14 +52,14 @@
 									<input type="text" name="orginal_link" id="orginal_link" value="<?=$orginal_link?>">
 								</div><br>
 							</div>
-
+ -->
 							<div class="entry clear" id="domaindiv">
 								<div class="fl">
 									<label>负责人:</label>
 								</div>
 								<div class="fl">
 									<!-- onchange="change_pdomain(this)" -->
-									<select name="leader_uid" id="leader_uid" >
+									<select name="leading_uid" id="leading_uid" >
 										<option value="">请选择</option>
 										<?php if (is_array($leaderData) && !empty($leaderData)): ?>
 											<?php foreach ($leaderData as $key => $leader): ?>

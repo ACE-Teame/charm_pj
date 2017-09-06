@@ -36,7 +36,7 @@
 					<thead>
 						<tr>
 							<th>序号</th>
-							<th>原链接</th>
+							<th>域名</th>
 							<th>公司名称</th>
 							<th class="tb-register-time">新建时间</th>
 							<th class="tb-modify-time">修改时间</th>
@@ -49,17 +49,20 @@
 						<tr>
 							<td><?=$linkContent['id']?></td>
 							<td>
-								<a href="#" class="original-link">
+								<a href="javascript:;" class="original-link">
 								<?php 
-									if(empty($linkContent['url'])) {
-										echo $model->select('domain', 'url', ['id' => $linkContent['domain_id']])[0];
-									}else {
-										echo $linkContent['url'];
-									}
+									echo $linkContent['domain'] . '-' . $linkContent['url'];
 								 ?>
-								<?php if ($linkContent['orginal_link']): ?>
-									<?php echo '/' . $linkContent['orginal_link']; ?>
-								<?php endif ?>
+								<?php 
+									// if(empty($linkContent['url'])) {
+									// 	echo $model->select('domain', 'url', ['id' => $linkContent['domain_id']])[0];
+									// }else {
+									// 	echo $linkContent['url'];
+									// }
+								 ?>
+								<?php //if ($linkContent['orginal_link']): ?>
+									<?php //echo '/' . $linkContent['orginal_link']; ?>
+								<?php //endif ?>
 								</a>
 							</td>
 							<td><?=$linkContent['company_name']?></td>
