@@ -111,8 +111,8 @@ class C_Controller extends Controller
 		 */
 		if($domainId) {
 			$c = get('c');
+			$linkContData = $this->_model->select('link_content', '*', ['domain_id' => $domainId])[0];
 			if(empty($c)){
-				$linkContData = $this->_model->select('link_content', '*', ['domain_id' => $domainId])[0];
 				if($linkContData && is_array($linkContData)) {
 					if($linkContData['display_page'] == 1) {
 						view('temp/goods', ['linkContData' => $linkContData]);
@@ -130,10 +130,10 @@ class C_Controller extends Controller
 					'LIMIT'        => 1
 					])[0];
 				if($oneLink) {
-					$linkContData = $this->_model->select('link_content', '*', [
-						'link_id' => $oneLink['id'],
-						'LIMIT'   => 1
-						])[0];
+					// $linkContData = $this->_model->select('link_content', '*', [
+					// 	'link_id' => $oneLink['id'],
+					// 	'LIMIT'   => 1
+					// 	])[0];
 
 					/**
 					 * 检测屏蔽地区  为TRUE表示是屏蔽地区 走审核页面

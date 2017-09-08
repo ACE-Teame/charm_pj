@@ -382,7 +382,7 @@ class LinkController extends C_Controller
 				['domain_id'   => intval($postData['domain_id']),
 				'id[!]' 	   => post('id')]);
 			if($count) {
-				ajaxReturn(202, '子链接重复');
+				ajaxReturn(202, '域名内容已存在');
 			}
 		}
 	}
