@@ -8,7 +8,7 @@
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
-			<div class="search">
+			<div class="search link-search">
 				<form action="<?php echo base_url('user');?>#" class="searchForm" method="GET" name="search">
 					<div class="entry">
 						<label>用户名:</label>

@@ -10,8 +10,12 @@
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
-			<div class="search">
-				<form action="<?=base_url('link/skip')?>" class="searchForm" method="GET" name="search">
+			<div class="search link-search">
+				<form action="<?=base_url('link/skip')?>" class="searchForm clear" method="GET" name="search">
+					<div class="entry">
+						<label>二级域名:</label>
+						<input type="text" name="orginal_link" placeholder="">
+					</div>
 					<div class="entry">
 						<label>原链接:</label>
 						<input type="text" name="orginal_link" placeholder="">
@@ -41,7 +45,7 @@
 					<thead>
 						<tr>
 							<th>序号</th>
-							<th>域名</th>
+							<th>二级域名</th>
 							<th>原链接</th>
 							<th>审核链接</th>
 							<th>推广链接</th>

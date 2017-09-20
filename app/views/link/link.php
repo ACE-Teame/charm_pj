@@ -9,12 +9,16 @@
 				<?php endif ?>
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
-			<div class="search">
+			<div class="search link-search">
 				<form action="<?php echo base_url('link/link') ?>" class="searchForm" method="GET" name="search" id="from">
 					<!-- <div class="entry">
 						<label>原链接:</label>
 						<input type="text" name="link_id" placeholder="">
 					</div> -->
+					<div class="entry">
+						<label>二级域名:</label>
+						<input type="text" name="domain_name" placeholder="">
+					</div>	
 					<div class="entry">
 						<label>公司名称:</label>
 						<input type="text" name="company_name" placeholder="">
@@ -36,7 +40,7 @@
 					<thead>
 						<tr>
 							<th>序号</th>
-							<th>域名</th>
+							<th>二级域名</th>
 							<th>公司名称</th>
 							<th class="tb-register-time">新建时间</th>
 							<th class="tb-modify-time">修改时间</th>
@@ -49,9 +53,10 @@
 						<tr>
 							<td><?=$linkContent['id']?></td>
 							<td>
-								<a href="javascript:;" class="original-link">
+								<a href="<?php echo 'http://'.$linkContent['url']; ?>" class="original-link" target="_blank">
 								<?php 
-									echo $linkContent['domain'] . '-' . $linkContent['url'];
+									// echo $linkContent['domain'] . '-' . $linkContent['url'];
+									echo $linkContent['url'];
 								 ?>
 								<?php 
 									// if(empty($linkContent['url'])) {

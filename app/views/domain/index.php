@@ -8,14 +8,14 @@
 				<a href="javascript:document.search.submit()" class="btn search">查询</a>
 			</div>
 
-			<div class="search">
+			<div class="search link-search">
 				<form action="<?php echo base_url('domain');?>#" class="searchForm" method="GET" name="search">
 					<div class="entry">
-						<label>域名:</label>
+						<label>域名名称:</label>
 						<input type="text" name="domain" placeholder="">
 					</div>
 					<div class="entry">
-						<label>地址:</label>
+						<label>二级域名:</label>
 						<input type="text" name="url" placeholder="">
 					</div>				
 				</form>
