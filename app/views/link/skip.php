@@ -96,7 +96,7 @@
 					</div>
 					<div class="entry">
 						<label>主域名:</label>
-						<select name="domain_id" id="domain_id" <?php if (empty($isAdmin)): ?>
+						<select onchange="check_unqiue()" name="domain_id" id="domain_id" <?php if (empty($isAdmin)): ?>
 							disabled='disabled'
 						<?php endif ?> >
 							<?php foreach ($domainData as $domain): ?>
@@ -106,7 +106,7 @@
 					</div>
 					<div class="entry">
 						<label>原链接:</label>
-						<input type="text" name="orginal_link" id="orginal_link" <?php if (empty($isAdmin)): ?>
+						<input onblur="check_unqiue()" class="check_unique" type="text" name="orginal_link" id="orginal_link" <?php if (empty($isAdmin)): ?>
 							readonly='readonly'
 						<?php endif ?> value="" placeholder="http://">
 					</div>
@@ -149,7 +149,23 @@
 			<div class="close"><a href="#" class="btn-close"><i class="iconfont icon-close" onclick="cancel()"></i></a></div> 
 		</div>
 		<script>
-
+			function check_unqiue(it)
+			{
+				var domain_id     = $('#domain_id').val();
+				var original_link = $('#orginal_link').val();
+				var send_data = {
+					domain_id: domain_id,
+					original_link: original_link
+				};
+				if(domain_id && orginal_link) {
+					$.post('<?php echo base_url('link/check_skip_unique')?>', send_data, function(data) {
+						if(data.status == 202) {
+							alert('此域名下的原始链接已存在！！！');
+						}
+					}, 'JSON');
+				}
+			}
+			
 			/**
 			 * 修改时获取数据
 			 */
