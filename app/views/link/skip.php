@@ -14,7 +14,7 @@
 				<form action="<?=base_url('link/skip')?>" class="searchForm clear" method="GET" name="search">
 					<div class="entry">
 						<label>二级域名:</label>
-						<input type="text" name="orginal_link" placeholder="">
+						<input type="text" name="url" placeholder="">
 					</div>
 					<div class="entry">
 						<label>原链接:</label>

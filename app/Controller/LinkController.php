@@ -31,7 +31,7 @@ class LinkController extends C_Controller
 		if(is_array($data) && !empty($data)) {
 			foreach ($data as $key => $value) {
 				$data[$key]['leadName'] = $userModel->byPkGetInfo($value['leading_uid'], 'name');
-				$data[$key]['domain'] = $domainModel->byPkGetInfo($value['domain_id'], 'domain');
+				$data[$key]['domain'] = $domainModel->byPkGetInfo($value['domain_id'], 'url');
 				$addressIds = $this->_model->select('link_address', 'address_id', ['link_id' => $value['id']]);
 				if($addressIds) {
 					$addressName  = '';
@@ -68,7 +68,9 @@ class LinkController extends C_Controller
 
 		$data['count']     = $this->_model->count('link', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
+		$where['ORDER']    = ['creat_time' => 'DESC'];
 		$data['linkData']  = $this->_model->select('link', '*', $where);
+
 		// 分页处理
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
@@ -87,6 +89,10 @@ class LinkController extends C_Controller
 	 */
 	private function _getSearch()
 	{
+		if(get('url')) {
+			$domainIds = $this->_model->select('domain', 'id', ['url[~]' => trim(get('url'))]);
+			$where['domain_id'] = $domainIds;
+		}
 		if(get('orginal_link')) {
 			$where['orginal_link[~]'] = get('orginal_link');
 		}
@@ -259,6 +265,7 @@ class LinkController extends C_Controller
 
 		$data['count']     = $this->_model->count('link_content', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
+		$where['ORDER']    = ['create_time' => 'DESC'];
 		/**
 		 * 数据表关联 取出数据
 		 */
