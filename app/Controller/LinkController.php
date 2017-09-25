@@ -31,7 +31,7 @@ class LinkController extends C_Controller
 		if(is_array($data) && !empty($data)) {
 			foreach ($data as $key => $value) {
 				$data[$key]['leadName'] = $userModel->byPkGetInfo($value['leading_uid'], 'name');
-				$data[$key]['domain'] = $domainModel->byPkGetInfo($value['domain_id'], 'domain');
+				$data[$key]['domain'] = $domainModel->byPkGetInfo($value['domain_id'], 'url');
 				$addressIds = $this->_model->select('link_address', 'address_id', ['link_id' => $value['id']]);
 				if($addressIds) {
 					$addressName  = '';
@@ -68,7 +68,9 @@ class LinkController extends C_Controller
 
 		$data['count']     = $this->_model->count('link', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
+		$where['ORDER']    = ['creat_time' => 'DESC'];
 		$data['linkData']  = $this->_model->select('link', '*', $where);
+
 		// 分页处理
 		$objPage           = new page($data['count'], $pageNum, $now_page, '?page={page}' . $this->getSearchParam());
 		$data['pageNum']   = $pageNum;
@@ -87,13 +89,17 @@ class LinkController extends C_Controller
 	 */
 	private function _getSearch()
 	{
-		if(get('orginal_link')) {
+		if(get('url') OR get('orginal_link') == 0) {
+			$domainIds = $this->_model->select('domain', 'id', ['url[~]' => trim(get('url'))]);
+			$where['domain_id'] = $domainIds;
+		}
+		if(get('orginal_link') OR get('orginal_link') == 0) {
 			$where['orginal_link[~]'] = get('orginal_link');
 		}
-		if(get('audit_link')) {
+		if(get('audit_link') OR get('orginal_link') == 0) {
 			$where['audit_link[~]']   = get('audit_link');
 		}
-		if(get('referral_link')) {
+		if(get('referral_link') OR get('orginal_link') == 0) {
 			$where['referral_link[~]'] = get('referral_link');
 		}
 		if(intval(get('leading_uid'))) {
@@ -259,6 +265,7 @@ class LinkController extends C_Controller
 
 		$data['count']     = $this->_model->count('link_content', $where);
 		$where['LIMIT']    = [$offset, $pageNum];
+		$where['ORDER']    = ['create_time' => 'DESC'];
 		/**
 		 * 数据表关联 取出数据
 		 */
@@ -308,7 +315,6 @@ class LinkController extends C_Controller
 					['user.name', 'link.domain_id', 'link.orginal_link', 'link.leading_uid'], 
 					['link.id' => $linkContentData['link_id']])[0];
 			}	
-			// $domainSonLink = $this->_model->select('link', ['id', 'orginal_link'], ['domain_id' => $linkData['domain_id']]);
 
 			/**
 			 * 当为修改时 赋值模板变量内容为 
@@ -396,38 +402,7 @@ class LinkController extends C_Controller
 		if( empty( $postData['id'] ) ) {
 			$this->_check_link_content($postData);
 			$postData['create_time'] = $postData['update_time'] = time();
-			// if($postData['orginal_link']) { 
-			// 	// 组装插入到链接跳转的数据
-			// 	// $insertLinkData = [
-			// 	// 	'leading_uid'    => $postData['leader_uid'],
-			// 	// 	'domain_id'      => $postData['domain_id'],
-			// 	// 	'orginal_link'   => $postData['orginal_link'],
-			// 	// 	'creat_uid'      => $_SESSION['uid'],
-			// 	// 	'last_edit_uid'  => $_SESSION['uid'],
-			// 	// 	'creat_time'     => time(),
-			// 	// 	'last_edit_time' => time(),
-			// 	// ];
-
-
-			// 	// $this->_model->insert('link', $insertLinkData);
-			// 	// $insertLinkId = $this->_model->id();
-			// 	// 插入的跳转ID赋值到link_content的link_id字段
-			// 	// $postData['link_id']     = $insertLinkId;
-			// 	$postData['leading_uid'] = $postData['leader_uid'];
-			// 	// 删除不需要的数据
-			// 	unset($postData['id'], $postData['orginal_link'], $postData['leader_uid'], $postData['domain_id']);
-			// }else {
-			// 	/**
-			// 	 * 当链接地址orginal_link为空的时候 说明只添加单一的域名页面
-			// 	 * 只插入到link_content
-			// 	 */
-			// 	$postData['leading_uid'] = $postData['leader_uid'];
-
-			// 	unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
-			// }
-			// $postData['leading_uid'] 
 			unset($postData['isadmin'], $postData['link_id']);
-			// dump($postData);exit;
 			// 插入到链接内容表
 			$flag = $this->_model->insert('link_content', $postData);
 			
@@ -446,83 +421,12 @@ class LinkController extends C_Controller
 	public function ajax_edit_link_content()
 	{
 		$linkContId = intval(post('id')); // 获得链接内容ID
-		// $linkId     = intval(post('link_id')); // 获得链接跳转ID
 		if($linkContId) {
 			$postData = post();
 			if ($this->isAdmin == FALSE) {
 				unset($postData['domain_id']);
 			}
-			// /**
-			//  * 如果linkId为空 orginal_link也为空的话表示 为单域名页面修改
-			//  * 只修改link_content即可
-			//  */
-			// if( empty($linkId) && empty($postData['orginal_link'])) {
-			// 	$postData['leading_uid'] = $postData['leader_uid'];
-			// 	unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
-
-			// /**
-			//  * 如果linkId为空 origin_link有值的话 表示之前是单域名页面 现在是子链接页面
-			//  * 增加子链接 并更新link_content内容
-			//  */
-			// }else if(empty($linkId) && $postData['orginal_link']){
-			// 	// 组装插入到链接跳转的数据
-			// 	$insertLinkData = [
-			// 		'leading_uid'    => $postData['leader_uid'],
-			// 		'domain_id'      => $postData['domain_id'],
-			// 		'orginal_link'   => $postData['orginal_link'],
-			// 		'creat_uid'      => $_SESSION['uid'],
-			// 		'last_edit_uid'  => $_SESSION['uid'],
-			// 		'creat_time'     => time(),
-			// 		'last_edit_time' => time(),
-			// 	];
-			// 	if( empty( post('isadmin') ) ) {
-			// 		unset($insertLinkData['domain_id']);
-			// 	}
-			// 	$this->_model->insert('link', $insertLinkData);
-			// 	$insertLinkId = $this->_model->id();
-			// 	// 插入的跳转ID赋值到link_content的link_id字段
-			// 	$postData['link_id']   = $insertLinkId;
-			// 	$postData['domain_id'] = 0;
-			// 	$postData['leading_uid'] = $postData['leader_uid'];
-			// 	// 删除不需要的数据
-			// 	unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
-
-			// /**
-			//  * 如果linkId有值 链接地址为空表示从子链接 转向为单域名页面
-			//  * 删除之前的子链接数据 更新链接内容
-			//  */
-			// }else if($linkId && empty($postData['orginal_link'])) {
-			// 	$this->_model->delete('link', ['id' => $linkId]);
-			// 	$postData['link_id']     = 0;
-			// 	$postData['leading_uid'] = $postData['leader_uid'];
-			// 	$postData['update_time'] = time();
-			// 	unset($postData['id'], $postData['orginal_link'], $postData['leader_uid']);
-			// /**
-			//  * 如果linkId和链接地址都有值
-			//  * 同时更新链接跳转和链接内容数据
-			//  */
-			// }else if($linkId && $postData['orginal_link']){
-			// 	$uptLink = [
-			// 		'domain_id'      => $postData['domain_id'],
-			// 		'leading_uid'    => $postData['leader_uid'],
-			// 		'orginal_link'   => $postData['orginal_link'],
-			// 		'last_edit_uid'  => $_SESSION['uid'],
-			// 		'last_edit_time' => time()
-			// 	];
-			// 	if( empty( post('isadmin') ) ) {
-			// 		unset($uptLink['domain_id']);
-			// 	}
-			// 	$flag = $this->_model->update('link', $uptLink, ['id' => $linkId]);
-			// 	$postData['leading_uid'] = $postData['leader_uid'];
-			// 	unset($postData['id'], $postData['orginal_link'], $postData['domain_id'], $postData['leader_uid']);
-
-			// }
-			// $postData['update_time'] = time();
-			// if( empty( post('isadmin') ) ) {
-			// 	unset($postData['domain_id']);
-			// }
 			unset($postData['isadmin'], $postData['link_id']);
-			// dump($postData);exit;
 			$flag = $this->_model->update('link_content', $postData, ['id' => $linkContId]);
 			if($flag) {
 				ajaxReturn(200, '修改成功');
@@ -542,6 +446,23 @@ class LinkController extends C_Controller
 			$delFlag = $this->_model->delete('link_content', ['id' => $id]);
 			if($delFlag) ajaxReturn(200);
 			ajaxReturn(202);
+		}
+	}
+
+	/**
+	 * 验证域名和原始链接唯一性
+	 */
+	public function check_skip_unique()
+	{
+		$domain_id    = intval(post('domain_id'));
+		$orginal_link = post('original_link');
+		if($domain_id && $orginal_link) {
+			$total = $this->_model->count('link', ['domain_id' => $domain_id, 'orginal_link' => $orginal_link]);
+			if($total) {
+				ajaxReturn(202);
+			}else {
+				ajaxReturn(200);
+			}
 		}
 	}
 
