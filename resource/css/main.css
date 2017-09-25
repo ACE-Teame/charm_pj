@@ -151,10 +151,14 @@ form .entry label { display: inline-block; min-width: 75px; }
 #labelTip { position: absolute; left: 0; width: 100%; height: 100%; font-size: 13px; font-family: 'Microsoft Yahei', serif; color: #787878; line-height: 38px; text-align: center; z-index: 2; }
 
 @media all and (max-width: 768px) {
-  table td { max-width: 120px; }
+  table td { max-width: 90px; }
   .sidebar .personInfo .name { width: 100%; }
   .sidebar .personInfo .logout { width: 100%; margin-top: 5px; }
+  .link-search form .entry { float: left; width: 48%; padding-right: 2%; }
+  .link-search form .entry:nth-child(3n) { padding-right: 2%; }
+  .link-search form .entry:nth-child(2n) { padding-right: 0; }
 }
+
 @media all and (max-height: 700px) {
   .sidebar .menu { height: calc(100% - 183px); overflow-y: scroll; }
   .popup .form { max-height: 285px; overflow-y: scroll; }
@@ -165,6 +169,7 @@ form .entry label { display: inline-block; min-width: 75px; }
 
 
 }
+
 @media all and (max-width: 480px) {
   h1 { padding-bottom: 10px; }
   input[type="text"], input[type="password"] { min-width: 170px; }
