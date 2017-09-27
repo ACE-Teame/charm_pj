@@ -46,14 +46,10 @@
 		
 		<div class="banner">
 			<div class="gallery">		
-				<!-- strip_tags去掉html标签 只保留img标签 需要更改请自行改之 -->		
+				<!-- strip_tags去掉html标签 只保留img标签 需要更改请自行改之 -->	
+				<ul class="silder clear">	
 				<?php echo strip_tags(htmlspecialchars_decode($linkContData['main_image']), '<img>') ?>
-				<!-- <ul class="silder clear">
-					<li><img src="<?php echo base_url('resource/images/games/1.jpg') ?>" alt=""></li>
-					<li><img src="<?php echo base_url('resource/images/games/2.jpg') ?>" alt=""></li>
-					<li><img src="<?php echo base_url('resource/images/games/3.jpg') ?>" alt=""></li>
-					<li><img src="<?php echo base_url('resource/images/games/4.jpg') ?>" alt=""></li>
-				</ul> -->
+				</ul>
 			</div>
 		</div>
 
