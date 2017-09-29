@@ -22,7 +22,7 @@ class HomeController extends C_Controller
 	{
 		$userModel        = new UserModel();
 		$data['userData'] = $userModel->select('', ['id', 'name', 'login_time', 'ip'],
-			['ORDER' => ['login_time' => DESC], 'LIMIT' => 3]);
+			['ORDER' => ['login_time' => DESC], 'LIMIT' => 15]);
 		$data['menu']['menuData'] = self::$menuData;
 		view('index', $data);
 	}
