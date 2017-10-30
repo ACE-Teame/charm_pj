@@ -112,6 +112,8 @@ class C_Controller extends Controller
 		if($domainId) {
 			$c = get('c');
 			$linkContData = $this->_model->select('link_content', '*', ['domain_id' => $domainId])[0];
+
+
 			if(empty($c)){
 				if($linkContData && is_array($linkContData)) {
 					if($linkContData['display_page'] == 1) {
@@ -130,10 +132,6 @@ class C_Controller extends Controller
 					'LIMIT'        => 1
 					])[0];
 				if($oneLink) {
-					// $linkContData = $this->_model->select('link_content', '*', [
-					// 	'link_id' => $oneLink['id'],
-					// 	'LIMIT'   => 1
-					// 	])[0];
 
 					/**
 					 * 检测屏蔽地区  为TRUE表示是屏蔽地区 走审核页面
@@ -150,9 +148,9 @@ class C_Controller extends Controller
 					 */
 					if( !empty($oneLink['audit_link']) ) {
 						if(($detector->isMobile() === false) OR ($isCkeck == TRUE)) {
-							redirect($oneLink['audit_link'], TRUE);
+							redirect(htmlspecialchars_decode($oneLink['audit_link']), TRUE);
 						}else {
-							redirect($oneLink['referral_link'], TRUE);
+							redirect(htmlspecialchars_decode($oneLink['referral_link']), TRUE);
 						}
 						exit;
 					}
@@ -174,7 +172,7 @@ class C_Controller extends Controller
 							}
 							exit;
 						}else {
-							redirect($oneLink['referral_link'], TRUE);
+							redirect(htmlspecialchars_decode($oneLink['referral_link']), TRUE);
 						}
 					}
 				}else {
@@ -182,8 +180,8 @@ class C_Controller extends Controller
 				}
 			}
 		}else {
-			if($urlName != 'link.teamtoptech.com') {
-			// if($urlName != 'charmpj.com') {
+			// if($urlName != 'link.teamtoptech.com') {
+			if($urlName != 'charm_pj.com') {
 				view('error');exit;
 			}else {
 				$_SESSION['is_url_check'] = 1;
